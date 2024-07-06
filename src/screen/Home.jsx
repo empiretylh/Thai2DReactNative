@@ -1,0 +1,241 @@
+import React, { useEffect, useMemo } from 'react'
+import { ActivityIndicator, Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import TopBar from './components/TopBar';
+import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
+import { useQuery } from 'react-query';
+import { getTwoDDaliy } from '../server/api';
+import { IMAGE } from '../config/image';
+import { COLOR } from '../config/theme';
+import Icon from 'react-native-vector-icons/Ionicons'
+
+
+const TwoDResultView = ({ result }) => {
+
+
+    return (
+        <View style={{
+            paddingHorizontal: 20,
+        }}>
+            <TouchableOpacity style={{ backgroundColor: COLOR.thridColor, marginTop: 10, borderRadius: 15, }}>
+                <View style={{ padding: 5, padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'column', gap: 2 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                            <Icon name="partly-sunny" size={30} color={COLOR.fithColor} />
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLOR.fithColor, fontWeight: 'bold', fontFamily: 'monospace' }} >12:01 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, }}>
+                            <Text style={{ color: COLOR.primaryColor, fontSize: 15 }}>Set 166,4343</Text>
+                            <Text style={{ color: COLOR.primaryColor, fontSize: 15 }}>Value 166,4343</Text>
+                        </View>
+                    </View>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', color: COLOR.fithColor, letterSpacing: 2 }}>
+                        56
+                    </Text>
+                </View>
+                <View style={{ backgroundColor: COLOR.fithColor, height: 1, width: '100%' }} />
+                <View style={{ padding: 5, padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'column', gap: 2 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                            <Icon name="moon" size={30} color={COLOR.fithColor} />
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLOR.fithColor, fontWeight: 'bold', fontFamily: 'monospace' }} >4:30 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, }}>
+                            <Text style={{ color: COLOR.primaryColor, fontSize: 15 }}>Set 166,4343</Text>
+                            <Text style={{ color: COLOR.primaryColor, fontSize: 15 }}>Value 166,4343</Text>
+                        </View>
+                    </View>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', color: COLOR.fithColor, letterSpacing: 2 }}>
+                        95
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    )
+
+}
+
+
+const ThreeDResultView = ({ result }) => {
+
+
+    return (
+        <View style={{
+            paddingHorizontal: 20,
+        }}>
+            <TouchableOpacity style={{ backgroundColor: COLOR.secondaryColor, marginTop: 10, borderRadius: 15, padding: 10 }}>
+                <View style={{ flexDirection: 'column', gap: 2 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                        <View style={{flex : 1}}>
+                        </View>
+
+                        <Text style={{
+                            fontSize: 18,
+                            marginLeft:'auto',
+                            color : COLOR.fithColor,
+                            flex:1,
+                            textAlign:'center',
+                            color:'yellow',
+                        }}>
+                            MODERN
+                        </Text>
+                        <Text style={{
+                            fontSize: 18,
+                            color : COLOR.fithColor,
+                            flex:1,
+                            textAlign:'center',
+                            color:'yellow',
+                        }}>
+                            INTERNET
+                        </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                        <View style={{flex : 1, flexDirection:'row', alignItems:'center', gap:2}}>
+                            <Icon name="sunny" size={25} color={COLOR.fithColor}/> 
+                            <Text style={{
+                                fontSize:20,
+                                fontWeight:'bold',
+                                color:COLOR.fithColor,
+                            }}>9:30 AM</Text>
+                        </View>
+
+                        <Text style={{
+                            fontSize: 20,
+                            marginLeft:'auto',
+                            textAlign:'center',
+                            fontWeight:'bold',
+                            color : COLOR.fithColor,
+                            flex:1,
+                        }}>
+                            300
+                        </Text>
+                        <Text style={{
+                            fontSize: 20,
+                            color : COLOR.fithColor,
+                            textAlign:'center',
+                            fontWeight:'bold',
+                            flex:1,
+
+
+
+                        }}>
+                            200
+                        </Text>
+                    </View>
+                    <View style={{ backgroundColor: COLOR.fithColor, height: 1, width: '100%', marginVertical:10 }} />
+           
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10}}>
+                        <View style={{flex : 1, flexDirection:'row', alignItems:'center', gap:2}}>
+                            <Icon name="sunny" size={25} color={COLOR.fithColor}/> 
+                            <Text style={{
+                                fontSize:20,
+                                fontWeight:'bold',
+                                color:COLOR.fithColor,
+                            }}>2:00 PM</Text>
+                        </View>
+
+                        <Text style={{
+                            fontSize: 20,
+                            marginLeft:'auto',
+                            textAlign:'center',
+                            fontWeight:'bold',
+                            color : COLOR.fithColor,
+                            flex:1,
+                        }}>
+                            400
+                        </Text>
+                        <Text style={{
+                            fontSize: 20,
+                            color : COLOR.fithColor,
+                            textAlign:'center',
+                            fontWeight:'bold',
+                            flex:1,
+
+
+
+                        }}>
+                            800
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        </View>
+    )
+
+}
+
+const Home = ({navigation}) => {
+    const twodData = useQuery('twod', getTwoDDaliy);
+
+    useEffect(()=>{
+        twodData?.refetch();
+    },[])
+
+    const Data = useMemo(() => {
+        if (twodData?.data) {
+            return twodData?.data?.data;
+        }
+        return null;
+    }, [twodData?.data]);
+
+    return (
+        <View style={{
+            flex: 1,
+        }}>
+            <ImageBackground
+                source={IMAGE.background}
+                resizeMode="cover"
+                style={{
+                    flex: 1,
+                }}
+            >
+                <TopBar />
+
+                <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderColor: 'black',
+                    marginTop: -15
+                }}>
+                    {twodData.isLoading ? (
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    ) : (
+                        <Text style={{
+                            color: COLOR.primaryColor,
+                            fontWeight: 'bold',
+                            fontSize: 170,
+                            fontFamily: 'arial',
+                            textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                            textShadowOffset: { width: -1, height: 4 },
+                            textShadowRadius: 2
+
+                        }}>{Data?.live?.twod}</Text>
+                    )}
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 4,
+                    }}>
+                        <Icon name="time-outline" size={20} />
+                        <Text style={{ color: 'black', fontWeight: 'bold' }}>
+                            Updated At {Data?.live?.time}</Text>
+                    </View>
+                </View>
+
+
+                <ScrollView style={{ flex: 1, marginBottom: 80 }}>
+                    <TwoDResultView result={Data?.result} />
+
+                    <ThreeDResultView result={Data?.result} />
+
+
+
+                </ScrollView>
+
+                <FloatingNavigionBottomBar navigation={navigation} screen='home'/>
+            </ImageBackground>
+        </View>
+    );
+}
+
+export default Home;
