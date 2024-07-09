@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {useContext, createContext} from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 const TokenContext = createContext();
@@ -13,16 +14,20 @@ export const TokenProvider = ({children}) => {
 
         EncryptedStorage.getItem('token').then((value)=>{
             setToken(value);
+            axios.defaults.headers.common['Authorization'] = `Token ${value}`   
         })
     }, []);
 
     const onSetGToken = (value)=>{
+        setGToken(value)
         EncryptedStorage.setItem('gtoken', value);
 
     }
 
     const onSetToken = (value)=>{
+        setToken(value);
         EncryptedStorage.setItem('token',value);
+        axios.defaults.headers.common['Authorization'] = `Token ${value}`
     }
 
     return (

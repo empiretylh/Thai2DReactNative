@@ -1,41 +1,122 @@
-import React, { useMemo } from 'react'
-import { ActivityIndicator, Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  RefreshControl,
+  View,
+} from 'react-native';
 import TopBar from './components/TopBar';
 import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
-import { useQuery } from 'react-query';
-import { getThreeDhistory, getTwoDDaliy } from '../server/api';
-import { IMAGE } from '../config/image';
-import { COLOR } from '../config/theme';
-import Icon from 'react-native-vector-icons/Ionicons'
+import {useQuery} from 'react-query';
+import {getFeeds, getThreeDhistory, getTwoDDaliy} from '../server/api';
+import {IMAGE} from '../config/image';
+import {COLOR} from '../config/theme';
+import Icon from 'react-native-vector-icons/Ionicons';
 import GoogleLoginView from './components/GoogleLogin';
+import {useToken} from '../context/TookenProvider';
+import axios from 'axios';
+import {timeExchanger} from '../tools/timeexchanger';
+import {PostItem} from './FeedComponents/Post';
+import { useLike } from '../context/LikeProvider';
 
+const Feed = ({navigation}) => {
+  const {gtoken, setGToken} = useToken();
+  const [loading, setLoading] = useState(true);
+  const [showNavibar, setShowNavibar] = React.useState(true);
+  let lastScrollY = useRef(0);
 
+  const handleScroll = event => {
+    const currentScrollY = event.nativeEvent.contentOffset.y;
+    if (currentScrollY > lastScrollY.current) {
+      // Scrolling down
+      setShowNavibar(false);
+    } else {
+      // Scrolling up
+      setShowNavibar(true);
+    }
+    lastScrollY.current = currentScrollY;
+  };
 
-const Feed = ({ navigation }) => {
-    
-    return (
-        <View style={{
-            flex: 1,
+  const feeds_data = useQuery('feeds', getFeeds);
+  const {likes, RefetchLikes, LikeCountbyPostId, isUserLiked,likes_data} = useLike();
+
+  useLayoutEffect(() => {
+    feeds_data?.refetch();
+  }, []);
+
+  useEffect(() => {
+    if (feeds_data?.isLoading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [feeds_data]);
+
+  const feeds = useMemo(() => {
+    return feeds_data?.data?.data;
+  }, [feeds_data]);
+
+  return (
+    <View
+      style={{
+        flex: 1,
+      }}>
+      <ImageBackground
+        source={IMAGE.background}
+        resizeMode="cover"
+        style={{
+          flex: 1,
         }}>
-            <ImageBackground
-                source={IMAGE.background}
-                resizeMode="cover"
-                style={{
-                    flex: 1,
-                }}
-            >
-                <TopBar >
-                    <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', textAlign: 'center' }}>Feed</Text>
-                </TopBar>
+        <TopBar>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 20,
+              color: 'white',
+              textAlign: 'center',
+            }}>
+            Feed
+          </Text>
+        </TopBar>
 
-                <GoogleLoginView/>
+        {gtoken ? (
+          <>
+            <FlatList
+              refreshControl={
+                <RefreshControl
+                  refreshing={feeds_data.isFetching}
+                  onRefresh={() => {
+                    feeds_data.refetch();
+                    likes_data.refetch();
+                  }}
+                />
+              }
+              data={feeds}
+              renderItem={({item}) => <PostItem item={item} />}
+              keyExtractor={item => item.id}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              initialNumToRender={5}
+            />
+          </>
+        ) : (
+          <GoogleLoginView />
+        )}
 
-              
-
-                <FloatingNavigionBottomBar navigation={navigation} screen='news' />
-            </ImageBackground>
-        </View>
-    );
-}
+        <FloatingNavigionBottomBar
+          navigation={navigation}
+          screen="news"
+          show={showNavibar}
+        />
+      </ImageBackground>
+    </View>
+  );
+};
 
 export default Feed;
