@@ -78,7 +78,7 @@ const Feed = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <TopBar showOrigin={false} customViewStyle={{
+        <TopBar navigation={navigation} showOrigin={false} customViewStyle={{
           flexDirection: 'row',
           alignItems: 'center',
           padding: 2,

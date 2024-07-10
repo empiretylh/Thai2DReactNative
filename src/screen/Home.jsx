@@ -325,7 +325,7 @@ const Home = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <TopBar />
+        <TopBar navigation={navigation} />
 
         <View
           style={{

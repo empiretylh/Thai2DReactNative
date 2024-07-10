@@ -3,7 +3,7 @@ import {COLOR} from '../../config/theme';
 import {IMAGE} from '../../config/image';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const TopBar = ({children, showOrigin = true, customViewStyle }) => {
+const TopBar = ({children, showOrigin = true, customViewStyle, navigation }) => {
   return (
     <View
       style={{
@@ -18,10 +18,17 @@ const TopBar = ({children, showOrigin = true, customViewStyle }) => {
       <StatusBar backgroundColor={COLOR.primaryColor} />
       {showOrigin ? (
         <>
+        <TouchableOpacity onPress={()=>{
+          navigation.navigate('Home')
+        }}>
+          
           <Image
             source={IMAGE.logo}
             style={{width: 70, height: 70, objectFit: 'contain'}}
           />
+
+          
+        </TouchableOpacity>
           <View style={{marginLeft: 'auto'}}>{children}</View>
 
           <TouchableOpacity

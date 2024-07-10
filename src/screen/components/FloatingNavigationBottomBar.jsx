@@ -63,7 +63,7 @@ const FloatingNavigionBottomBar = ({
             transform: [{translateY: position}],
           },
         ]}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             navigation.navigate('Home');
           }}
@@ -81,16 +81,38 @@ const FloatingNavigionBottomBar = ({
             }}>
             Home
           </Text>
+        </TouchableOpacity> */}
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('History');
+          }}
+          style={style.buttton}>
+          <Image
+            source={
+              active === 'history' ? IMAGE.twodactive : IMAGE.twodinactive
+            }
+            style={{width: 30, height: 30}}
+          />
+          <Text
+            style={{
+              color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
+              textAlign: 'center',
+              fontWeight: 'bold',
+            }}>
+            History
+          </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ThreeD');
           }}
           style={style.buttton}>
-          <Icon
-            name={active === 'threed' ? 'color-filter' : 'color-filter-outline'}
-            size={30}
-            color={active === 'threed' ? COLOR.primaryColor : '#2e4f24'}
+          <Image
+            source={
+              active === 'threed' ? IMAGE.threedactive : IMAGE.threedinactive
+            }
+            style={{width: 30, height: 30}}
           />
           <Text
             style={{
@@ -101,7 +123,39 @@ const FloatingNavigionBottomBar = ({
             3D
           </Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
+
+        <View>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 50,
+              width: 90,
+              position: 'relative',
+            }}
+            onPress={() => {
+              navigation.navigate('Gift');
+            }}>
+            <View
+              style={{
+                position: 'absolute',
+              }}>
+              <Image source={IMAGE.gift} style={{width: 90, height: 90}} />
+              <Text
+                style={{
+                  color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  marginTop: -10,
+                }}>
+                Gift
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate('Chat');
           }}
@@ -118,55 +172,6 @@ const FloatingNavigionBottomBar = ({
               fontWeight: 'bold',
             }}>
             Chat
-          </Text>
-        </TouchableOpacity> */}
-        <View>
-          <TouchableOpacity style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 50,
-            width:90,
-            position:'relative'
-          }} onPress={() => {
-            navigation.navigate('Gift');
-          
-          }}>
-            <View style={{
-                 position:'absolute',
-            }}>
-                
-            <Image source={IMAGE.gift} style={{width: 90, height: 90,}} />
-            <Text
-            style={{
-              color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              marginTop:-10
-            }}>
-            Gift
-          </Text>
-          
-          </View>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('History');
-          }}
-          style={style.buttton}>
-          <Icon
-            name={active === 'history' ? 'time' : 'time-outline'}
-            size={30}
-            color={active === 'history' ? COLOR.primaryColor : '#2e4f24'}
-          />
-          <Text
-            style={{
-              color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}>
-            History
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

@@ -6,7 +6,6 @@ import { useQuery } from 'react-query';
 import { getThreeDhistory, getTwoDDaliy } from '../server/api';
 import { IMAGE } from '../config/image';
 import { COLOR } from '../config/theme';
-import Icon from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -73,7 +72,7 @@ const ThreeDView = ({ navigation }) => {
                     flex: 1,
                 }}
             >
-                <TopBar >
+                <TopBar navigation={navigation}>
                     <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', textAlign: 'center' }}>3D History</Text>
                 </TopBar>
 
