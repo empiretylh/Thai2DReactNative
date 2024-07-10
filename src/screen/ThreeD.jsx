@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 
 const ThreeDView = ({ navigation }) => {
-    const twodData = useQuery('twod', getThreeDhistory);
+    const twodData = useQuery('threed', getThreeDhistory);
 
     const Data = useMemo(() => {
         if (twodData?.data) {

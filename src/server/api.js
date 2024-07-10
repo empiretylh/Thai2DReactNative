@@ -1,6 +1,6 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://10.0.1.225:8000/'
-// axios.defaults.baseURL = 'http://192.168.43.113:8000'
+// axios.defaults.baseURL = 'http://10.0.1.225:8000/'
+axios.defaults.baseURL = 'http://192.168.43.113:8000'
 
 
 export const getTwoDDaliy = () => {
@@ -13,6 +13,14 @@ export const getThreeDhistory = ()=>{
     return axios.get('https://api.2dboss.com/api/v2/v1/2dstock/threed-result')
 }
 
+
+export const getTwoDHistory = ()=>{ // last 10 days
+    return axios.get('https://api.thaistock2d.com/2d_result')
+}
+
+export const getTwoDHistoryByDate = (date)=>{ // last 10 days
+    return axios.get('https://api.thaistock2d.com/history?date='+date)
+}
 export const getFeeds = ()=>{
     return axios.get('/api/feeds/')
 }
