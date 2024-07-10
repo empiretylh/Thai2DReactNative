@@ -24,11 +24,16 @@ import axios from 'axios';
 import {timeExchanger} from '../tools/timeexchanger';
 import {PostItem} from './FeedComponents/Post';
 import { useLike } from '../context/LikeProvider';
+import { SearchViewModal } from './FeedComponents/SearchViewModal';
 
 const Feed = ({navigation}) => {
   const {gtoken, setGToken} = useToken();
   const [loading, setLoading] = useState(true);
   const [showNavibar, setShowNavibar] = React.useState(true);
+
+  const [showSearchView, setShowSearchView] = useState(false);
+
+
   let lastScrollY = useRef(0);
 
   const handleScroll = event => {
@@ -73,7 +78,27 @@ const Feed = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <TopBar>
+        <TopBar showOrigin={false} customViewStyle={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: 2,
+          paddingHorizontal: 10,
+          minHeight: 50,
+          width:'100%',
+
+        }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            
+            style={{
+              padding:5,
+              alignItems: 'center',
+              marginRight: 10,
+            }}>
+            <Icon name="arrow-back" size={25} color="#fff" />
+          </TouchableOpacity>
           <Text
             style={{
               fontWeight: 'bold',
@@ -83,7 +108,21 @@ const Feed = ({navigation}) => {
             }}>
             Feed
           </Text>
+          <View style={{
+            marginLeft:'auto',
+          }}>
+            <TouchableOpacity onPress={() => {
+              setShowSearchView(true);
+            }
+            }>
+              <Icon name="search" size={30} color="#fff" />
+
+            </TouchableOpacity>
+
+          </View>
         </TopBar>
+
+        <SearchViewModal onClose={() => setShowSearchView(false)} visible={showSearchView} />
 
         {gtoken ? (
           <>

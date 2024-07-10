@@ -227,7 +227,7 @@ export const PostItem = ({item}) => {
         style={{
           width: '100%',
           height: 50,
-          backgroundColor: 'red',
+          backgroundColor: '#e0aeab',
           justifyContent: 'center',
           alignItems: 'center',
         }}>

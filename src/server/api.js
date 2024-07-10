@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://10.0.1.111:8000'
+axios.defaults.baseURL = 'http://10.0.1.225:8000/'
 // axios.defaults.baseURL = 'http://192.168.43.113:8000'
 
 
@@ -24,6 +24,11 @@ export const onLike = (data)=>{
 
 export const getLike = (data)=>{
     return axios.get('/api/like/',data)
+}
+
+export const getSearch = ({queryKey})=>{
+    const [_,searchtext] = queryKey;
+    return axios.get('/api/search/?search='+searchtext);
 }
 export const register = (data)=>{
     axios.defaults.headers.common = {};
