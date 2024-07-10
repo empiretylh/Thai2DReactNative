@@ -5,6 +5,7 @@ import {
   ImageBackground,
   ScrollView,
   StatusBar,
+  RefreshControl,
   Text,
   TouchableOpacity,
   View,
@@ -12,7 +13,7 @@ import {
 import TopBar from './components/TopBar';
 import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
 import {useQuery} from 'react-query';
-import {getTwoDDaliy} from '../server/api';
+import {getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -300,7 +301,14 @@ const Home = ({navigation}) => {
   const twodData = useQuery('twod', getTwoDDaliy);
   const [modernResult, setModernResult] = React.useState(null);
 
-  useEffect(() => {}, []);
+  const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
+
+  const SUData = useMemo(() => {
+    if (serverupdatedTwoD?.data) {
+      return serverupdatedTwoD?.data?.data;
+    }
+    return null;
+  }, [serverupdatedTwoD?.data]);
 
   useEffect(() => {
     twodData?.refetch();
@@ -313,6 +321,34 @@ const Home = ({navigation}) => {
     }
     return null;
   }, [twodData?.data]);
+
+  const onRefresh = () => {
+    twodData.refetch();
+    serverupdatedTwoD.refetch();
+  };
+
+  const showTwodNumber = useMemo(() => {
+
+    // compare updated time with current time and show the number
+    let DataTwoDTime = new Date(Data?.live?.time);
+    let SUDataTime = new Date(SUData?.update_time);
+    if (DataTwoDTime > SUDataTime) {
+      return Data?.live?.twod;
+    } else {
+      return SUData?.number;
+    }
+  }, [Data?.live?.twod, SUData?.number]);
+
+
+  const showTwodTime = useMemo(() => {
+    let DataTwoDTime = new Date(Data?.live?.time);
+    let SUDataTime = new Date(SUData?.update_time);
+    if (DataTwoDTime > SUDataTime) {
+      return Data?.live?.time;
+    } else {
+      return SUData?.update_time;
+    }
+  }, [Data?.live?.time, SUData?.time]);
 
   return (
     <View
@@ -327,8 +363,14 @@ const Home = ({navigation}) => {
         }}>
         <TopBar navigation={navigation} />
 
-        <View
-          style={{
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={twodData.isFetching}
+              onRefresh={onRefresh}
+            />
+          }
+          contentContainerStyle={{
             alignItems: 'center',
             justifyContent: 'center',
             borderColor: 'black',
@@ -347,7 +389,7 @@ const Home = ({navigation}) => {
                 textShadowOffset: {width: -1, height: 4},
                 textShadowRadius: 2,
               }}>
-              {Data?.live?.twod}
+              {showTwodNumber}
             </Text>
           )}
           <View
@@ -358,12 +400,12 @@ const Home = ({navigation}) => {
             }}>
             <Icon name="time-outline" size={20} />
             <Text style={{color: 'black', fontWeight: 'bold'}}>
-              Updated At {Data?.live?.time}
+              Updated At {new Date(showTwodTime).toLocaleString()}
             </Text>
           </View>
-        </View>
+        </ScrollView>
 
-        <ScrollView style={{flex: 1, marginBottom: 80}}>
+        <ScrollView style={{marginBottom: 80}}>
           {Data?.result && (
             <>
               <TwoDResultView result={Data?.result || [{}]} />

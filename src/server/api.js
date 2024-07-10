@@ -21,6 +21,10 @@ export const getTwoDHistory = ()=>{ // last 10 days
 export const getTwoDHistoryByDate = (date)=>{ // last 10 days
     return axios.get('https://api.thaistock2d.com/history?date='+date)
 }
+
+export const getLiveTwoDServerUpdate= ()=>{
+    return axios.get('/api/livetwod/')
+}
 export const getFeeds = ()=>{
     return axios.get('/api/feeds/')
 }

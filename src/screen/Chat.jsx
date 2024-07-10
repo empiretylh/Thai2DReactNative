@@ -99,7 +99,6 @@ const Chat = ({navigation}) => {
             style={{
               flex: 1,
               padding: 10,
-              marginBottom: 80,
               backgroundColor: 'white',
             }}>
             <GiftedChat
@@ -116,7 +115,7 @@ const Chat = ({navigation}) => {
         ) : (
           <GoogleLoginView />
         )}
-        <FloatingNavigionBottomBar navigation={navigation} screen="chat" />
+        <FloatingNavigionBottomBar navigation={navigation} screen="chat"  show={false}/>
       </ImageBackground>
     </View>
   );
