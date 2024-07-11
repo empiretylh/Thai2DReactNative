@@ -99,7 +99,7 @@ const FloatingNavigionBottomBar = ({
               textAlign: 'center',
               fontWeight: 'bold',
             }}>
-            History
+            2D
           </Text>
         </TouchableOpacity>
 

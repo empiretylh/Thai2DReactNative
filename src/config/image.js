@@ -6,7 +6,8 @@ import twodactive  from '../assets/twodicon_active.png';
 import twodinactive  from '../assets/twodicon_inactive.png';
 import threedactive  from '../assets/threedicon_active.png';
 import threedinactive  from '../assets/threedicon_inactive.png';
-
+import pout_tee from '../assets/Pout_tee.png'
+import gift_title from '../assets/Title.png'
 export const IMAGE = {
     logo : logo,
     background : background,
@@ -15,7 +16,9 @@ export const IMAGE = {
     twodactive : twodactive,
     twodinactive : twodinactive,
     threedactive : threedactive,
-    threedinactive : threedinactive
+    threedinactive : threedinactive,
+    pout_tee : pout_tee,
+    gift_title : gift_title,
 
 
 }

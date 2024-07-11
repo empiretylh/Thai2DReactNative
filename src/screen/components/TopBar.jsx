@@ -3,11 +3,11 @@ import {COLOR} from '../../config/theme';
 import {IMAGE} from '../../config/image';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const TopBar = ({children, showOrigin = true, customViewStyle, navigation }) => {
+const TopBar = ({children, showOrigin = true, customViewStyle, navigation , backgroundColor }) => {
   return (
     <View
       style={{
-        backgroundColor: COLOR.primaryColor,
+        backgroundColor: backgroundColor ? backgroundColor : COLOR.primaryColor,
         borderBottomRightRadius: 25,
         borderBottomLeftRadius: 25,
         flexDirection: 'row',
@@ -15,7 +15,7 @@ const TopBar = ({children, showOrigin = true, customViewStyle, navigation }) => 
         padding: 5,
         paddingHorizontal: 10,
       }}>
-      <StatusBar backgroundColor={COLOR.primaryColor} />
+      <StatusBar backgroundColor={backgroundColor ? backgroundColor : COLOR.primaryColor} />
       {showOrigin ? (
         <>
         <TouchableOpacity onPress={()=>{
@@ -32,6 +32,9 @@ const TopBar = ({children, showOrigin = true, customViewStyle, navigation }) => 
           <View style={{marginLeft: 'auto'}}>{children}</View>
 
           <TouchableOpacity
+            onPress={()=>{
+              navigation.navigate('Profile')
+            }}
             style={{marginLeft: 'auto', width: 70, alignItems: 'center'}}>
             <Icon name="person-circle" size={40} color="#fff" />
           </TouchableOpacity>

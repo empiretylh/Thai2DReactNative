@@ -3,24 +3,22 @@
 import {View, Text, Button, TouchableOpacity} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import { COLOR } from '../../config/theme';
+import {COLOR} from '../../config/theme';
 import Icons from 'react-native-vector-icons/Ionicons';
-import { useToken } from '../../context/TookenProvider';
-import { useMutation } from 'react-query';
-import { register } from '../../server/api';
-const GoogleLoginView = () => {
+import {useToken} from '../../context/TookenProvider';
+import {useMutation} from 'react-query';
+import {register} from '../../server/api';
+const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
   const {gtoken, onSetGToken, setToken, token, onSetToken} = useToken();
 
-  const LoginToServer = useMutation(register,{
-    onSuccess:(data)=>{
+  const LoginToServer = useMutation(register, {
+    onSuccess: data => {
       onSetToken(data.data.token);
     },
-    onError:(error)=>{
+    onError: error => {
       console.log(error);
-    }
-  
-  })
-
+    },
+  });
 
   async function onGoogleButtonPress() {
     GoogleSignin.configure({
@@ -34,19 +32,20 @@ const GoogleLoginView = () => {
             .then(userInfo => {
               console.log(JSON.stringify(userInfo));
               let idtoken = userInfo.idToken;
-              let googleCredential = auth.GoogleAuthProvider.credential(idtoken);
-
+              let googleCredential =
+                auth.GoogleAuthProvider.credential(idtoken);
 
               LoginToServer.mutate({
-                name : userInfo.user.givenName,
+                name: userInfo.user.name,
                 email: userInfo.user.email,
                 username: userInfo.user.email,
                 photo: userInfo.user.photo,
-                password : userInfo.user.id,
+                password: userInfo.user.id,
               });
 
               auth().signInWithCredential(googleCredential);
               onSetGToken(userInfo.idToken);
+              reload();
             })
             .catch(e => {
               console.log('ERROR IS: ' + JSON.stringify(e));
@@ -56,11 +55,16 @@ const GoogleLoginView = () => {
       .catch(e => {
         console.log('ERROR IS: ' + JSON.stringify(e));
       });
-     
   }
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: nobound ? 0 : 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: nobound ? 10 : 1,
+      }}>
       <View
         style={{
           backgroundColor: 'white',
@@ -85,30 +89,31 @@ const GoogleLoginView = () => {
             textAlign: 'center',
             fontSize: 18,
             marginTop: 4,
-            
+
             fontWeight: 'bold',
           }}>
           Live Chat and New Feeds
         </Text>
-        <TouchableOpacity onPress={onGoogleButtonPress} style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: 'white',
-          padding: 10,
-          borderRadius: 10,
-          marginTop: 10,
-          gap:5,
-          borderColor: COLOR.primaryColor,
-          borderWidth:1,
-          width: '100%',
-          justifyContent: 'center',
-          
-        }}>
-            <Icons name="logo-google" size={30} color={COLOR.primaryColor} /> 
-            <Text style={{color: 'black', fontSize: 20}}>
-              Sign in with Google
-              </Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          onPress={onGoogleButtonPress}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            padding: 10,
+            borderRadius: 10,
+            marginTop: 10,
+            gap: 5,
+            borderColor: COLOR.primaryColor,
+            borderWidth: 1,
+            width: '100%',
+            justifyContent: 'center',
+          }}>
+          <Icons name="logo-google" size={30} color={COLOR.primaryColor} />
+          <Text style={{color: 'black', fontSize: 20}}>
+            Sign in with Google
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

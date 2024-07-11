@@ -10,6 +10,9 @@ import Feed from './Feed';
 import Chat from './Chat';
 import {LikeProvider} from '../context/LikeProvider';
 import {UserProvider} from '../context/UserProvider';
+import Profile from './Profile';
+import GiftView from './GiftView';
+import ETS from './GiftScreen/ETS';
 
 const client = new QueryClient();
 
@@ -24,10 +27,16 @@ const Container = () => {
             <Stack.Navigator
               screenOptions={{headerShown: false, animation: 'none'}}>
               <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Gift" component={GiftView} />
+
               <Stack.Screen name="ThreeD" component={ThreeDView} />
               <Stack.Screen name="History" component={History} />
               <Stack.Screen name="Feed" component={Feed} />
               <Stack.Screen name="Chat" component={Chat} />
+              <Stack.Screen name="Profile" component={Profile} />
+
+              {/* gift view */}
+              <Stack.Screen name="ets" component={ETS} />
 
               <Stack.Screen name="SplashScreen" component={SplashScreen} />
             </Stack.Navigator>

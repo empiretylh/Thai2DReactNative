@@ -29,7 +29,7 @@ const NumberDisplaySet = ({number = 0}) => {
         fontFamily: 'arial',
         letterSpacing: 0.5,
         fontSize: 18,
-        color: 'white',
+        color: 'black',
       }}>
       <Text>Set: </Text>
       <Text style={{color: 'black'}}>{mainPart}</Text>
@@ -55,7 +55,7 @@ const NumberDisplayVal = ({number = 0}) => {
       style={{
         fontFamily: 'arial',
         fontSize: 18,
-        color: 'white',
+        color: 'black',
       }}>
       <Text>Value : </Text>
       <Text style={{color: '#000'}}>{firstPart}</Text>

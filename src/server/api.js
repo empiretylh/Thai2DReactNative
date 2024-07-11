@@ -50,3 +50,11 @@ export const register = (data)=>{
 export const getUsers = ()=>{
     return axios.get('/api/profile/')
 }
+
+export const getEtsdata = (data) =>{
+    return axios.get('/api/gift/ets/')
+}
+
+export const getOneDayGiftStock = (data)=>{
+    return axios.get('/api/gift/onedaygift')
+}

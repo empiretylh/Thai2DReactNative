@@ -297,7 +297,7 @@ const ThreeDResultView = ({result}) => {
   );
 };
 
-const Home = ({navigation}) => {
+const GiftView = ({navigation}) => {
   const twodData = useQuery('twod', getTwoDDaliy);
   const [modernResult, setModernResult] = React.useState(null);
 
@@ -328,19 +328,16 @@ const Home = ({navigation}) => {
   };
 
   const showTwodNumber = useMemo(() => {
-
     // compare updated time with current time and show the number
     let DataTwoDTime = new Date(Data?.live?.time);
     let SUDataTime = new Date(SUData?.update_time);
 
-      if (DataTwoDTime < SUDataTime) {
+    if (DataTwoDTime < SUDataTime) {
       return SUData?.number;
     } else {
       return Data?.live?.twod;
-
     }
   }, [Data?.live?.twod, SUData?.number]);
-
 
   const showTwodTime = useMemo(() => {
     let DataTwoDTime = new Date(Data?.live?.time);
@@ -348,7 +345,7 @@ const Home = ({navigation}) => {
     if (DataTwoDTime < SUDataTime) {
       return SUData?.update_time;
     } else {
-      return Data?.live?.time
+      return Data?.live?.time;
     }
   }, [Data?.live?.time, SUData?.time]);
 
@@ -363,63 +360,231 @@ const Home = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <TopBar navigation={navigation} />
-
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={twodData.isFetching}
-              onRefresh={onRefresh}
+        <TopBar
+          navigation={navigation}
+          showOrigin={false}
+          backgroundColor={'#033B5C'}
+          customViewStyle={{
+            backgroundColor: '#033B5C',
+            borderRadius: 20,
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image
+              source={IMAGE.pout_tee}
+              style={{
+                width: 155,
+                height: 190,
+                position: 'absolute',
+                bottom: -40,
+              }}
             />
-          }
-          contentContainerStyle={{
+            <View style={{width: 145, height: 150}} />
+            <Image
+              source={IMAGE.gift_title}
+              style={{
+                width: 200,
+                height: 100,
+                objectFit: 'contain',
+                right: 0,
+              }}
+            />
+          </View>
+        </TopBar>
+
+        {/* adview  */}
+
+        <ScrollView style={{
+          marginBottom:80
+        }}>
+        <View
+          style={{
+            width: 330,
+            height: 90,
+            backgroundColor: 'white',
             alignItems: 'center',
             justifyContent: 'center',
-            borderColor: 'black',
-            marginTop: -15,
+            alignSelf: 'center',
+            marginTop: 30,
           }}>
-          {twodData.isLoading ? (
-            <ActivityIndicator size="large" color="#0000ff" />
-          ) : (
+          <Text style={{color: 'black'}}>AD View 330x100</Text>
+        </View>
+
+        <View
+          style={{
+            backgroundColor: COLOR.thridColor,
+            padding: 10,
+            margin: 10,
+            borderRadius: 18,
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>
+            တစ်ရက်စာ
+          </Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLOR.fouthColor,
+              borderRadius: 15,
+              padding: 10,
+              marginTop: 5,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+
+            onPress={()=>{
+              navigation.navigate('ets')
+            }}
+            
+            >
             <Text
               style={{
                 color: COLOR.primaryColor,
+                fontSize: 18,
                 fontWeight: 'bold',
-                fontSize: 170,
-                fontFamily: 'arial',
-                textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                textShadowOffset: {width: -1, height: 4},
-                textShadowRadius: 2,
               }}>
-              {showTwodNumber}
+              Estimate Thai Stock
             </Text>
-          )}
-          <View
+            <Icon name="chevron-forward-outline" size={20} color={'white'} />
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
+              backgroundColor: COLOR.fouthColor,
+              borderRadius: 15,
+              padding: 10,
+              marginTop: 5,
               flexDirection: 'row',
-              alignItems: 'center',
-              gap: 4,
+              justifyContent: 'space-between',
             }}>
-            <Icon name="time-outline" size={20} />
-            <Text style={{color: 'black', fontWeight: 'bold'}}>
-              Updated At {new Date(showTwodTime).toLocaleString()}
+            <Text
+              style={{
+                color: COLOR.primaryColor,
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              တစ်ရက်စာ ရွှေလက်ဆောင်
             </Text>
-          </View>
-        </ScrollView>
+            <Icon name="chevron-forward-outline" size={20} color={'white'} />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            backgroundColor: COLOR.thridColor,
+            padding: 10,
+            margin: 10,
+            marginTop:3,
+            borderRadius: 18,
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>
+            တစ်ပတ်စာ
+          </Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLOR.fouthColor,
+              borderRadius: 15,
+              padding: 10,
+              marginTop: 5,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                color: COLOR.primaryColor,
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              တစ်ပတ်စာလက်ဆောင်
+            </Text>
+            <Icon name="chevron-forward-outline" size={20} color={'white'} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLOR.fouthColor,
+              borderRadius: 15,
+              padding: 10,
+              marginTop: 5,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                color: '#d65f1a',
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+             ⭐ မူပိုင်ထိုင်းရှယ် ⭐
+            </Text>
+            <Icon name="chevron-forward-outline" size={20} color={'white'} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLOR.fouthColor,
+              borderRadius: 15,
+              padding: 10,
+              marginTop: 5,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                color: '#d65f1a',
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+             ⭐ မွေးဂဏန်းနှင့်မွေးအခွေ ⭐
+            </Text>
+            <Icon name="chevron-forward-outline" size={20} color={'white'} />
+          </TouchableOpacity>
+        </View>
 
-        <ScrollView style={{marginBottom: 80}}>
-          {Data?.result && (
-            <>
-              <TwoDResultView result={Data?.result || [{}]} />
-              <ThreeDResultView result={Data?.result || [{}]} />
-            </>
-          )}
-        </ScrollView>
+        
+        <View
+          style={{
+            backgroundColor: COLOR.thridColor,
+            padding: 10,
+            margin: 10,
+            marginTop:2,
+            borderRadius: 18,
+          }}>
+        
+         
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLOR.fouthColor,
+              borderRadius: 15,
+              padding: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems:'center'
+            }}>
+            <View style={{width:20}} />
 
+            <Text
+              style={{
+                color: COLOR.primaryColor,
+                fontSize: 18,
+                fontWeight: 'bold',
+                textAlign:'center',
+                flex:1,
+              }}>
+                3D ရွှေလက်ဆောင်
+            </Text>
+            <Icon name="chevron-forward-outline" size={20} color={'white'} />
+          </TouchableOpacity>
+        </View>
+        
+        </ScrollView>
         <FloatingNavigionBottomBar navigation={navigation} screen="home" />
       </ImageBackground>
     </View>
   );
 };
 
-export default Home;
+export default GiftView;
