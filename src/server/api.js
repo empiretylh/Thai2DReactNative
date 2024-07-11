@@ -1,60 +1,59 @@
 import axios from 'axios';
 // axios.defaults.baseURL = 'http://10.0.1.225:8000/'
-axios.defaults.baseURL = 'http://192.168.43.113:8000'
-
+// axios.defaults.baseURL = 'https://thaimyanmar2d.pythonanywhere.com'
+axios.defaults.baseURL = 'http://192.168.43.113:8000';
 
 export const getTwoDDaliy = () => {
-    return axios.get('https://api.thaistock2d.com/live')
+  return axios.get('https://api.thaistock2d.com/live');
+};
 
-}
+export const getThreeDhistory = () => {
+  return axios.get('https://api.2dboss.com/api/v2/v1/2dstock/threed-result');
+};
 
+export const getTwoDHistory = () => {
+  // last 10 days
+  return axios.get('https://api.thaistock2d.com/2d_result');
+};
 
-export const getThreeDhistory = ()=>{
-    return axios.get('https://api.2dboss.com/api/v2/v1/2dstock/threed-result')
-}
+export const getTwoDHistoryByDate = date => {
+  // last 10 days
+  return axios.get('https://api.thaistock2d.com/history?date=' + date);
+};
 
+export const getLiveTwoDServerUpdate = () => {
+  return axios.get('/api/livetwod/');
+};
+export const getFeeds = () => {
+  return axios.get('/api/feeds/');
+};
 
-export const getTwoDHistory = ()=>{ // last 10 days
-    return axios.get('https://api.thaistock2d.com/2d_result')
-}
+export const onLike = data => {
+  return axios.post('/api/like/', data);
+};
 
-export const getTwoDHistoryByDate = (date)=>{ // last 10 days
-    return axios.get('https://api.thaistock2d.com/history?date='+date)
-}
+export const getLike = data => {
+  return axios.get('/api/like/', data);
+};
 
-export const getLiveTwoDServerUpdate= ()=>{
-    return axios.get('/api/livetwod/')
-}
-export const getFeeds = ()=>{
-    return axios.get('/api/feeds/')
-}
+export const getSearch = ({queryKey}) => {
+  const [_, searchtext] = queryKey;
+  return axios.get('/api/search/?search=' + searchtext);
+};
+export const register = data => {
+  axios.defaults.headers.common = {};
+  return axios.post('/auth/register/', data);
+};
 
+export const getUsers = () => {
+  return axios.get('/api/profile/');
+};
 
-export const onLike = (data)=>{
-    return axios.post('/api/like/',data)
-}
+export const getEtsdata = data => {
+  return axios.get('/api/gift/ets/');
+};
 
-export const getLike = (data)=>{
-    return axios.get('/api/like/',data)
-}
-
-export const getSearch = ({queryKey})=>{
-    const [_,searchtext] = queryKey;
-    return axios.get('/api/search/?search='+searchtext);
-}
-export const register = (data)=>{
-    axios.defaults.headers.common = {};
-    return axios.post('/auth/register/',data)
-}
-
-export const getUsers = ()=>{
-    return axios.get('/api/profile/')
-}
-
-export const getEtsdata = (data) =>{
-    return axios.get('/api/gift/ets/')
-}
-
-export const getOneDayGiftStock = (data)=>{
-    return axios.get('/api/gift/onedaygift')
-}
+export const getGiftImage = ({queryKey}) => {
+  const [_, type] = queryKey;
+  return axios.get('/api/gift/giftimage/?type=' + type);
+};

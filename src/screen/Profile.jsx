@@ -216,7 +216,7 @@ const Profile = ({navigation}) => {
                 fontWeight: 'bold',
                 fontSize: 17,
               }}>
-              Rate tis app
+              Rate this app
             </Text>
           </TouchableOpacity>
           <TouchableOpacity

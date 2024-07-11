@@ -63,25 +63,36 @@ const FloatingNavigionBottomBar = ({
             transform: [{translateY: position}],
           },
         ]}>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate('Home');
           }}
           style={style.buttton}>
-          <Icon
-            name={active === 'home' ? 'home' : 'home-outline'}
-            size={30}
-            color={active === 'home' ? COLOR.primaryColor : '#2e4f24'}
+          <Image
+            source={active === 'home' ? IMAGE.live_active : IMAGE.live_inactive}
+            style={[
+              {
+                width: 30,
+                height: 30,
+                backgroundColor: active === 'home' ? 'red' : 'white',
+
+                borderColor: active === 'home' ? 'red' : 'black',
+                borderWidth: 1,
+                padding: 3,
+                borderRadius: 50,
+              },
+            ]}
           />
+
           <Text
             style={{
               color: active === 'home' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
               fontWeight: 'bold',
             }}>
-            Home
+            Live
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('History');
@@ -100,27 +111,6 @@ const FloatingNavigionBottomBar = ({
               fontWeight: 'bold',
             }}>
             2D
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('ThreeD');
-          }}
-          style={style.buttton}>
-          <Image
-            source={
-              active === 'threed' ? IMAGE.threedactive : IMAGE.threedinactive
-            }
-            style={{width: 30, height: 30}}
-          />
-          <Text
-            style={{
-              color: active === 'threed' ? COLOR.primaryColor : '#2e4f24',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}>
-            3D
           </Text>
         </TouchableOpacity>
 
@@ -154,24 +144,24 @@ const FloatingNavigionBottomBar = ({
             </View>
           </TouchableOpacity>
         </View>
-
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Chat');
+            navigation.navigate('ThreeD');
           }}
           style={style.buttton}>
-          <Icon
-            name={active === 'chat' ? 'chatbubbles' : 'chatbubbles-outline'}
-            size={30}
-            color={active === 'chat' ? COLOR.primaryColor : '#2e4f24'}
+          <Image
+            source={
+              active === 'threed' ? IMAGE.threedactive : IMAGE.threedinactive
+            }
+            style={{width: 30, height: 30}}
           />
           <Text
             style={{
-              color: active === 'chat' ? COLOR.primaryColor : '#2e4f24',
+              color: active === 'threed' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
               fontWeight: 'bold',
             }}>
-            Chat
+            3D
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

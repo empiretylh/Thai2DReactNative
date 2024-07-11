@@ -13,6 +13,7 @@ import {UserProvider} from '../context/UserProvider';
 import Profile from './Profile';
 import GiftView from './GiftView';
 import ETS from './GiftScreen/ETS';
+import GiftTypeScreen from './GiftScreen/GiftTypeScreen';
 
 const client = new QueryClient();
 
@@ -37,6 +38,7 @@ const Container = () => {
 
               {/* gift view */}
               <Stack.Screen name="ets" component={ETS} />
+              <Stack.Screen name="gts" component={GiftTypeScreen}/>
 
               <Stack.Screen name="SplashScreen" component={SplashScreen} />
             </Stack.Navigator>

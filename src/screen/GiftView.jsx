@@ -17,337 +17,15 @@ import {getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-const NumberDisplaySet = ({number = 0}) => {
-  const numberString = number.toString();
-  const mainPart = numberString.slice(0, -1); // All except last character
-  const lastDigit = numberString.slice(-1); // Last character
-
-  return (
-    <Text
-      style={{
-        fontFamily: 'arial',
-        letterSpacing: 0.5,
-        fontSize: 18,
-        color: 'white',
-      }}>
-      <Text>Set: </Text>
-      <Text style={{color: 'black'}}>{mainPart}</Text>
-      <Text style={{color: '#f21b13', fontSize: 20, fontWeight: 'bold'}}>
-        {lastDigit}
-      </Text>
-    </Text>
-  );
-};
-
-const NumberDisplayVal = ({number = 0}) => {
-  const numberString = number.toString();
-  const firstindex = numberString.lastIndexOf('.');
-  const selectPart = numberString.slice(firstindex - 1, firstindex);
-  const firstPart = numberString.slice(0, firstindex - 1);
-  const thridPart = numberString.slice(firstindex, numberString.length);
-
-  console.log(firstindex);
-  console.log(selectPart);
-
-  return (
-    <Text
-      style={{
-        fontFamily: 'arial',
-        fontSize: 18,
-        color: 'white',
-      }}>
-      <Text>Value : </Text>
-      <Text style={{color: '#000'}}>{firstPart}</Text>
-      <Text style={{color: '#f21b13', fontWeight: 'bold'}}>{selectPart}</Text>
-      <Text style={{color: '#000'}}>{thridPart} </Text>
-    </Text>
-  );
-};
-const TwoDResultView = ({result = []}) => {
-  const twelevePm =
-    result && result?.find(item => item.open_time == '12:01:00');
-  const fourPm = result && result?.find(item => item.open_time == '16:30:00');
-  return (
-    <View
-      style={{
-        paddingHorizontal: 20,
-      }}>
-      <TouchableOpacity
-        style={{
-          backgroundColor: COLOR.secondaryColor,
-          marginTop: 10,
-          borderRadius: 15,
-        }}>
-        <View
-          style={{
-            padding: 5,
-            padding: 15,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <View style={{flexDirection: 'column', gap: 2}}>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
-              <Icon name="partly-sunny" size={30} color={COLOR.fithColor} />
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: COLOR.fithColor,
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace',
-                }}>
-                12:01 PM
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-              <NumberDisplaySet number={twelevePm?.set} />
-              <NumberDisplayVal number={twelevePm?.value} />
-            </View>
-          </View>
-          <Text
-            style={{
-              fontSize: 50,
-              fontWeight: 'bold',
-              color: COLOR.fithColor,
-              letterSpacing: 2,
-            }}>
-            {twelevePm?.twod}
-          </Text>
-        </View>
-        <View
-          style={{backgroundColor: COLOR.fithColor, height: 1, width: '100%'}}
-        />
-        <View
-          style={{
-            padding: 5,
-            padding: 15,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <View style={{flexDirection: 'column', gap: 2}}>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
-              <Icon name="moon" size={30} color={COLOR.fithColor} />
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: COLOR.fithColor,
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace',
-                }}>
-                4:30 PM
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-              <NumberDisplaySet number={fourPm?.set} />
-              <NumberDisplayVal number={fourPm?.value} />
-            </View>
-          </View>
-          <Text
-            style={{
-              fontSize: 50,
-              fontWeight: 'bold',
-              color: COLOR.fithColor,
-              letterSpacing: 2,
-            }}>
-            {fourPm?.twod}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const ThreeDResultView = ({result}) => {
-  return (
-    <View
-      style={{
-        paddingHorizontal: 20,
-      }}>
-      <TouchableOpacity
-        style={{
-          backgroundColor: COLOR.secondaryColor,
-          marginTop: 10,
-          borderRadius: 15,
-          padding: 10,
-        }}>
-        <View style={{flexDirection: 'column', gap: 2}}>
-          <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-            <View style={{flex: 1}}></View>
-
-            <Text
-              style={{
-                fontSize: 18,
-                marginLeft: 'auto',
-                color: COLOR.fithColor,
-                flex: 1,
-                textAlign: 'center',
-                color: 'yellow',
-              }}>
-              MODERN
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                color: COLOR.fithColor,
-                flex: 1,
-                textAlign: 'center',
-                color: 'yellow',
-              }}>
-              INTERNET
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 2,
-              }}>
-              <Icon name="sunny" size={25} color={COLOR.fithColor} />
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: COLOR.fithColor,
-                }}>
-                9:30 AM
-              </Text>
-            </View>
-
-            <Text
-              style={{
-                fontSize: 20,
-                marginLeft: 'auto',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                color: COLOR.fithColor,
-                flex: 1,
-              }}>
-              300
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                color: COLOR.fithColor,
-                textAlign: 'center',
-                fontWeight: 'bold',
-                flex: 1,
-              }}>
-              200
-            </Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: COLOR.fithColor,
-              height: 1,
-              width: '100%',
-              marginVertical: 10,
-            }}
-          />
-
-          <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 2,
-              }}>
-              <Icon name="sunny" size={25} color={COLOR.fithColor} />
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: COLOR.fithColor,
-                }}>
-                2:00 PM
-              </Text>
-            </View>
-
-            <Text
-              style={{
-                fontSize: 20,
-                marginLeft: 'auto',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                color: COLOR.fithColor,
-                flex: 1,
-              }}>
-              400
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                color: COLOR.fithColor,
-                textAlign: 'center',
-                fontWeight: 'bold',
-                flex: 1,
-              }}>
-              800
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
+import {SCREEN} from '../config/screen';
+import Carousel from 'react-native-reanimated-carousel';
 
 const GiftView = ({navigation}) => {
   const twodData = useQuery('twod', getTwoDDaliy);
-  const [modernResult, setModernResult] = React.useState(null);
-
-  const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
-
-  const SUData = useMemo(() => {
-    if (serverupdatedTwoD?.data) {
-      return serverupdatedTwoD?.data?.data;
-    }
-    return null;
-  }, [serverupdatedTwoD?.data]);
 
   useEffect(() => {
     twodData?.refetch();
   }, []);
-
-  const Data = useMemo(() => {
-    if (twodData?.data) {
-      console.log(twodData?.data?.data);
-      return twodData?.data?.data;
-    }
-    return null;
-  }, [twodData?.data]);
-
-  const onRefresh = () => {
-    twodData.refetch();
-    serverupdatedTwoD.refetch();
-  };
-
-  const showTwodNumber = useMemo(() => {
-    // compare updated time with current time and show the number
-    let DataTwoDTime = new Date(Data?.live?.time);
-    let SUDataTime = new Date(SUData?.update_time);
-
-    if (DataTwoDTime < SUDataTime) {
-      return SUData?.number;
-    } else {
-      return Data?.live?.twod;
-    }
-  }, [Data?.live?.twod, SUData?.number]);
-
-  const showTwodTime = useMemo(() => {
-    let DataTwoDTime = new Date(Data?.live?.time);
-    let SUDataTime = new Date(SUData?.update_time);
-    if (DataTwoDTime < SUDataTime) {
-      return SUData?.update_time;
-    } else {
-      return Data?.live?.time;
-    }
-  }, [Data?.live?.time, SUData?.time]);
 
   return (
     <View
@@ -360,226 +38,183 @@ const GiftView = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <TopBar
-          navigation={navigation}
-          showOrigin={false}
-          backgroundColor={'#033B5C'}
-          customViewStyle={{
-            backgroundColor: '#033B5C',
-            borderRadius: 20,
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              source={IMAGE.pout_tee}
-              style={{
-                width: 155,
-                height: 190,
-                position: 'absolute',
-                bottom: -40,
-              }}
-            />
-            <View style={{width: 145, height: 150}} />
-            <Image
-              source={IMAGE.gift_title}
-              style={{
-                width: 200,
-                height: 100,
-                objectFit: 'contain',
-                right: 0,
-              }}
-            />
-          </View>
-        </TopBar>
-
-        {/* adview  */}
-
-        <ScrollView style={{
-          marginBottom:80
-        }}>
-        <View
+        <View style={{flexDirection: 'row', alignItems: 'center'}}></View>
+        <ScrollView
           style={{
-            width: 330,
-            height: 90,
-            backgroundColor: 'white',
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            marginTop: 30,
+            marginBottom: 80,
           }}>
-          <Text style={{color: 'black'}}>AD View 330x100</Text>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: COLOR.thridColor,
-            padding: 10,
-            margin: 10,
-            borderRadius: 18,
-          }}>
-          <Text
+          <View
             style={{
-              color: 'white',
-              fontSize: 20,
-              fontWeight: 'bold',
+              width: 330,
+              height: 90,
+              backgroundColor: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'center',
             }}>
-            တစ်ရက်စာ
-          </Text>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLOR.fouthColor,
-              borderRadius: 15,
-              padding: 10,
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
+            <Text style={{color: 'black'}}>AD View 330x100</Text>
+          </View>
 
-            onPress={()=>{
-              navigation.navigate('ets')
+          <View
+            style={{
+              backgroundColor: COLOR.thridColor,
+              padding: 10,
+              margin: 10,
+              borderRadius: 18,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}>
+              တစ်ရက်စာ
+            </Text>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLOR.fouthColor,
+                borderRadius: 15,
+                padding: 10,
+                marginTop: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => {
+                navigation.navigate('ets');
+              }}>
+              <Text
+                style={{
+                  color: COLOR.primaryColor,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                }}>
+                Estimate Thai Stock
+              </Text>
+              <Icon name="chevron-forward-outline" size={20} color={'white'} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLOR.fouthColor,
+                borderRadius: 15,
+                padding: 10,
+                marginTop: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+
+              onPress={()=>{
+                navigation.navigate({
+                  name : "gts",
+                  params:{
+                    giftype: 'oneday'
+                  }
+                })
+              }}
+              
+              >
+              <Text
+                style={{
+                  color: COLOR.primaryColor,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                }}>
+                တစ်ရက်စာ ရွှေလက်ဆောင်
+              </Text>
+              <Icon name="chevron-forward-outline" size={20} color={'white'} />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              backgroundColor: COLOR.thridColor,
+              padding: 10,
+              margin: 10,
+              marginTop: 3,
+              borderRadius: 18,
             }}
-            
+           
             >
             <Text
               style={{
-                color: COLOR.primaryColor,
-                fontSize: 18,
+                color: 'white',
+                fontSize: 20,
                 fontWeight: 'bold',
               }}>
-              Estimate Thai Stock
+              တစ်ပတ်စာ
             </Text>
-            <Icon name="chevron-forward-outline" size={20} color={'white'} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLOR.fouthColor,
-              borderRadius: 15,
-              padding: 10,
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text
+            <TouchableOpacity
               style={{
-                color: COLOR.primaryColor,
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-              တစ်ရက်စာ ရွှေလက်ဆောင်
-            </Text>
-            <Icon name="chevron-forward-outline" size={20} color={'white'} />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            backgroundColor: COLOR.thridColor,
-            padding: 10,
-            margin: 10,
-            marginTop:3,
-            borderRadius: 18,
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            တစ်ပတ်စာ
-          </Text>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLOR.fouthColor,
-              borderRadius: 15,
-              padding: 10,
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                color: COLOR.primaryColor,
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-              တစ်ပတ်စာလက်ဆောင်
-            </Text>
-            <Icon name="chevron-forward-outline" size={20} color={'white'} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLOR.fouthColor,
-              borderRadius: 15,
-              padding: 10,
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                color: '#d65f1a',
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-             ⭐ မူပိုင်ထိုင်းရှယ် ⭐
-            </Text>
-            <Icon name="chevron-forward-outline" size={20} color={'white'} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLOR.fouthColor,
-              borderRadius: 15,
-              padding: 10,
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                color: '#d65f1a',
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-             ⭐ မွေးဂဏန်းနှင့်မွေးအခွေ ⭐
-            </Text>
-            <Icon name="chevron-forward-outline" size={20} color={'white'} />
-          </TouchableOpacity>
-        </View>
+                backgroundColor: COLOR.fouthColor,
+                borderRadius: 15,
+                padding: 10,
+                marginTop: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+              
+              onPress={()=>{
+                navigation.navigate({
+                  name : "gts",
+                  params:{
+                    giftype: 'oneweek'
+                  }
+                })
+              }}  
+              >
+              <Text
+                style={{
+                  color: COLOR.primaryColor,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                }}>
+                တစ်ပတ်စာလက်ဆောင်
+              </Text>
+              <Icon name="chevron-forward-outline" size={20} color={'white'} />
+            </TouchableOpacity>
+          </View>
 
-        
-        <View
-          style={{
-            backgroundColor: COLOR.thridColor,
-            padding: 10,
-            margin: 10,
-            marginTop:2,
-            borderRadius: 18,
-          }}>
-        
-         
-          <TouchableOpacity
+          <View
             style={{
-              backgroundColor: COLOR.fouthColor,
-              borderRadius: 15,
+              backgroundColor: COLOR.thridColor,
               padding: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems:'center'
+              margin: 10,
+              marginTop: 2,
+              borderRadius: 18,
             }}>
-            <View style={{width:20}} />
-
-            <Text
+            <TouchableOpacity
               style={{
-                color: COLOR.primaryColor,
-                fontSize: 18,
-                fontWeight: 'bold',
-                textAlign:'center',
-                flex:1,
-              }}>
+                backgroundColor: COLOR.fouthColor,
+                borderRadius: 15,
+                padding: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+
+              onPress={()=>{
+                navigation.navigate({
+                  name : "gts",
+                  params:{
+                    giftype: 'threedgift'
+                  }
+                })
+              }}  
+              
+              >
+              <View style={{width: 20}} />
+
+              <Text
+                style={{
+                  color: COLOR.primaryColor,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  flex: 1,
+                }}>
                 3D ရွှေလက်ဆောင်
-            </Text>
-            <Icon name="chevron-forward-outline" size={20} color={'white'} />
-          </TouchableOpacity>
-        </View>
-        
+              </Text>
+              <Icon name="chevron-forward-outline" size={20} color={'white'} />
+            </TouchableOpacity>
+          </View>
         </ScrollView>
         <FloatingNavigionBottomBar navigation={navigation} screen="home" />
       </ImageBackground>

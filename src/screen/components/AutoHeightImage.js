@@ -3,7 +3,7 @@ import { Image, Dimensions } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const AutoHeightImage = ({ sourceUri }) => {
+const AutoHeightImage = ({ sourceUri, minusHeight=0 }) => {
   const [height, setHeight] = useState(0);
 
   const handleImageLoaded = (event) => {
@@ -15,7 +15,7 @@ const AutoHeightImage = ({ sourceUri }) => {
   return (
     <Image
       source={{ uri: sourceUri }}
-      style={{ width: SCREEN_WIDTH, height: height }}
+      style={{ width: SCREEN_WIDTH, height: height - minusHeight }}
       resizeMode="contain"
       onLoad={handleImageLoaded}
     />

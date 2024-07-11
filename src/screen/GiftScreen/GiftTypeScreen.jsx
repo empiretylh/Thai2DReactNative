@@ -15,6 +15,7 @@ import FloatingNavigionBottomBar from '../components/FloatingNavigationBottomBar
 import {useQuery} from 'react-query';
 import {
   getEtsdata,
+  getGiftImage,
   getLiveTwoDServerUpdate,
   getTwoDDaliy,
 } from '../../server/api';
@@ -25,17 +26,15 @@ import axios from 'axios';
 import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
 
-
-const ETS = ({navigation}) => {
-  const ets_data = useQuery('ets_datad', getEtsdata);
+const GiftTypeScreen = ({navigation, route}) => {
+  const {giftype} = route.params
+  const ets_data = useQuery(['gift_type_img',giftype || 'oneday'], getGiftImage);
 
   const data = useMemo(() => {
     if (ets_data.data) {
       return ets_data?.data?.data;
     }
   }, [ets_data?.data]);
-
-  console.log(ets_data)
 
   return (
     <View
@@ -70,7 +69,7 @@ const ETS = ({navigation}) => {
               color: 'white',
               fontSize: 20,
             }}>
-            Estimate Thai Stock
+           {giftype == 'oneday'? "တစ်ရက်စာ ရွှေလက်ဆောင်" : giftype == "oneweek" ? "တစ်ပတ်စာ ရွှေလက်ဆောင်" : "3D ရွှေလက်ဆောင်"}
           </Text>
         </TopBar>
 
@@ -85,14 +84,27 @@ const ETS = ({navigation}) => {
             />
           }>
           <View style={{marginTop: 10}}>
-            <AutoHeightImage sourceUri={axios.defaults.baseURL + data?.image} />
+            <AutoHeightImage sourceUri={axios.defaults.baseURL + data?.image} minusHeight={80} />
+            {/* adview */}
+            <View style={{
+              width:330,
+              height:100,
+              alignItems:'center',
+              justifyContent:'center',
+              backgroundColor:'#f0f0f0',
+              alignSelf:'center',
+              marginTop:5
+              
+            }}>
+              <Text>Ad View</Text>
+            </View>
+        
           </View>
         </ScrollView>
 
-        <FloatingNavigionBottomBar navigation={navigation} screen="home" />
       </ImageBackground>
     </View>
   );
 };
 
-export default ETS;
+export default GiftTypeScreen;

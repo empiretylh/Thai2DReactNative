@@ -3,7 +3,13 @@ import {COLOR} from '../../config/theme';
 import {IMAGE} from '../../config/image';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const TopBar = ({children, showOrigin = true, customViewStyle, navigation , backgroundColor }) => {
+const TopBar = ({
+  children,
+  showOrigin = true,
+  customViewStyle,
+  navigation,
+  backgroundColor,
+}) => {
   return (
     <View
       style={{
@@ -14,36 +20,59 @@ const TopBar = ({children, showOrigin = true, customViewStyle, navigation , back
         alignItems: 'center',
         padding: 5,
         paddingHorizontal: 10,
+        height: 60,
       }}>
-      <StatusBar backgroundColor={backgroundColor ? backgroundColor : COLOR.primaryColor} />
+      <StatusBar
+        backgroundColor={backgroundColor ? backgroundColor : COLOR.primaryColor}
+      />
       {showOrigin ? (
         <>
-        <TouchableOpacity onPress={()=>{
-          navigation.navigate('Home')
-        }}>
-          
-          <Image
-            source={IMAGE.logo}
-            style={{width: 70, height: 70, objectFit: 'contain'}}
-          />
-
-          
-        </TouchableOpacity>
-          <View style={{marginLeft: 'auto'}}>{children}</View>
-
           <TouchableOpacity
-            onPress={()=>{
-              navigation.navigate('Profile')
-            }}
-            style={{marginLeft: 'auto', width: 70, alignItems: 'center'}}>
-            <Icon name="person-circle" size={40} color="#fff" />
+            onPress={() => {
+              navigation.navigate('Home');
+            }}>
+            <Image
+              source={IMAGE.logo}
+              style={{
+                width: 50,
+                height: 50,
+                objectFit: 'contain',
+                position: 'absolute',
+                top: -30,
+              }}
+            />
           </TouchableOpacity>
+          <View
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            {children}
+          </View>
+
+          <View
+            style={{
+              position: 'absolute',
+              flexDirection: 'row',
+              right:10,
+              gap:10,
+              padding:5,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('chat');
+              }}
+              style={{alignItems: 'center'}}>
+              <Icon name="chatbubbles" size={30} color="#fff" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Profile');
+              }}
+              style={{alignItems: 'center'}}>
+              <Icon name="person-circle" size={30} color="#fff" />
+            </TouchableOpacity>
+          </View>
         </>
       ) : (
-        <View style={customViewStyle}>
-
-        {children}
-        </View>
+        <View style={customViewStyle}>{children}</View>
       )}
     </View>
   );
