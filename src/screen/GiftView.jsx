@@ -13,19 +13,15 @@ import {
 import TopBar from './components/TopBar';
 import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
 import {useQuery} from 'react-query';
-import {getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
+import {getAdImages, getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {SCREEN} from '../config/screen';
-import Carousel from 'react-native-reanimated-carousel';
+import TopView from './GiftScreen/TopView';
 
 const GiftView = ({navigation}) => {
-  const twodData = useQuery('twod', getTwoDDaliy);
-
-  useEffect(() => {
-    twodData?.refetch();
-  }, []);
+  const ad_images = useQuery('adimages', getAdImages);
 
   return (
     <View
@@ -39,10 +35,18 @@ const GiftView = ({navigation}) => {
           flex: 1,
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}></View>
+ 
+        <TopView ad_images={ad_images}/>
         <ScrollView
           style={{
             marginBottom: 80,
-          }}>
+          }}
+          
+          refreshControl={
+            <RefreshControl refreshing={ad_images?.isLoading} onRefresh={()=>{
+              ad_images.refetch();
+            }}/>
+          }>
           <View
             style={{
               width: 330,

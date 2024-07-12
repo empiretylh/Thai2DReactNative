@@ -14,6 +14,7 @@ import Profile from './Profile';
 import GiftView from './GiftView';
 import ETS from './GiftScreen/ETS';
 import GiftTypeScreen from './GiftScreen/GiftTypeScreen';
+import {LoadDataProvider} from '../context/LoadDataProvider';
 
 const client = new QueryClient();
 
@@ -23,27 +24,29 @@ const Container = () => {
   return (
     <QueryClientProvider client={client}>
       <NavigationContainer>
-        <UserProvider>
-          <LikeProvider>
-            <Stack.Navigator
-              screenOptions={{headerShown: false, animation: 'none'}}>
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="Gift" component={GiftView} />
+        <LoadDataProvider>
+          <UserProvider>
+            <LikeProvider>
+              <Stack.Navigator
+                screenOptions={{headerShown: false, animation: 'none'}}>
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Gift" component={GiftView} />
 
-              <Stack.Screen name="ThreeD" component={ThreeDView} />
-              <Stack.Screen name="History" component={History} />
-              <Stack.Screen name="Feed" component={Feed} />
-              <Stack.Screen name="Chat" component={Chat} />
-              <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="ThreeD" component={ThreeDView} />
+                <Stack.Screen name="History" component={History} />
+                <Stack.Screen name="Feed" component={Feed} />
+                <Stack.Screen name="Chat" component={Chat} />
+                <Stack.Screen name="Profile" component={Profile} />
 
-              {/* gift view */}
-              <Stack.Screen name="ets" component={ETS} />
-              <Stack.Screen name="gts" component={GiftTypeScreen}/>
+                {/* gift view */}
+                <Stack.Screen name="ets" component={ETS} />
+                <Stack.Screen name="gts" component={GiftTypeScreen} />
 
-              <Stack.Screen name="SplashScreen" component={SplashScreen} />
-            </Stack.Navigator>
-          </LikeProvider>
-        </UserProvider>
+                <Stack.Screen name="SplashScreen" component={SplashScreen} />
+              </Stack.Navigator>
+            </LikeProvider>
+          </UserProvider>
+        </LoadDataProvider>
       </NavigationContainer>
     </QueryClientProvider>
   );

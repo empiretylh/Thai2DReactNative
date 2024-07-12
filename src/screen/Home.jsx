@@ -17,6 +17,7 @@ import {getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useLoadData } from '../context/LoadDataProvider';
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -298,9 +299,7 @@ const ThreeDResultView = ({result}) => {
 };
 
 const Home = ({navigation}) => {
-  const twodData = useQuery('twod', getTwoDDaliy);
-  const [modernResult, setModernResult] = React.useState(null);
-
+  const {twodData} = useLoadData();
   const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
 
   const SUData = useMemo(() => {

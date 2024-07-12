@@ -6,11 +6,12 @@ import { useQuery } from 'react-query';
 import { getThreeDhistory, getTwoDDaliy } from '../server/api';
 import { IMAGE } from '../config/image';
 import { COLOR } from '../config/theme';
+import { useLoadData } from '../context/LoadDataProvider';
 
 
 
 const ThreeDView = ({ navigation }) => {
-    const twodData = useQuery('threed', getThreeDhistory);
+    const {threedDataHistory:twodData}  = useLoadData();
 
     const Data = useMemo(() => {
         if (twodData?.data) {

@@ -16,6 +16,14 @@ const SplashScreen = () => {
             <StatusBar backgroundColor={COLOR.primaryColor} />
             <Image source={IMAGE.logo} style={{ width: 200, objectFit: 'contain' }} />
             <ActivityIndicator color={'#fff'} size={30} />
+            <Text style={{
+                color:'white',
+                fontSize:20,
+                fontWeight:'bold',
+
+            }}>
+                ခဏစောင့်ပေးပါ...
+                </Text>
         </View>
     )
 }

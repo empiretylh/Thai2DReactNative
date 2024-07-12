@@ -17,6 +17,7 @@ import {getThreeDhistory, getTwoDDaliy, getTwoDHistory} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useLoadData } from '../context/LoadDataProvider';
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -163,11 +164,14 @@ const TwoDResultView = ({result = []}) => {
 };
 
 const History = ({navigation}) => {
-  const twodData = useQuery('twodhistory', getTwoDHistory);
+  const {twodDataHistory:twodData} = useLoadData();
 
   const Data = useMemo(() => {
     if (twodData?.data) {
-      return twodData?.data?.data;
+      let data2:Array = twodData?.data?.data;
+      let d = data2.slice(0, 10)
+
+      return d
     }
     return null;
   }, [twodData?.data]);

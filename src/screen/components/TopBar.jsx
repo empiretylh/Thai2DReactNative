@@ -57,7 +57,7 @@ const TopBar = ({
             }}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('chat');
+                navigation.navigate('Chat');
               }}
               style={{alignItems: 'center'}}>
               <Icon name="chatbubbles" size={30} color="#fff" />
