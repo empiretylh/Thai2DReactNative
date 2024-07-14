@@ -25,6 +25,7 @@ import {
   getLiveTwoDServerUpdate,
   getThreeDhistory,
   getTwoDDaliy,
+  getUsers,
 } from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
@@ -32,8 +33,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import GoogleLoginView from './components/GoogleLogin';
 import {useToken} from '../context/TookenProvider';
 import firebase from '@react-native-firebase/app';
-import firestore from '@react-native-firebase/firestore';
+import firestore, {onSnapshot} from '@react-native-firebase/firestore';
 import {GiftedChat} from 'react-native-gifted-chat';
+import {SCREEN} from '../config/screen';
+import {CountActiveUsers, setUserPresence} from '../context/UserActiveProvider';
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -82,9 +85,7 @@ const NumberDisplayVal = ({number = 0}) => {
   );
 };
 const TwoDResultView = ({result = [], livenumber}) => {
-  const twelevePm =
-    result && result?.find(item => item.open_time == '12:01:00');
-  const fourPm = result && result?.find(item => item.open_time == '16:30:00');
+  const twelevePm = result && result?.[result?.length];
 
   return (
     <View style={{}}>
@@ -107,13 +108,23 @@ const TwoDResultView = ({result = [], livenumber}) => {
                   fontFamily: 'arial',
                   fontSize: 20,
                   color: 'white',
-                  fontWeight:'bold'
+                  fontWeight: 'bold',
                 }}>
                 <Text>Live : </Text>
-                <Text>{livenumber}</Text>
+                <Text>
+                  {livenumber == '--' ? result[3].twod || 0 : livenumber}
+                </Text>
               </Text>
-              <NumberDisplaySet number={twelevePm?.set} />
-              <NumberDisplayVal number={twelevePm?.value} />
+              <NumberDisplaySet
+                number={
+                  livenumber == '--' ? result[3]?.set || 0 : twelevePm?.set
+                }
+              />
+              <NumberDisplayVal
+                number={
+                  livenumber == '--' ? result[3]?.value || 0 : twelevePm?.value
+                }
+              />
             </View>
           </View>
         </View>
@@ -122,12 +133,18 @@ const TwoDResultView = ({result = [], livenumber}) => {
   );
 };
 
+const MESSAGE_LIMIT = 50;
 const Chat = ({navigation}) => {
   const twodData = useQuery('twod', getTwoDDaliy);
-
-  const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
-
+  const userprofile = useQuery('user_profile', getUsers);
   const {gtoken, onSetGToken} = useToken();
+
+  const profiledata = useMemo(() => {
+    if (userprofile?.data) {
+      return userprofile?.data?.data;
+    }
+    return null;
+  }, [userprofile?.data]);
 
   const Data = useMemo(() => {
     if (twodData?.data) {
@@ -137,31 +154,181 @@ const Chat = ({navigation}) => {
     return null;
   }, [twodData?.data]);
 
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  // Firestore cursor is not supported in query.onSnapshot so maintaining two chat list
+  // oldChats -> chat list via cursor, recentChats -> chat list via live listener
+  const [oldChats, setOldChats] = useState([]);
+  const [recentChats, setRecentChats] = useState([]);
 
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
-    );
+  // if true, show a loader at the top of chat list
+  const [moreChatsAvailable, setMoreChatsAvailable] = useState(true);
 
-    const {_id, createdAt, text, user} = messages[0];
+  const [inputMessage, setInputMessage] = useState('');
 
-    firestore()
-      .collection('messages')
-      .doc('chatRoomId')
-      .collection('messages')
-      .add({
-        _id,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        text,
-        user: firebase.auth().currentUser.email,
+  const [activeUsers, setActiveUsers] = useState([]);
+
+  useEffect(() => {
+    const query = firestore().collection('Users').where('isOnline', '==', true);
+    const listener = query.onSnapshot(querySnapshot => {
+      let data = [];
+      querySnapshot?.forEach(s => {
+        data.push(s.data());
       });
+      setActiveUsers(data);
+    });
+
+    return () => {
+      listener();
+    };
   }, []);
 
-  const firbaseLogout = () => {
-    firebase.auth().signOut();
-    onSetGToken(null);
+  useEffect(() => {
+    const query = firestore()
+      .collection('messages')
+      .orderBy('createdAt', 'desc')
+      .limit(MESSAGE_LIMIT);
+
+    const listener = query.onSnapshot(querySnapshot => {
+      let chats = [];
+      querySnapshot?.forEach(snapshot => {
+        chats.push(snapshot.data());
+      });
+      // merge recentChats & chats
+      if (recentChats.length > 0) {
+        const newRecentChats = [];
+        for (let i = 0; i < chats.length; i++) {
+          if (chats[i].sessionId === recentChats[0].sessionId) {
+            break;
+          }
+          newRecentChats.push(chats[i]);
+        }
+        setRecentChats([...newRecentChats, ...recentChats]);
+      } else {
+        setRecentChats(chats);
+        if (chats.length < MESSAGE_LIMIT) {
+          setMoreChatsAvailable(false);
+        }
+      }
+    });
+
+    setUserPresence(true);
+
+    return () => {
+      // unsubscribe listener
+      listener();
+    };
+  }, []);
+
+  const onChatListEndReached = () => {
+    if (!moreChatsAvailable) {
+      return;
+    }
+    let startAfterTime;
+    if (oldChats.length > 0) {
+      startAfterTime = oldChats[oldChats.length - 1].time;
+    } else if (recentChats.length > 0) {
+      startAfterTime = recentChats[recentChats.length - 1].time;
+    } else {
+      setMoreChatsAvailable(false);
+      return;
+    }
+    // query data using cursor
+    firestore()
+      .collection('messages')
+      .orderBy('createdAt', 'desc')
+      .startAfter(startAfterTime)
+      .limit(MESSAGE_LIMIT)
+      .get()
+      .then(querySnapshot => {
+        let chats = [];
+        querySnapshot?.forEach(snapshot => {
+          chats.push(snapshot.data());
+        });
+        if (chats.length == 0) {
+          setMoreChatsAvailable(false);
+        } else {
+          setOldChats([...oldChats, ...chats]);
+        }
+      });
+  };
+
+  const postMessage = message => {
+    firestore()
+      .collection('messages')
+      .add({
+        _id: new Date().getTime(),
+        createdAt: firestore.FieldValue.serverTimestamp(),
+        text: message,
+        user: {
+          username: firebase?.auth().currentUser.displayName,
+          email: firebase.auth().currentUser.email,
+          photo:
+            profiledata?.photo ||
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJEbNBW7WgMiqHuSO0OPtl8yxP218c-U-4Q&s',
+        },
+      });
+  };
+
+  const onMessageInputChange = text => {
+    setInputMessage(text);
+  };
+
+  const onMessageSubmit = () => {
+    if (inputMessage == '') return false;
+
+    postMessage(inputMessage);
+    setInputMessage('');
+  };
+
+  const FlatListItem = ({item, index}) => {
+    return (
+      <View
+        style={{
+          padding: 5,
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 10,
+        }}
+        key={index}>
+        <Image
+          source={{
+            uri:
+              item?.item?.user?.photo == null
+                ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJEbNBW7WgMiqHuSO0OPtl8yxP218c-U-4Q&s'
+                : item?.item?.user?.photo,
+          }}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 40,
+          }}
+        />
+        <View
+          style={{
+            backgroundColor:
+              item?.item?.user?.email == profiledata?.email
+                ? COLOR.primaryColor
+                : COLOR.secondaryColor,
+            padding: 5,
+            paddingHorizontal: 10,
+            borderRadius: 15,
+          }}>
+          <Text style={{color: COLOR.fithColor}}>
+            {item?.item?.user?.username}
+          </Text>
+
+          <Text
+            selectable
+            style={{
+              fontWeight: 'bold',
+              color: 'white',
+              maxWidth: SCREEN.width - 100,
+              fontSize: 19,
+            }}>
+            {item.item.text}
+          </Text>
+        </View>
+      </View>
+    );
   };
 
   return (
@@ -169,100 +336,131 @@ const Chat = ({navigation}) => {
       style={{
         flex: 1,
       }}>
-      <ImageBackground
-        source={IMAGE.background}
-        resizeMode="cover"
+      <View
         style={{
-          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: 40,
+          backgroundColor: COLOR.primaryColor,
+          padding: 5,
         }}>
-        <View
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
           style={{
-            flexDirection: 'row',
+            padding: 5,
             alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 40,
-            backgroundColor: COLOR.primaryColor,
-            padding: 10,
+            position: 'absolute',
+            left: 10,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}
-            style={{
-              padding: 5,
-              alignItems: 'center',
-              position: 'absolute',
-              left: 10,
-            }}>
-            <Icon name="arrow-back" size={25} color="#fff" />
-          </TouchableOpacity>
-          <View style={{alignItems: 'center'}}>
-            <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-              Chat
-            </Text>
-            <Text style={{color: 'white', fontSize: 15}}>25 Online</Text>
-          </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}
-            style={{
-              padding: 5,
-              alignItems: 'center',
-              position: 'absolute',
-              right: 10,
-            }}>
-            <Icon name="menu" size={25} color="#fff" />
-          </TouchableOpacity>
+          <Icon name="arrow-back" size={25} color="#fff" />
+        </TouchableOpacity>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+            Chat
+          </Text>
         </View>
 
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={{
+            padding: 5,
+            alignItems: 'center',
+            position: 'absolute',
+            right: 10,
+          }}>
+          <Icon name="menu" size={25} color="#fff" />
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: COLOR.primaryColor,
+          paddingBottom: 10,
+          borderBottomRightRadius: 35,
+          borderBottomLeftRadius: 35,
+        }}>
+        <View>
+        <Text
+            style={{
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 18,
+              textAlign:'center'
+            }}>
+            {activeUsers?.length < 0 ? activeUsers?.length : '1'} Online
+          </Text>
+
+          <TwoDResultView result={Data?.result} livenumber={Data?.live?.twod} />
+        </View>
+      </View>
+
+      {gtoken ? (
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 40,
-            backgroundColor: COLOR.primaryColor,
-            padding: 10,
-            borderBottomRightRadius: 35,
-            borderBottomLeftRadius: 35,
+            flex: 1,
+            backgroundColor: 'white',
           }}>
-          <View>
-            <TwoDResultView
-              result={Data?.result}
-              livenumber={Data?.live?.twod}
-            />
-          </View>
-        </View>
-
-        {gtoken ? (
+          <FlatList
+            inverted
+            data={[...recentChats, ...oldChats]}
+            renderItem={(item, index) => (
+              <FlatListItem item={item} index={index} />
+            )}
+            keyExtractor={item => item?.id}
+            onEndReached={onChatListEndReached}
+            onEndReachedThreshold={0.2}
+            ListFooterComponent={
+              moreChatsAvailable ? <ActivityIndicator /> : null
+            }
+          />
           <View
             style={{
-              flex: 1,
-              padding: 10,
-              backgroundColor: 'white',
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: COLOR.primaryColor,
             }}>
-            <GiftedChat
-              messages={messages}
-              onSend={messages => onSend(messages)}
-              showAvatarForEveryMessage={true}
-              user={{
-                _id: firebase.auth()?.currentUser?.email,
-                name: firebase.auth()?.currentUser?.displayName,
-                avatar: firebase.auth()?.currentUser?.photoURL,
+            <TextInput
+              style={{
+                padding: 10,
+                flex: 1,
+                color: 'white',
+                fontSize: 20,
               }}
+              placeholder="Type a message...."
+              placeholderTextColor={'white'}
+              value={inputMessage}
+              onChangeText={onMessageInputChange}
             />
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: COLOR.primaryColor,
+              }}
+              onPress={() => {
+                onMessageSubmit();
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                Send
+              </Text>
+            </TouchableOpacity>
           </View>
-        ) : (
-          <GoogleLoginView />
-        )}
-        <FloatingNavigionBottomBar
-          navigation={navigation}
-          screen="chat"
-          show={false}
-        />
-      </ImageBackground>
+        </View>
+      ) : (
+        <GoogleLoginView />
+      )}
     </View>
   );
 };

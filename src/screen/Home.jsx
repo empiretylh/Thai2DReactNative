@@ -229,7 +229,7 @@ const ThreeDResultView = ({result}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              300
+              {result?.modern_930}
             </Text>
             <Text
               style={{
@@ -239,7 +239,7 @@ const ThreeDResultView = ({result}) => {
                 fontWeight: 'bold',
                 flex: 1,
               }}>
-              200
+              {result?.internet_930}
             </Text>
           </View>
           <View
@@ -279,7 +279,7 @@ const ThreeDResultView = ({result}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              400
+             {result?.modern_200}
             </Text>
             <Text
               style={{
@@ -289,7 +289,7 @@ const ThreeDResultView = ({result}) => {
                 fontWeight: 'bold',
                 flex: 1,
               }}>
-              800
+              {result?.internet_200}
             </Text>
           </View>
         </View>
@@ -299,7 +299,7 @@ const ThreeDResultView = ({result}) => {
 };
 
 const Home = ({navigation}) => {
-  const {twodData} = useLoadData();
+  const {twodData, modernData} = useLoadData();
   const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
 
   const SUData = useMemo(() => {
@@ -308,6 +308,14 @@ const Home = ({navigation}) => {
     }
     return null;
   }, [serverupdatedTwoD?.data]);
+
+
+  const MIData = useMemo(()=>{
+    if(modernData?.data){
+      return modernData?.data?.data
+    }
+
+  },[modernData?.data])
 
   useEffect(() => {
     twodData?.refetch();
@@ -332,12 +340,23 @@ const Home = ({navigation}) => {
     let DataTwoDTime = new Date(Data?.live?.time);
     let SUDataTime = new Date(SUData?.update_time);
 
+    let number = 0;
+
       if (DataTwoDTime < SUDataTime) {
-      return SUData?.number;
+      number =  SUData?.number;
     } else {
-      return Data?.live?.twod;
+      number = Data?.live?.twod;
 
     }
+
+    if(number == '--'){
+      let data =  Data?.result;
+      number = data[3]?.twod || '--';
+    }
+
+
+    return number
+
   }, [Data?.live?.twod, SUData?.number]);
 
 
@@ -346,8 +365,11 @@ const Home = ({navigation}) => {
     let SUDataTime = new Date(SUData?.update_time);
     if (DataTwoDTime < SUDataTime) {
       return SUData?.update_time;
-    } else {
+    }else if(DataTwoDTime > SUDataTime){
       return Data?.live?.time
+    }else{
+      let data =  Data?.result[3];
+      return new Date(data?.stock_datetime)
     }
   }, [Data?.live?.time, SUData?.time]);
 
@@ -410,7 +432,7 @@ const Home = ({navigation}) => {
           {Data?.result && (
             <>
               <TwoDResultView result={Data?.result || [{}]} />
-              <ThreeDResultView result={Data?.result || [{}]} />
+              <ThreeDResultView result={MIData?.data || [{}]} />
             </>
           )}
         </ScrollView>

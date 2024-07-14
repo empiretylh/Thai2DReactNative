@@ -1,7 +1,7 @@
 import axios from 'axios';
 // axios.defaults.baseURL = 'http://10.0.1.225:8000/'
-// axios.defaults.baseURL = 'https://thaimyanmar2d.pythonanywhere.com'
-axios.defaults.baseURL = 'http://192.168.43.181:8000';
+axios.defaults.baseURL = 'https://thaimyanmar2d.pythonanywhere.com';
+// axios.defaults.baseURL = 'http://192.168.43.181:8000';
 
 export const getTwoDDaliy = () => {
   return axios.get('https://api.thaistock2d.com/live');
@@ -58,7 +58,10 @@ export const getGiftImage = ({queryKey}) => {
   return axios.get('/api/gift/giftimage/?type=' + type);
 };
 
+export const getAdImages = ({queryKey}) => {
+  return axios.get('/api/gift/adimages/');
+};
 
-export const getAdImages = ({queryKey}) =>{
-  return axios.get('/api/gift/adimages/')
-}
+export const getModernInternetData = () => {
+  return axios.get('https://luke.2dboss.com/api/luke/twod-result-live');
+};

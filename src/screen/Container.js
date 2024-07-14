@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SplashScreen from './components/SplashScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from './Home';
@@ -15,12 +15,33 @@ import GiftView from './GiftView';
 import ETS from './GiftScreen/ETS';
 import GiftTypeScreen from './GiftScreen/GiftTypeScreen';
 import {LoadDataProvider} from '../context/LoadDataProvider';
+import {View, Text, AppState} from 'react-native';
+import { setUserPresence } from '../context/UserActiveProvider';
 
 const client = new QueryClient();
 
 const Stack = createNativeStackNavigator();
 
 const Container = () => {
+  const [appState, setAppState] = useState(AppState.currentState);
+
+  useEffect(() => {
+    const handleAppStateChange = nextAppState => {
+      if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        setUserPresence(true);
+      } else if (nextAppState === 'background') {
+        setUserPresence(false);
+      }
+
+      setAppState(nextAppState);
+    };
+
+    AppState.addEventListener('change', handleAppStateChange);
+
+   
+  }, [appState]);
+
+
   return (
     <QueryClientProvider client={client}>
       <NavigationContainer>

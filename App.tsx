@@ -13,9 +13,9 @@ export default function App() {
     projectId: "thai2dproject",
     messagingSenderId: "658645331835",
     appId: "1:658645331835:android:b5bcaf7f1ba4603a7b97de",
-    // measurementId: "G-4JQZ7ZVQYV"
-    storageBucket: "testapp-7d4d2.appspot.com",
-    databaseURL: "https://thai2dproject-default-rtdb.firebaseio.com"
+     measurementId: "G-4JQZ7ZVQYV",
+    databaseURL: 'https://thai2dproject-default-rtdb.firebaseio.com/',
+    storageBucket: 'thai2dproject.appspot.com',
   };
  
 

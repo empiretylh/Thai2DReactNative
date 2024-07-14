@@ -55,19 +55,19 @@ const TopBar = ({
               gap:10,
               padding:5,
             }}>
+                        <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Profile');
+              }}
+              style={{alignItems: 'center'}}>
+              <Icon name="person-circle" size={30} color="#fff" />
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Chat');
               }}
               style={{alignItems: 'center'}}>
               <Icon name="chatbubbles" size={30} color="#fff" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Profile');
-              }}
-              style={{alignItems: 'center'}}>
-              <Icon name="person-circle" size={30} color="#fff" />
             </TouchableOpacity>
           </View>
         </>
