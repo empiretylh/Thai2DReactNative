@@ -374,9 +374,6 @@ const Home = ({navigation}) => {
       number = fourPm?.twod
     }
 
-    if (twelevePm?.twod !== '') {
-      number = twelevePm?.twod;
-    }
 
     return number;
   }, [Data?.live?.twod, SUData?.number]);
