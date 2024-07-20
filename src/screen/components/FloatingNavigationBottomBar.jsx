@@ -10,6 +10,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../config/theme';
 import {IMAGE} from '../../config/image';
+import { InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import { ADKEYWORD, ADUNIT } from '../../config/adconfig';
 
 const style = StyleSheet.create({
   buttton: {
@@ -18,6 +20,16 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+
+
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+
+
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  keywords: ADKEYWORD
+});
+
 
 const FloatingNavigionBottomBar = ({
   navigation,
@@ -39,6 +51,10 @@ const FloatingNavigionBottomBar = ({
       useNativeDriver: true,
     }).start();
   }, [show]);
+
+  const LoadAd =()=>{
+    interstitial.load();
+  }
 
   return (
     <View
@@ -96,6 +112,7 @@ const FloatingNavigionBottomBar = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('History');
+            LoadAd();
           }}
           style={style.buttton}>
           <Image
@@ -126,6 +143,7 @@ const FloatingNavigionBottomBar = ({
             }}
             onPress={() => {
               navigation.navigate('Gift');
+              LoadAd();
             }}>
             <View
               style={{
@@ -147,6 +165,7 @@ const FloatingNavigionBottomBar = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ThreeD');
+            LoadAd();
           }}
           style={style.buttton}>
           <Image
@@ -167,6 +186,7 @@ const FloatingNavigionBottomBar = ({
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Feed');
+            LoadAd();
           }}
           style={style.buttton}>
           <Icon

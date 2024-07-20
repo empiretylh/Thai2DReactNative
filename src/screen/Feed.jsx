@@ -129,7 +129,7 @@ const Feed = ({navigation}) => {
             <FlatList
               refreshControl={
                 <RefreshControl
-                  refreshing={feeds_data.isFetching}
+                  refreshing={feeds_data.isLoading}
                   onRefresh={() => {
                     feeds_data.refetch();
                     likes_data.refetch();

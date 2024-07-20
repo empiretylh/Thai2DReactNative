@@ -13,12 +13,18 @@ import {
 import TopBar from './components/TopBar';
 import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
 import {useQuery} from 'react-query';
-import {getAdImages, getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
+import {
+  getAdImages,
+  getLiveTwoDServerUpdate,
+  getTwoDDaliy,
+} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {SCREEN} from '../config/screen';
 import TopView from './GiftScreen/TopView';
+import {ADUNIT} from '../config/adconfig';
+import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
 
 const GiftView = ({navigation}) => {
   const ad_images = useQuery('adimages', getAdImages);
@@ -35,29 +41,24 @@ const GiftView = ({navigation}) => {
           flex: 1,
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}></View>
- 
-        <TopView ad_images={ad_images}/>
+
+        <TopView ad_images={ad_images} />
         <ScrollView
           style={{
             marginBottom: 80,
           }}
-          
           refreshControl={
-            <RefreshControl refreshing={ad_images?.isLoading} onRefresh={()=>{
-              ad_images.refetch();
-            }}/>
+            <RefreshControl
+              refreshing={ad_images?.isLoading}
+              onRefresh={() => {
+                ad_images.refetch();
+              }}
+            />
           }>
-          <View
-            style={{
-              width: 330,
-              height: 90,
-              backgroundColor: 'white',
-              alignItems: 'center',
-              justifyContent: 'center',
-              alignSelf: 'center',
-            }}>
-            <Text style={{color: 'black'}}>AD View 330x100</Text>
-          </View>
+          <BannerAd
+            unitId={ADUNIT.bannerunit}
+            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          />
 
           <View
             style={{
@@ -105,17 +106,14 @@ const GiftView = ({navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}
-
-              onPress={()=>{
+              onPress={() => {
                 navigation.navigate({
-                  name : "gts",
-                  params:{
-                    giftype: 'oneday'
-                  }
-                })
-              }}
-              
-              >
+                  name: 'gts',
+                  params: {
+                    giftype: 'oneday',
+                  },
+                });
+              }}>
               <Text
                 style={{
                   color: COLOR.primaryColor,
@@ -134,9 +132,7 @@ const GiftView = ({navigation}) => {
               margin: 10,
               marginTop: 3,
               borderRadius: 18,
-            }}
-           
-            >
+            }}>
             <Text
               style={{
                 color: 'white',
@@ -154,16 +150,14 @@ const GiftView = ({navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}
-              
-              onPress={()=>{
+              onPress={() => {
                 navigation.navigate({
-                  name : "gts",
-                  params:{
-                    giftype: 'oneweek'
-                  }
-                })
-              }}  
-              >
+                  name: 'gts',
+                  params: {
+                    giftype: 'oneweek',
+                  },
+                });
+              }}>
               <Text
                 style={{
                   color: COLOR.primaryColor,
@@ -193,17 +187,14 @@ const GiftView = ({navigation}) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}
-
-              onPress={()=>{
+              onPress={() => {
                 navigation.navigate({
-                  name : "gts",
-                  params:{
-                    giftype: 'threedgift'
-                  }
-                })
-              }}  
-              
-              >
+                  name: 'gts',
+                  params: {
+                    giftype: 'threedgift',
+                  },
+                });
+              }}>
               <View style={{width: 20}} />
 
               <Text
@@ -218,6 +209,13 @@ const GiftView = ({navigation}) => {
               </Text>
               <Icon name="chevron-forward-outline" size={20} color={'white'} />
             </TouchableOpacity>
+          </View>
+
+          <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+            <BannerAd
+              unitId={ADUNIT.bannerunit}
+              size={BannerAdSize.LARGE_BANNER}
+            />
           </View>
         </ScrollView>
         <FloatingNavigionBottomBar navigation={navigation} screen="home" />

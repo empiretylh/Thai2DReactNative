@@ -19,6 +19,8 @@ import {SCREEN} from '../../config/screen';
 import {useEffect, useState} from 'react';
 import { ModalImageViewer } from './ImageViewer';
 import ImageViewer from '../components/ImageViewer';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { ADUNIT } from '../../config/adconfig';
 
 const styles = StyleSheet.create({
   container: {
@@ -215,9 +217,9 @@ export const PostItem = ({item}) => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Icon name="bookmark-outline" size={30} color={COLOR.primary} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -231,7 +233,11 @@ export const PostItem = ({item}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text>Ad View</Text>
+        
+            <BannerAd
+              unitId={ADUNIT.bannerunit}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+            />
       </View>
     </>
   );

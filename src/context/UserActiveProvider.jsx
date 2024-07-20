@@ -4,7 +4,7 @@ import firebase from '@react-native-firebase/app';
 import firestore, {onSnapshot} from '@react-native-firebase/firestore';
 
 export const setUserPresence = isOnline => {
-  firestore().collection('Users').doc(firebase.auth().currentUser.uid).set(
+  firestore().collection('Users').doc(firebase.auth()?.currentUser?.uid).set(
     {
       isOnline: isOnline,
     },

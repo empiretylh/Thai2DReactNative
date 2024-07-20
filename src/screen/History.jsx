@@ -18,6 +18,10 @@ import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useLoadData } from '../context/LoadDataProvider';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { ADUNIT } from '../config/adconfig';
+
+
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -198,7 +202,7 @@ const History = ({navigation}) => {
             2D History
           </Text>
         </TopBar>
-
+            <BannerAd unitId={ADUNIT.bannerunit} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
         <ScrollView
           style={{
             flex: 1,

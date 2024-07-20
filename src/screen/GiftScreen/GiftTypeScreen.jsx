@@ -25,6 +25,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
+import { ADUNIT } from '../../config/adconfig';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 const GiftTypeScreen = ({navigation, route}) => {
   const {giftype} = route.params
@@ -85,21 +87,17 @@ const GiftTypeScreen = ({navigation, route}) => {
           }>
           <View style={{marginTop: 10}}>
             <AutoHeightImage sourceUri={axios.defaults.baseURL + data?.image} minusHeight={80} />
-            {/* adview */}
-            <View style={{
-              width:330,
-              height:100,
-              alignItems:'center',
-              justifyContent:'center',
-              backgroundColor:'#f0f0f0',
-              alignSelf:'center',
-              marginTop:5
-              
-            }}>
-              <Text>Ad View</Text>
-            </View>
-        
+          
+            
+            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+            <BannerAd
+              unitId={ADUNIT.bannerunit}
+              size={BannerAdSize.LARGE_BANNER}
+            />
           </View>
+          </View>
+
+        
         </ScrollView>
 
       </ImageBackground>

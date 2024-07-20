@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import SplashScreen from './components/SplashScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from './Home';
@@ -15,8 +15,14 @@ import GiftView from './GiftView';
 import ETS from './GiftScreen/ETS';
 import GiftTypeScreen from './GiftScreen/GiftTypeScreen';
 import {LoadDataProvider} from '../context/LoadDataProvider';
-import {View, Text, AppState} from 'react-native';
-import { setUserPresence } from '../context/UserActiveProvider';
+import {View, Text, AppState, PermissionsAndroid} from 'react-native';
+import {setUserPresence} from '../context/UserActiveProvider';
+import {getFCMToken, requestUserPermission} from '../utils/utils';
+import messaging from '@react-native-firebase/messaging';
+import axios from 'axios';
+import {postFCMToken} from '../server/api';
+import {getUniqueIdSync} from 'react-native-device-info';
+import EncryptedStorage from 'react-native-encrypted-storage'
 
 const client = new QueryClient();
 
@@ -35,12 +41,40 @@ const Container = () => {
 
       setAppState(nextAppState);
     };
-
+    
     AppState.addEventListener('change', handleAppStateChange);
-
-   
   }, [appState]);
 
+  useEffect(() => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+
+    requestUserPermission();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      PushNotification.localNotification({
+        title: remoteMessage.notification.title,
+        message: remoteMessage.notification.body,
+      });
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const getMessagingToken = async () => {
+    let fcmtoken = await EncryptedStorage.getItem('fcmtoken');
+    postFCMToken({
+      unique_id: getUniqueIdSync(),
+      fcm_token: fcmtoken,
+    });
+  };
+
+  useEffect(() => {
+    getMessagingToken();
+  }, []);
 
   return (
     <QueryClientProvider client={client}>

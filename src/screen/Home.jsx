@@ -17,7 +17,9 @@ import {getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useLoadData } from '../context/LoadDataProvider';
+import {useLoadData} from '../context/LoadDataProvider';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { ADUNIT } from '../config/adconfig';
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -114,7 +116,7 @@ const TwoDResultView = ({result = []}) => {
               color: COLOR.fithColor,
               letterSpacing: 2,
             }}>
-            {twelevePm?.twod}
+            {twelevePm?.twod || '--'}
           </Text>
         </View>
         <View
@@ -229,7 +231,7 @@ const ThreeDResultView = ({result}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              {result?.modern_930}
+              {result?.modern_930 || '--'}
             </Text>
             <Text
               style={{
@@ -239,7 +241,7 @@ const ThreeDResultView = ({result}) => {
                 fontWeight: 'bold',
                 flex: 1,
               }}>
-              {result?.internet_930}
+              {result?.internet_930 || '--'}
             </Text>
           </View>
           <View
@@ -279,7 +281,7 @@ const ThreeDResultView = ({result}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-             {result?.modern_200}
+              {result?.modern_200 || '--'}
             </Text>
             <Text
               style={{
@@ -289,7 +291,7 @@ const ThreeDResultView = ({result}) => {
                 fontWeight: 'bold',
                 flex: 1,
               }}>
-              {result?.internet_200}
+              {result?.internet_200 || '--'}
             </Text>
           </View>
         </View>
@@ -309,13 +311,11 @@ const Home = ({navigation}) => {
     return null;
   }, [serverupdatedTwoD?.data]);
 
-
-  const MIData = useMemo(()=>{
-    if(modernData?.data){
-      return modernData?.data?.data
+  const MIData = useMemo(() => {
+    if (modernData?.data) {
+      return modernData?.data?.data;
     }
-
-  },[modernData?.data])
+  }, [modernData?.data]);
 
   useEffect(() => {
     twodData?.refetch();
@@ -335,41 +335,62 @@ const Home = ({navigation}) => {
   };
 
   const showTwodNumber = useMemo(() => {
-
     // compare updated time with current time and show the number
     let DataTwoDTime = new Date(Data?.live?.time);
     let SUDataTime = new Date(SUData?.update_time);
 
     let number = 0;
 
-      if (DataTwoDTime < SUDataTime) {
-      number =  SUData?.number;
+    if (DataTwoDTime < SUDataTime) {
+      number = SUData?.number;
     } else {
       number = Data?.live?.twod;
-
     }
 
-    if(number == '--'){
-      let data =  Data?.result;
+    if (number == '--') {
+      let data = Data?.result;
       number = data[3]?.twod || '--';
     }
 
+    let now = new Date();
 
-    return number
+    let noon = new Date(now);
+    noon.setHours(12, 1, 0, 0); // 12:00 PM
 
+    let afternoon = new Date(now);
+    afternoon.setHours(16, 30, 0, 0); // 4:30 PM
+
+    
+    const twelevePm =
+      Data?.result && Data?.result?.find(item => item.open_time == '12:01:00');
+
+    const fourPm =
+      Data?.result && Data?.result?.find(item => item.open_time == '16:30:00');
+
+    if (now < noon) {
+    } else if (now >= noon && now < afternoon) {
+      number =  twelevePm?.twod
+    } else {
+      number = fourPm?.twod
+    }
+
+    if (twelevePm?.twod !== '') {
+      number = twelevePm?.twod;
+    }
+
+    return number;
   }, [Data?.live?.twod, SUData?.number]);
-
 
   const showTwodTime = useMemo(() => {
     let DataTwoDTime = new Date(Data?.live?.time);
     let SUDataTime = new Date(SUData?.update_time);
     if (DataTwoDTime < SUDataTime) {
       return SUData?.update_time;
-    }else if(DataTwoDTime > SUDataTime){
-      return Data?.live?.time
-    }else{
-      let data =  Data?.result[3];
-      return new Date(data?.stock_datetime)
+    } else if (DataTwoDTime > SUDataTime) {
+      return Data?.live?.time;
+    } else {
+      let data = Data?.result[3];
+      return new Date(data?.stock_datetime);
     }
   }, [Data?.live?.time, SUData?.time]);
 
@@ -432,6 +453,7 @@ const Home = ({navigation}) => {
           {Data?.result && (
             <>
               <TwoDResultView result={Data?.result || [{}]} />
+              <BannerAd unitId={ADUNIT.bannerunit} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}/>
               <ThreeDResultView result={MIData?.data || [{}]} />
             </>
           )}

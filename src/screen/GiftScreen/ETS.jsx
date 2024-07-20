@@ -24,6 +24,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { ADUNIT } from '../../config/adconfig';
 
 
 const ETS = ({navigation}) => {
@@ -86,6 +88,13 @@ const ETS = ({navigation}) => {
           }>
           <View style={{marginTop: 10}}>
             <AutoHeightImage sourceUri={axios.defaults.baseURL + data?.image} />
+          </View>
+
+          <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+            <BannerAd
+              unitId={ADUNIT.bannerunit}
+              size={BannerAdSize.LARGE_BANNER}
+            />
           </View>
         </ScrollView>
 

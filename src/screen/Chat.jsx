@@ -37,6 +37,8 @@ import firestore, {onSnapshot} from '@react-native-firebase/firestore';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {SCREEN} from '../config/screen';
 import {CountActiveUsers, setUserPresence} from '../context/UserActiveProvider';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { ADUNIT } from '../config/adconfig';
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -398,9 +400,11 @@ const Chat = ({navigation}) => {
             {activeUsers?.length < 0 ? activeUsers?.length : '1'} Online
           </Text>
 
+        
           <TwoDResultView result={Data?.result} livenumber={Data?.live?.twod} />
         </View>
       </View>
+      <BannerAd unitId={ADUNIT.bannerunit} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
 
       {gtoken ? (
         <View
