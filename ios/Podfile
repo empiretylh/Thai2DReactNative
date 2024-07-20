@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'Thai2D' do
+target '2D MM VIP' do
   config = use_native_modules!
 
   use_react_native!(
