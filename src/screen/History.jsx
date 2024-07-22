@@ -39,7 +39,7 @@ const NumberDisplaySet = ({number = 0}) => {
       }}>
       <Text allowFontScaling={false}>Set: </Text>
       <Text allowFontScaling={false} style={{color: 'black'}}>{mainPart}</Text>
-      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: 20, fontFamily: 'Inter-Bold'}}>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: wp('4%'), fontFamily: 'Inter-Bold'}}>
         {lastDigit}
       </Text>
     </Text>
@@ -99,7 +99,7 @@ const TwoDResultView = ({result = []}) => {
               <Icon name="partly-sunny" size={30} color={COLOR.fithColor} />
               <Text allowFontScaling={false}
                 style={{
-                  fontSize: 20,
+                  fontSize: wp('4%'),
                   color: COLOR.fithColor,
                   fontFamily: 'Inter-Bold',
                 }}>
@@ -113,7 +113,7 @@ const TwoDResultView = ({result = []}) => {
           </View>
           <Text allowFontScaling={false}
             style={{
-              fontSize: 50,
+              fontSize: wp('14%'),
               fontFamily: 'Inter-Bold',
               color: COLOR.fithColor,
               letterSpacing: 2,
@@ -137,7 +137,7 @@ const TwoDResultView = ({result = []}) => {
               <Icon name="moon" size={30} color={COLOR.fithColor} />
               <Text allowFontScaling={false}
                 style={{
-                  fontSize: 20,
+                  fontSize: wp('4%'),
                   color: COLOR.fithColor,
                   fontFamily: 'Inter-Bold',
                 }}>
@@ -151,7 +151,7 @@ const TwoDResultView = ({result = []}) => {
           </View>
           <Text allowFontScaling={false}
             style={{
-              fontSize: 50,
+              fontSize: wp('14%'),
               fontFamily: 'Inter-Bold',
               color: COLOR.fithColor,
               letterSpacing: 2,
@@ -192,7 +192,7 @@ const History = ({navigation}) => {
           <Text allowFontScaling={false}
             style={{
               fontFamily: 'Inter-Bold',
-              fontSize: 20,
+              fontSize: wp('4%'),
               color: 'white',
               textAlign: 'center',
             }}>

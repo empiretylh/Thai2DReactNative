@@ -38,7 +38,7 @@ const NumberDisplaySet = ({number = 0}) => {
       }}>
       <Text allowFontScaling={false}>Set: </Text>
       <Text allowFontScaling={false} style={{color: 'black'}}>{mainPart}</Text>
-      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: 20, fontFamily: 'Inter-Bold'}}>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: wp('4%'), fontFamily: 'Inter-Bold'}}>
         {lastDigit}
       </Text>
     </Text>
@@ -99,7 +99,7 @@ const TwoDResultView = ({result = []}) => {
               <Icon name="partly-sunny" size={30} color={COLOR.fithColor} />
               <Text allowFontScaling={false}
                 style={{
-                  fontSize: 20,
+                  fontSize: wp('4%'),
                   color: COLOR.fithColor,
                   fontFamily:'Inter-Bold',
                 }}>
@@ -113,7 +113,7 @@ const TwoDResultView = ({result = []}) => {
           </View>
           <Text allowFontScaling={false}
             style={{
-              fontSize: 50,
+              fontSize: wp('14%'),
               color: COLOR.fithColor,
               letterSpacing: 2,
               fontFamily:'Inter-Bold',
@@ -137,7 +137,7 @@ const TwoDResultView = ({result = []}) => {
               <Icon name="moon" size={30} color={COLOR.fithColor} />
               <Text allowFontScaling={false}
                 style={{
-                  fontSize: 20,
+                  fontSize: wp('4%'),
                   color: COLOR.fithColor,
                   fontFamily:'Inter-Bold',
                 }}>
@@ -151,7 +151,7 @@ const TwoDResultView = ({result = []}) => {
           </View>
           <Text allowFontScaling={false}
             style={{
-              fontSize: 50,
+              fontSize: wp('14%'),
               color: COLOR.fithColor,
               letterSpacing: 2,
               fontFamily:'Inter-Bold',
@@ -226,7 +226,7 @@ const ThreeDResultView = ({result}) => {
 
             <Text allowFontScaling={false}
               style={{
-                fontSize: 20,
+                fontSize: wp('4%'),
                 marginLeft: 'auto',
                 textAlign: 'center',
                 fontFamily:'Inter-Bold',
@@ -237,7 +237,7 @@ const ThreeDResultView = ({result}) => {
             </Text>
             <Text allowFontScaling={false}
               style={{
-                fontSize: 20,
+                fontSize: wp('4%'),
                 color: COLOR.fithColor,
                 textAlign: 'center',
                 fontFamily: 'Inter-Bold',
@@ -266,7 +266,7 @@ const ThreeDResultView = ({result}) => {
               <Icon name="sunny" size={25} color={COLOR.fithColor} />
               <Text allowFontScaling={false}
                 style={{
-                  fontSize: 20,
+                  fontSize: wp('4%'),
                   fontFamily: 'Inter-Bold',
                   color: COLOR.fithColor,
                 }}>
@@ -276,7 +276,7 @@ const ThreeDResultView = ({result}) => {
 
             <Text allowFontScaling={false}
               style={{
-                fontSize: 20,
+                fontSize: wp('4%'),
                 marginLeft: 'auto',
                 textAlign: 'center',
                 fontFamily: 'Inter-Bold',
@@ -423,7 +423,7 @@ const Home = ({navigation}) => {
                 style={{
                   color: COLOR.primaryColor,
                   // fontSize: 170,
-                  fontSize: wp('40%'),
+                  fontSize: wp('37%'),
                   textShadowColor: 'rgba(0, 0, 0, 0.5)',
                   textShadowOffset: {width: -1, height: 4},
                   textShadowRadius: 2,
@@ -439,7 +439,7 @@ const Home = ({navigation}) => {
                 gap: 4,
               }}>
               <Icon name="time-outline" size={20} />
-              <Text allowFontScaling={false} style={{color: 'black',  fontFamily:'Inter-Bold'}}>
+              <Text allowFontScaling={false} style={{color: 'black',fontSize:wp('3%'),  fontFamily:'Inter-Bold'}}>
                 Updated At {new Date(showTwodTime).toLocaleString()}
               </Text>
             </View>

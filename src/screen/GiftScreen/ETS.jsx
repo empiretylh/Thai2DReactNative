@@ -24,13 +24,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { ADUNIT } from '../../config/adconfig';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-
+import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
+import {ADUNIT} from '../../config/adconfig';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {useToken} from '../../context/TookenProvider';
+import GoogleLoginView from '../components/GoogleLogin';
 
 const ETS = ({navigation}) => {
   const ets_data = useQuery('ets_datad', getEtsdata);
+  const {token, gtoken} = useToken();
 
   const data = useMemo(() => {
     if (ets_data.data) {
@@ -38,70 +40,91 @@ const ETS = ({navigation}) => {
     }
   }, [ets_data?.data]);
 
-  console.log(ets_data)
+  console.log(ets_data);
 
   return (
     <View
       style={{
         flex: 1,
       }}>
-      <ImageBackground
-        source={IMAGE.background}
-        resizeMode="cover"
-        style={{
-          flex: 1,
-        }}>
-        <TopBar
-          showOrigin={false}
-          customViewStyle={{
-            flexDirection: 'row',
-            alignItems: 'center',
+      {gtoken ? (
+        <ImageBackground
+          source={IMAGE.background}
+          resizeMode="cover"
+          style={{
+            flex: 1,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}
-            style={{
-              padding: 5,
+          <TopBar
+            showOrigin={false}
+            customViewStyle={{
+              flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Icon name="arrow-back" size={25} color="#fff" />
-          </TouchableOpacity>
-
-          <Text allowFontScaling={false}
-            style={{
-              color: 'white',
-              fontSize: 20,
-              fontFamily:'Inter-Bold'
-            }}>
-            Estimate Thai Stock
-          </Text>
-        </TopBar>
-
-        <ScrollView
-          style={{flex: 1}}
-          refreshControl={
-            <RefreshControl
-              refreshing={ets_data.isLoading}
-              onRefresh={() => {
-                ets_data?.refetch();
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
               }}
-            />
-          }>
-          <View style={{marginTop: 10}}>
-            <AutoHeightImage sourceUri={axios.defaults.baseURL + data?.image} />
-          </View>
+              style={{
+                padding: 5,
+                alignItems: 'center',
+              }}>
+              <Icon name="arrow-back" size={25} color="#fff" />
+            </TouchableOpacity>
 
-          <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-            <BannerAd
-              unitId={ADUNIT.bannerunit}
-              size={BannerAdSize.LARGE_BANNER}
-            />
-          </View>
-        </ScrollView>
+            <Text
+              allowFontScaling={false}
+              style={{
+                color: 'white',
+                fontSize: wp('4%'),
+                fontFamily: 'Inter-Bold',
+              }}>
+              Estimate Thai Stock
+            </Text>
+          </TopBar>
 
-        <FloatingNavigionBottomBar navigation={navigation} screen="home" />
-      </ImageBackground>
+          <ScrollView
+            style={{flex: 1}}
+            refreshControl={
+              <RefreshControl
+                refreshing={ets_data.isLoading}
+                onRefresh={() => {
+                  ets_data?.refetch();
+                }}
+              />
+            }>
+            <View style={{marginTop: 10}}>
+              <AutoHeightImage
+                sourceUri={axios.defaults.baseURL + data?.image}
+              />
+            </View>
+
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <BannerAd
+                unitId={ADUNIT.bannerunit}
+                size={BannerAdSize.LARGE_BANNER}
+              />
+            </View>
+          </ScrollView>
+
+          <FloatingNavigionBottomBar navigation={navigation} screen="home" />
+        </ImageBackground>
+      ) : (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text
+            style={{
+              fontFamily: 'NotoSansMyanmar-Bold',
+              color: 'black',
+              fontSize: wp('4%'),
+              alignItems: 'center',
+              justifyContent: 'center',
+            
+            }}>
+            Sigin ဝင်ပြီး ပေါက်ဂဏန်းများ ရယူပါ။
+          </Text>
+          <GoogleLoginView nobound />
+        </View>
+      )}
     </View>
   );
 };

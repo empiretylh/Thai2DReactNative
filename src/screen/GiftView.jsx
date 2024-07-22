@@ -70,7 +70,7 @@ const GiftView = ({navigation}) => {
             <Text allowFontScaling={false}
               style={{
                 color: 'white',
-                fontSize: 20,
+                fontSize: wp('4%'),
                 fontFamily: 'Inter-Bold',
               }}>
               တစ်ရက်စာ
@@ -136,7 +136,7 @@ const GiftView = ({navigation}) => {
             <Text allowFontScaling={false}
               style={{
                 color: 'white',
-                fontSize: 20,
+                fontSize: wp('4%'),
                 fontFamily: 'Inter-Bold',
               }}>
               တစ်ပတ်စာ

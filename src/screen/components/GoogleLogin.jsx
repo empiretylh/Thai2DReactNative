@@ -8,9 +8,9 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import {useToken} from '../../context/TookenProvider';
 import {useMutation} from 'react-query';
 import {register} from '../../server/api';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
+const GoogleLoginView = ({nobound = false, reload = () => {}}) => {
   const {gtoken, onSetGToken, setToken, token, onSetToken} = useToken();
 
   const LoginToServer = useMutation(register, {
@@ -76,16 +76,18 @@ const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
           width: '90%',
           padding: 20,
         }}>
-        <Text allowFontScaling={false}
+        <Text
+          allowFontScaling={false}
           style={{
             color: 'black',
             textAlign: 'center',
-            fontSize: 23,
+            fontSize: wp('5%'),
             fontFamily: 'Inter-Bold',
           }}>
           Please Sign in to Continue
         </Text>
-        <Text allowFontScaling={false}
+        <Text
+          allowFontScaling={false}
           style={{
             color: COLOR.primaryColor,
             textAlign: 'center',
@@ -109,10 +111,20 @@ const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
             borderColor: COLOR.primaryColor,
             borderWidth: 1,
             width: '100%',
-            justifyContent: 'center',
+            justifyContent:'center'
           }}>
-          <Icons name="logo-google" size={30} color={COLOR.primaryColor} />
-          <Text allowFontScaling={false} style={{color: 'black', fontSize: 20, fontFamily:'Inter-Regular'}}>
+          <Icons
+            name="logo-google"
+            size={wp('5%')}
+            color={COLOR.primaryColor}
+          />
+          <Text
+            allowFontScaling={false}
+            style={{
+              color: 'black',
+              fontSize: wp('4%'),
+              fontFamily: 'Inter-Bold',
+            }}>
             Sign in with Google
           </Text>
         </TouchableOpacity>

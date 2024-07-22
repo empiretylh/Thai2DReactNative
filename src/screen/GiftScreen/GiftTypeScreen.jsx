@@ -25,14 +25,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
-import { ADUNIT } from '../../config/adconfig';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {ADUNIT} from '../../config/adconfig';
+import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import { useToken } from '../../context/TookenProvider';
 
 const GiftTypeScreen = ({navigation, route}) => {
-  const {giftype} = route.params
-  const ets_data = useQuery(['gift_type_img',giftype || 'oneday'], getGiftImage);
-
+  const {giftype} = route.params;
+  const ets_data = useQuery(
+    ['gift_type_img', giftype || 'oneday'],
+    getGiftImage,
+  );
+  const {token, gtoken} = useToken();
   const data = useMemo(() => {
     if (ets_data.data) {
       return ets_data?.data?.data;
@@ -44,65 +48,90 @@ const GiftTypeScreen = ({navigation, route}) => {
       style={{
         flex: 1,
       }}>
-      <ImageBackground
-        source={IMAGE.background}
-        resizeMode="cover"
-        style={{
-          flex: 1,
-        }}>
-        <TopBar
-          showOrigin={false}
-          customViewStyle={{
-            flexDirection: 'row',
-            alignItems: 'center',
+      {gtoken ? (
+        <ImageBackground
+          source={IMAGE.background}
+          resizeMode="cover"
+          style={{
+            flex: 1,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}
-            style={{
-              padding: 5,
+          <TopBar
+            showOrigin={false}
+            customViewStyle={{
+              flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Icon name="arrow-back" size={25} color="#fff" />
-          </TouchableOpacity>
-
-          <Text allowFontScaling={false}
-            style={{
-              color: 'white',
-              fontSize: 20,
-              fontFamily:'Inter-Bold'
-            }}>
-           {giftype == 'oneday'? "တစ်ရက်စာ ရွှေလက်ဆောင်" : giftype == "oneweek" ? "တစ်ပတ်စာ ရွှေလက်ဆောင်" : "3D ရွှေလက်ဆောင်"}
-          </Text>
-        </TopBar>
-
-        <ScrollView
-          style={{flex: 1}}
-          refreshControl={
-            <RefreshControl
-              refreshing={ets_data.isLoading}
-              onRefresh={() => {
-                ets_data?.refetch();
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
               }}
-            />
-          }>
-          <View style={{marginTop: 10}}>
-            <AutoHeightImage sourceUri={axios.defaults.baseURL + data?.image} minusHeight={80} />
-          
-            
-            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-            <BannerAd
-              unitId={ADUNIT.bannerunit}
-              size={BannerAdSize.LARGE_BANNER}
-            />
-          </View>
-          </View>
+              style={{
+                padding: 5,
+                alignItems: 'center',
+              }}>
+              <Icon name="arrow-back" size={25} color="#fff" />
+            </TouchableOpacity>
 
-        
-        </ScrollView>
+            <Text
+              allowFontScaling={false}
+              style={{
+                color: 'white',
+                fontSize: wp('4%'),
+                fontFamily: 'Inter-Bold',
+              }}>
+              {giftype == 'oneday'
+                ? 'တစ်ရက်စာ ရွှေလက်ဆောင်'
+                : giftype == 'oneweek'
+                ? 'တစ်ပတ်စာ ရွှေလက်ဆောင်'
+                : '3D ရွှေလက်ဆောင်'}
+            </Text>
+          </TopBar>
 
-      </ImageBackground>
+          <ScrollView
+            style={{flex: 1}}
+            refreshControl={
+              <RefreshControl
+                refreshing={ets_data.isLoading}
+                onRefresh={() => {
+                  ets_data?.refetch();
+                }}
+              />
+            }>
+            <View style={{marginTop: 10}}>
+              <AutoHeightImage
+                sourceUri={axios.defaults.baseURL + data?.image}
+                minusHeight={80}
+              />
+
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <BannerAd
+                  unitId={ADUNIT.bannerunit}
+                  size={BannerAdSize.LARGE_BANNER}
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </ImageBackground>
+      ) : (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text
+            style={{
+              fontFamily: 'NotoSansMyanmar-Bold',
+              color: 'black',
+              fontSize: wp('4%'),
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            Sigin ဝင်ပြီး ပေါက်ဂဏန်းများ ရယူပါ။
+          </Text>
+          <GoogleLoginView nobound />
+        </View>
+      )}
     </View>
   );
 };

@@ -58,7 +58,7 @@ const Profile = ({navigation}) => {
           <Text allowFontScaling={false}
             style={{
               fontFamily: 'Inter-Bold',
-              fontSize: 20,
+              fontSize: wp('4%'),
               color: 'white',
               textAlign: 'center',
             }}>
@@ -91,7 +91,7 @@ const Profile = ({navigation}) => {
             <Text allowFontScaling={false}
               style={{
                 textAlign: 'center',
-                fontSize: 20,
+                fontSize: wp('4%'),
                 fontFamily: 'Inter-Bold',
                 marginTop: 10,
                 color: COLOR.primaryColor,

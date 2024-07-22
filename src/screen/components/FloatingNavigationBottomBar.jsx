@@ -106,6 +106,7 @@ const FloatingNavigionBottomBar = ({
               color: active === 'home' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
               fontFamily: 'Inter-Bold',
+              fontSize : wp('3%')
             }}>
             Live
           </Text>
@@ -127,6 +128,7 @@ const FloatingNavigionBottomBar = ({
               color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
               fontFamily: 'Inter-Bold',
+              fontSize : wp('3%')
             }}>
             2D
           </Text>
@@ -141,6 +143,7 @@ const FloatingNavigionBottomBar = ({
               borderRadius: 50,
               width: 90,
               position: 'relative',
+              fontSize : wp('3%')
             }}
             onPress={() => {
               navigation.navigate('Gift');
@@ -157,6 +160,7 @@ const FloatingNavigionBottomBar = ({
                   textAlign: 'center',
                   fontFamily: 'Inter-Bold',
                   marginTop: -10,
+                  fontSize : wp('3%')
                 }}>
                 Gift
               </Text>
@@ -180,6 +184,7 @@ const FloatingNavigionBottomBar = ({
               color: active === 'threed' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
               fontFamily: 'Inter-Bold',
+              fontSize : wp('3%')
             }}>
             3D
           </Text>
@@ -200,6 +205,7 @@ const FloatingNavigionBottomBar = ({
               color: active === 'news' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
               fontFamily: 'Inter-Bold',
+              fontSize : wp('3%')
             }}>
             Feed
           </Text>

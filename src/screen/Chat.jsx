@@ -57,7 +57,7 @@ const NumberDisplaySet = ({number = 0}) => {
       }}>
       <Text allowFontScaling={false}>Set: </Text>
       <Text allowFontScaling={false} style={{color: 'black'}}>{mainPart}</Text>
-      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: 20, fontFamily: 'Inter-Bold'}}>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: wp('4%'), fontFamily: 'Inter-Bold'}}>
         {lastDigit}
       </Text>
     </Text>
@@ -110,7 +110,7 @@ const TwoDResultView = ({result = [], livenumber}) => {
               <Text allowFontScaling={false}
                 style={{
                   fontFamily: 'Inter-Bold',
-                  fontSize: 20,
+                  fontSize: wp('4%'),
                   color: 'white',
                   fontFamily: 'Inter-Bold',
                 }}>
@@ -362,7 +362,7 @@ const Chat = ({navigation}) => {
           <Icon name="arrow-back" size={25} color="#fff" />
         </TouchableOpacity>
         <View style={{alignItems: 'center'}}>
-          <Text allowFontScaling={false} style={{color: 'white', fontSize: 20, fontFamily: 'Inter-Bold'}}>
+          <Text allowFontScaling={false} style={{color: 'white', fontSize: wp('4%'), fontFamily: 'Inter-Bold'}}>
             Chat
           </Text>
         </View>
@@ -438,7 +438,7 @@ const Chat = ({navigation}) => {
                 padding: 10,
                 flex: 1,
                 color: 'white',
-                fontSize: 20,
+                fontSize: wp('4%'),
               }}
               placeholder="Type a message...."
               placeholderTextColor={'white'}

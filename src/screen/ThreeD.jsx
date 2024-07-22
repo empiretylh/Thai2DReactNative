@@ -93,7 +93,7 @@ const ThreeDView = ({navigation}) => {
           <Text allowFontScaling={false}
             style={{
               fontFamily: 'Inter-Bold',
-              fontSize: 20,
+              fontSize: wp('4%'),
               color: 'white',
               textAlign: 'center',
             }}>
