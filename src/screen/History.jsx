@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useLoadData } from '../context/LoadDataProvider';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { ADUNIT } from '../config/adconfig';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 
 
@@ -29,16 +30,16 @@ const NumberDisplaySet = ({number = 0}) => {
   const lastDigit = numberString.slice(-1); // Last character
 
   return (
-    <Text
+    <Text allowFontScaling={false}
       style={{
-        fontFamily: 'arial',
+        fontFamily: 'Inter-Bold',
         letterSpacing: 0.5,
-        fontSize: 18,
+        fontSize: wp('4%'),
         color: 'black',
       }}>
-      <Text>Set: </Text>
-      <Text style={{color: 'black'}}>{mainPart}</Text>
-      <Text style={{color: '#f21b13', fontSize: 20, fontWeight: 'bold'}}>
+      <Text allowFontScaling={false}>Set: </Text>
+      <Text allowFontScaling={false} style={{color: 'black'}}>{mainPart}</Text>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: 20, fontFamily: 'Inter-Bold'}}>
         {lastDigit}
       </Text>
     </Text>
@@ -56,16 +57,16 @@ const NumberDisplayVal = ({number = 0}) => {
   console.log(selectPart);
 
   return (
-    <Text
+    <Text allowFontScaling={false}
       style={{
-        fontFamily: 'arial',
-        fontSize: 18,
+        fontFamily: 'Inter-Bold',
+        fontSize: wp('4%'),
         color: 'black',
       }}>
-      <Text>Value : </Text>
-      <Text style={{color: '#000'}}>{firstPart}</Text>
-      <Text style={{color: '#f21b13', fontWeight: 'bold'}}>{selectPart}</Text>
-      <Text style={{color: '#000'}}>{thridPart} </Text>
+      <Text allowFontScaling={false}>Value : </Text>
+      <Text allowFontScaling={false} style={{color: '#000'}}>{firstPart}</Text>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontFamily: 'Inter-Bold'}}>{selectPart}</Text>
+      <Text allowFontScaling={false} style={{color: '#000'}}>{thridPart} </Text>
     </Text>
   );
 };
@@ -96,13 +97,11 @@ const TwoDResultView = ({result = []}) => {
           <View style={{flexDirection: 'column', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
               <Icon name="partly-sunny" size={30} color={COLOR.fithColor} />
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   fontSize: 20,
-                  fontWeight: 'bold',
                   color: COLOR.fithColor,
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace',
+                  fontFamily: 'Inter-Bold',
                 }}>
                 12:01 PM
               </Text>
@@ -112,10 +111,10 @@ const TwoDResultView = ({result = []}) => {
               <NumberDisplayVal number={twelevePm?.value} />
             </View>
           </View>
-          <Text
+          <Text allowFontScaling={false}
             style={{
               fontSize: 50,
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               color: COLOR.fithColor,
               letterSpacing: 2,
             }}>
@@ -136,13 +135,11 @@ const TwoDResultView = ({result = []}) => {
           <View style={{flexDirection: 'column', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
               <Icon name="moon" size={30} color={COLOR.fithColor} />
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   fontSize: 20,
-                  fontWeight: 'bold',
                   color: COLOR.fithColor,
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace',
+                  fontFamily: 'Inter-Bold',
                 }}>
                 4:30 PM
               </Text>
@@ -152,10 +149,10 @@ const TwoDResultView = ({result = []}) => {
               <NumberDisplayVal number={fourPm?.value} />
             </View>
           </View>
-          <Text
+          <Text allowFontScaling={false}
             style={{
               fontSize: 50,
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               color: COLOR.fithColor,
               letterSpacing: 2,
             }}>
@@ -192,9 +189,9 @@ const History = ({navigation}) => {
           flex: 1,
         }}>
         <TopBar navigation={navigation}>
-          <Text
+          <Text allowFontScaling={false}
             style={{
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               fontSize: 20,
               color: 'white',
               textAlign: 'center',
@@ -220,12 +217,12 @@ const History = ({navigation}) => {
           )}
           {Data?.map((item, index) => (
             <View style={{alignItems: 'center'}} key={index}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
-                  fontSize: 18,
+                  fontSize: wp('4%'),
                   textAlign: 'center',
                   color: COLOR.primaryColor,
-                  fontWeight: 'bold',
+                  fontFamily: 'Inter-Bold',
                   borderBottomColor: COLOR.secondaryColor,
                   padding: 10,
                   borderBottomWidth: 1,

@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import GoogleLoginView from './components/GoogleLogin';
 import {useToken} from '../context/TookenProvider';
 import firebase from '@react-native-firebase/app';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const Profile = ({navigation}) => {
   const {token, gtoken, onSetGToken, onSetToken} = useToken();
@@ -54,9 +55,9 @@ const Profile = ({navigation}) => {
           flex: 1,
         }}>
         <TopBar navigation={navigation}>
-          <Text
+          <Text allowFontScaling={false}
             style={{
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               fontSize: 20,
               color: 'white',
               textAlign: 'center',
@@ -87,20 +88,20 @@ const Profile = ({navigation}) => {
                 }}
               />
             </View>
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 textAlign: 'center',
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 marginTop: 10,
                 color: COLOR.primaryColor,
               }}>
               {Data?.name}
             </Text>
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 textAlign: 'center',
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 color: COLOR.primaryColor,
               }}>
               {Data?.email}
@@ -123,12 +124,11 @@ const Profile = ({navigation}) => {
             borderRadius: 15,
             marginTop: 10,
           }}>
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: 'white',
-              fontSize: 18,
-              fontWeight: 'bold',
-              fontFamily: 'arial',
+              fontSize: wp('4%'),
+              fontFamily: 'Inter-Bold',
             }}>
             SETTINGS
           </Text>
@@ -140,13 +140,17 @@ const Profile = ({navigation}) => {
               borderBottomColor: COLOR.thridColor,
               padding: 10,
               borderBottomWidth: 1,
-            }}>
+            }}
+            onPress={()=>{
+              navigation.navigate("PrivacyPolicy")
+            }}
+            >
             <Icon name="document" size={25} color={'#fff'} />
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 marginLeft: 10,
                 color: 'white',
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 fontSize: 17,
               }}>
               Privacy Policy
@@ -165,11 +169,11 @@ const Profile = ({navigation}) => {
               borderBottomWidth: 1,
             }}>
             <Icon name="information-circle" size={25} color={'#fff'} />
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 marginLeft: 10,
                 color: 'white',
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 fontSize: 17,
               }}>
               About Us
@@ -188,17 +192,17 @@ const Profile = ({navigation}) => {
               borderBottomWidth: 1,
             }}>
             <Icon name="git-branch" size={25} color={'#fff'} />
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 marginLeft: 10,
                 color: 'white',
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 fontSize: 17,
               }}>
               Current Version
             </Text>
 
-            <Text style={{marginLeft: 'auto', color: 'white'}}>1.1.0</Text>
+            <Text allowFontScaling={false} style={{marginLeft: 'auto', color: 'white'}}>1.1.0</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -209,11 +213,11 @@ const Profile = ({navigation}) => {
               borderBottomWidth: 1,
             }}>
             <Icon name="star" size={25} color={'#fff'} />
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 marginLeft: 10,
                 color: 'white',
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 fontSize: 17,
               }}>
               Rate this app
@@ -229,11 +233,11 @@ const Profile = ({navigation}) => {
               firbaseLogout();
             }}>
             <Icon name="log-out-outline" size={25} color={'#fff'} />
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 marginLeft: 10,
                 color: 'white',
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
                 fontSize: 17,
               }}>
               Logout

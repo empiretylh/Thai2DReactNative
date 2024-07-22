@@ -18,6 +18,7 @@ import {COLOR} from '../../config/theme';
 import {useQuery} from 'react-query';
 import {getSearch} from '../../server/api';
 import {PostItem} from './Post';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export const SearchViewModal = ({visible, onClose}) => {
   const [searchtext, setSearchText] = React.useState('');
@@ -111,7 +112,7 @@ export const SearchViewModal = ({visible, onClose}) => {
               flex: 1,
               backgroundColor: 'white',
               color: 'black',
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               padding: 5,
               borderRadius: 5,
             }}
@@ -159,10 +160,10 @@ export const SearchViewModal = ({visible, onClose}) => {
                   onSearch();
                 }}>
                 <Icon name="time-outline" size={25} color="#000" />
-                <Text
+                <Text allowFontScaling={false}
                   style={{
                     color: 'black',
-                    fontSize: 18,
+                    fontSize: wp('4%'),
                   }}>
                   {item}
                 </Text>

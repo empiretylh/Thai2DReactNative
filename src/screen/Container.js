@@ -23,6 +23,7 @@ import axios from 'axios';
 import {postFCMToken} from '../server/api';
 import {getUniqueIdSync} from 'react-native-device-info';
 import EncryptedStorage from 'react-native-encrypted-storage'
+import PrivacyPolicy from './PrivacyPolicy';
 
 const client = new QueryClient();
 
@@ -92,6 +93,8 @@ const Container = () => {
                 <Stack.Screen name="Feed" component={Feed} />
                 <Stack.Screen name="Chat" component={Chat} />
                 <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+
 
                 {/* gift view */}
                 <Stack.Screen name="ets" component={ETS} />

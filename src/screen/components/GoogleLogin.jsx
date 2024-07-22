@@ -8,6 +8,8 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import {useToken} from '../../context/TookenProvider';
 import {useMutation} from 'react-query';
 import {register} from '../../server/api';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
   const {gtoken, onSetGToken, setToken, token, onSetToken} = useToken();
 
@@ -74,23 +76,23 @@ const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
           width: '90%',
           padding: 20,
         }}>
-        <Text
+        <Text allowFontScaling={false}
           style={{
             color: 'black',
             textAlign: 'center',
             fontSize: 23,
-            fontWeight: 'bold',
+            fontFamily: 'Inter-Bold',
           }}>
           Please Sign in to Continue
         </Text>
-        <Text
+        <Text allowFontScaling={false}
           style={{
             color: COLOR.primaryColor,
             textAlign: 'center',
-            fontSize: 18,
+            fontSize: wp('4%'),
             marginTop: 4,
 
-            fontWeight: 'bold',
+            fontFamily: 'Inter-Bold',
           }}>
           Live Chat and New Feeds
         </Text>
@@ -110,7 +112,7 @@ const GoogleLoginView = ({nobound = false, reload= ()=>{}}) => {
             justifyContent: 'center',
           }}>
           <Icons name="logo-google" size={30} color={COLOR.primaryColor} />
-          <Text style={{color: 'black', fontSize: 20}}>
+          <Text allowFontScaling={false} style={{color: 'black', fontSize: 20, fontFamily:'Inter-Regular'}}>
             Sign in with Google
           </Text>
         </TouchableOpacity>

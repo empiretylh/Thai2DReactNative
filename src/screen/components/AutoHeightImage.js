@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Dimensions, ActivityIndicator, View, Text} from 'react-native';
 import { SCREEN } from '../../config/screen';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -26,11 +27,11 @@ const AutoHeightImage = ({sourceUri, minusHeight = 0}) => {
             justifyContent: 'center',
           }}>
           <ActivityIndicator size="50" color="#0000ff" />
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: 'black',
-              fontSize: 18,
-              fontWeight: 'bold',
+              fontSize: wp('4%'),
+              fontFamily: 'Inter-Bold',
             }}>
             ခဏစောင့်ပါ...
           </Text>

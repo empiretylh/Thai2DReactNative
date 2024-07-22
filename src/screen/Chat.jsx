@@ -39,6 +39,8 @@ import {SCREEN} from '../config/screen';
 import {CountActiveUsers, setUserPresence} from '../context/UserActiveProvider';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { ADUNIT } from '../config/adconfig';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -46,16 +48,16 @@ const NumberDisplaySet = ({number = 0}) => {
   const lastDigit = numberString.slice(-1); // Last character
 
   return (
-    <Text
+    <Text allowFontScaling={false}
       style={{
-        fontFamily: 'arial',
+        fontFamily: 'Inter-Bold',
         letterSpacing: 0.5,
-        fontSize: 18,
+        fontSize: wp('4%'),
         color: 'black',
       }}>
-      <Text>Set: </Text>
-      <Text style={{color: 'black'}}>{mainPart}</Text>
-      <Text style={{color: '#f21b13', fontSize: 20, fontWeight: 'bold'}}>
+      <Text allowFontScaling={false}>Set: </Text>
+      <Text allowFontScaling={false} style={{color: 'black'}}>{mainPart}</Text>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: 20, fontFamily: 'Inter-Bold'}}>
         {lastDigit}
       </Text>
     </Text>
@@ -73,16 +75,16 @@ const NumberDisplayVal = ({number = 0}) => {
   console.log(selectPart);
 
   return (
-    <Text
+    <Text allowFontScaling={false}
       style={{
-        fontFamily: 'arial',
-        fontSize: 18,
+        fontFamily: 'Inter-Bold',
+        fontSize: wp('4%'),
         color: 'black',
       }}>
-      <Text>Value : </Text>
-      <Text style={{color: '#000'}}>{firstPart}</Text>
-      <Text style={{color: '#f21b13', fontWeight: 'bold'}}>{selectPart}</Text>
-      <Text style={{color: '#000'}}>{thridPart} </Text>
+      <Text allowFontScaling={false}>Value : </Text>
+      <Text allowFontScaling={false} style={{color: '#000'}}>{firstPart}</Text>
+      <Text allowFontScaling={false} style={{color: '#f21b13', fontFamily: 'Inter-Bold'}}>{selectPart}</Text>
+      <Text allowFontScaling={false} style={{color: '#000'}}>{thridPart} </Text>
     </Text>
   );
 };
@@ -105,15 +107,15 @@ const TwoDResultView = ({result = [], livenumber}) => {
           }}>
           <View style={{flexDirection: 'column', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
-                  fontFamily: 'arial',
+                  fontFamily: 'Inter-Bold',
                   fontSize: 20,
                   color: 'white',
-                  fontWeight: 'bold',
+                  fontFamily: 'Inter-Bold',
                 }}>
-                <Text>Live : </Text>
-                <Text>
+                <Text allowFontScaling={false}>Live : </Text>
+                <Text allowFontScaling={false}>
                   {livenumber == '--' ? result[3].twod || 0 : livenumber}
                 </Text>
               </Text>
@@ -314,14 +316,14 @@ const Chat = ({navigation}) => {
             paddingHorizontal: 10,
             borderRadius: 15,
           }}>
-          <Text style={{color: COLOR.fithColor}}>
+          <Text allowFontScaling={false} style={{color: COLOR.fithColor}}>
             {item?.item?.user?.username}
           </Text>
 
-          <Text
+          <Text allowFontScaling={false}
             selectable
             style={{
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               color: 'white',
               maxWidth: SCREEN.width - 100,
               fontSize: 19,
@@ -360,7 +362,7 @@ const Chat = ({navigation}) => {
           <Icon name="arrow-back" size={25} color="#fff" />
         </TouchableOpacity>
         <View style={{alignItems: 'center'}}>
-          <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+          <Text allowFontScaling={false} style={{color: 'white', fontSize: 20, fontFamily: 'Inter-Bold'}}>
             Chat
           </Text>
         </View>
@@ -390,11 +392,11 @@ const Chat = ({navigation}) => {
           borderBottomLeftRadius: 35,
         }}>
         <View>
-        <Text
+        <Text allowFontScaling={false}
             style={{
               color: 'white',
-              fontWeight: 'bold',
-              fontSize: 18,
+              fontFamily: 'Inter-Bold',
+              fontSize: wp('4%'),
               textAlign:'center'
             }}>
             {activeUsers?.length < 0 ? activeUsers?.length : '1'} Online
@@ -451,11 +453,11 @@ const Chat = ({navigation}) => {
               onPress={() => {
                 onMessageSubmit();
               }}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: 18,
+                  fontFamily: 'Inter-Bold',
+                  fontSize: wp('4%'),
                 }}>
                 Send
               </Text>

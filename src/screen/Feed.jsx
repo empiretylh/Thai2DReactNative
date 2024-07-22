@@ -25,6 +25,7 @@ import {timeExchanger} from '../tools/timeexchanger';
 import {PostItem} from './FeedComponents/Post';
 import { useLike } from '../context/LikeProvider';
 import { SearchViewModal } from './FeedComponents/SearchViewModal';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const Feed = ({navigation}) => {
   const {gtoken, setGToken} = useToken();
@@ -99,9 +100,9 @@ const Feed = ({navigation}) => {
             }}>
             <Icon name="arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
-          <Text
+          <Text allowFontScaling={false}
             style={{
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
               fontSize: 20,
               color: 'white',
               textAlign: 'center',

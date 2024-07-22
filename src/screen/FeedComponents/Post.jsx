@@ -21,6 +21,7 @@ import { ModalImageViewer } from './ImageViewer';
 import ImageViewer from '../components/ImageViewer';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { ADUNIT } from '../../config/adconfig';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,10 +32,13 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     marginTop: 5,
+    fontFamily: 'Inter-Regular',
   },
   showMore: {
     color: 'blue',
     marginTop: 5,
+    fontFamily: 'Inter-Bold',
+
   },
 });
 
@@ -44,7 +48,7 @@ const ShowMoreText = ({text, numberOfLines , style}) => {
 
   return (
     <View style={style}>
-      <Text
+      <Text allowFontScaling={false}
         style={styles.text}
         numberOfLines={expanded ? null : numberOfLines}
         selectable
@@ -55,7 +59,7 @@ const ShowMoreText = ({text, numberOfLines , style}) => {
       </Text>
       {showButton && (
         <TouchableOpacity onPress={() => setExpanded(!expanded)}>
-          <Text style={styles.showMore}>
+          <Text allowFontScaling={false} style={styles.showMore}>
             {expanded ? 'Show less' : 'Show more'}
           </Text>
         </TouchableOpacity>
@@ -140,14 +144,14 @@ export const PostItem = ({item}) => {
               style={{
                 flexDirection: 'column',
               }}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: 'black',
-                  fontWeight: 'bold',
+                  fontFamily: 'Inter-Bold',
                 }}>
                 {item.user.username}
               </Text>
-              <Text>{timeExchanger(item.created_at)}</Text>
+              <Text allowFontScaling={false}>{timeExchanger(item.created_at)}</Text>
             </View>
           </View>
 
@@ -182,10 +186,10 @@ export const PostItem = ({item}) => {
                 padding: 5,
               }}>
               <Icon name="albums-outline" size={25} color={'white'} />
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: 'white',
-                  fontWeight: 'bold',
+                  fontFamily: 'Inter-Bold',
                   fontSize: 15,
                   marginLeft: 5,
                 }}>
@@ -212,7 +216,7 @@ export const PostItem = ({item}) => {
                   size={30}
                   color={'red'}
                 />
-                <Text style={{color: 'black'}}>
+                <Text allowFontScaling={false} style={{color: 'black'}}>
                   {LikeCountbyPostId(item.id)}
                 </Text>
               </TouchableOpacity>

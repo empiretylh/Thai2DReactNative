@@ -27,6 +27,7 @@ import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
 import { ADUNIT } from '../../config/adconfig';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const GiftTypeScreen = ({navigation, route}) => {
   const {giftype} = route.params
@@ -66,10 +67,11 @@ const GiftTypeScreen = ({navigation, route}) => {
             <Icon name="arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
 
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: 'white',
               fontSize: 20,
+              fontFamily:'Inter-Bold'
             }}>
            {giftype == 'oneday'? "တစ်ရက်စာ ရွှေလက်ဆောင်" : giftype == "oneweek" ? "တစ်ပတ်စာ ရွှေလက်ဆောင်" : "3D ရွှေလက်ဆောင်"}
           </Text>

@@ -7,6 +7,7 @@ import {SCREEN} from '../../config/screen';
 import axios from 'axios';
 import {ExpandingDot} from 'react-native-animated-pagination-dots';
 import CustomFlatListComponent from './CustomFlatListComponenet';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 width = SCREEN.width;
 

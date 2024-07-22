@@ -25,7 +25,7 @@ import {SCREEN} from '../config/screen';
 import TopView from './GiftScreen/TopView';
 import {ADUNIT} from '../config/adconfig';
 import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
-
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 const GiftView = ({navigation}) => {
   const ad_images = useQuery('adimages', getAdImages);
 
@@ -67,11 +67,11 @@ const GiftView = ({navigation}) => {
               margin: 10,
               borderRadius: 18,
             }}>
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 color: 'white',
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
               }}>
               တစ်ရက်စာ
             </Text>
@@ -87,11 +87,11 @@ const GiftView = ({navigation}) => {
               onPress={() => {
                 navigation.navigate('ets');
               }}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: COLOR.primaryColor,
-                  fontSize: 18,
-                  fontWeight: 'bold',
+                  fontSize: wp('4%'),
+                  fontFamily: 'Inter-Bold',
                 }}>
                 Estimate Thai Stock
               </Text>
@@ -114,11 +114,11 @@ const GiftView = ({navigation}) => {
                   },
                 });
               }}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: COLOR.primaryColor,
-                  fontSize: 18,
-                  fontWeight: 'bold',
+                  fontSize: wp('4%'),
+                  fontFamily: 'Inter-Bold',
                 }}>
                 တစ်ရက်စာ ရွှေလက်ဆောင်
               </Text>
@@ -133,11 +133,11 @@ const GiftView = ({navigation}) => {
               marginTop: 3,
               borderRadius: 18,
             }}>
-            <Text
+            <Text allowFontScaling={false}
               style={{
                 color: 'white',
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontFamily: 'Inter-Bold',
               }}>
               တစ်ပတ်စာ
             </Text>
@@ -158,11 +158,11 @@ const GiftView = ({navigation}) => {
                   },
                 });
               }}>
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: COLOR.primaryColor,
-                  fontSize: 18,
-                  fontWeight: 'bold',
+                  fontSize: wp('4%'),
+                  fontFamily: 'Inter-Bold',
                 }}>
                 တစ်ပတ်စာလက်ဆောင်
               </Text>
@@ -197,11 +197,11 @@ const GiftView = ({navigation}) => {
               }}>
               <View style={{width: 20}} />
 
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: COLOR.primaryColor,
-                  fontSize: 18,
-                  fontWeight: 'bold',
+                  fontSize: wp('4%'),
+                  fontFamily: 'Inter-Bold',
                   textAlign: 'center',
                   flex: 1,
                 }}>

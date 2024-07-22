@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const ImageViewer = ({route}) => {
   const {image} = route.params;

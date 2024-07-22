@@ -3,6 +3,7 @@ import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native'
 import { COLOR } from '../../config/theme';
 import { IMAGE } from '../../config/image';
 import Icons from 'react-native-vector-icons/Ionicons';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 
 const SplashScreen = () => {
@@ -16,11 +17,11 @@ const SplashScreen = () => {
             <StatusBar backgroundColor={COLOR.primaryColor} />
             <Image source={IMAGE.logo} style={{ width: 200, objectFit: 'contain' }} />
             <ActivityIndicator color={'#fff'} size={30} />
-            <Text style={{
+            <Text allowFontScaling={false} style={{
                 color:'white',
                 fontSize:20,
                 fontWeight:'bold',
-
+                fontFamily:'Inter-Bold',
             }}>
                 ခဏစောင့်ပေးပါ...
                 </Text>

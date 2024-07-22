@@ -12,6 +12,7 @@ import {COLOR} from '../../config/theme';
 import {IMAGE} from '../../config/image';
 import { InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 import { ADKEYWORD, ADUNIT } from '../../config/adconfig';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const style = StyleSheet.create({
   buttton: {
@@ -100,11 +101,11 @@ const FloatingNavigionBottomBar = ({
             ]}
           />
 
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: active === 'home' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
             }}>
             Live
           </Text>
@@ -121,11 +122,11 @@ const FloatingNavigionBottomBar = ({
             }
             style={{width: 30, height: 30}}
           />
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
             }}>
             2D
           </Text>
@@ -150,11 +151,11 @@ const FloatingNavigionBottomBar = ({
                 position: 'absolute',
               }}>
               <Image source={IMAGE.gift} style={{width: 90, height: 90}} />
-              <Text
+              <Text allowFontScaling={false}
                 style={{
                   color: active === 'history' ? COLOR.primaryColor : '#2e4f24',
                   textAlign: 'center',
-                  fontWeight: 'bold',
+                  fontFamily: 'Inter-Bold',
                   marginTop: -10,
                 }}>
                 Gift
@@ -174,11 +175,11 @@ const FloatingNavigionBottomBar = ({
             }
             style={{width: 30, height: 30}}
           />
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: active === 'threed' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
             }}>
             3D
           </Text>
@@ -194,11 +195,11 @@ const FloatingNavigionBottomBar = ({
             size={30}
             color={active === 'news' ? COLOR.primaryColor : '#2e4f24'}
           />
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: active === 'news' ? COLOR.primaryColor : '#2e4f24',
               textAlign: 'center',
-              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
             }}>
             Feed
           </Text>

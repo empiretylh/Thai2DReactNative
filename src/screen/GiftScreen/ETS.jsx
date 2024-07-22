@@ -26,6 +26,7 @@ import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { ADUNIT } from '../../config/adconfig';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 
 const ETS = ({navigation}) => {
@@ -67,10 +68,11 @@ const ETS = ({navigation}) => {
             <Icon name="arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
 
-          <Text
+          <Text allowFontScaling={false}
             style={{
               color: 'white',
               fontSize: 20,
+              fontFamily:'Inter-Bold'
             }}>
             Estimate Thai Stock
           </Text>

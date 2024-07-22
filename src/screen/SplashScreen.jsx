@@ -1,6 +1,7 @@
 import React from "react";
 import {View, Text, StatusBar} from 'react-native';
 import { COLOR } from "../config/theme";
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
  const SplashScreen = ()=>{
     return (
