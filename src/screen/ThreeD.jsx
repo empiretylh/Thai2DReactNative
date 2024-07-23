@@ -16,7 +16,8 @@ import {getThreeDhistory, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import {useLoadData} from '../context/LoadDataProvider';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 
 const ThreeDView = ({navigation}) => {

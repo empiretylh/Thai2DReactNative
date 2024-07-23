@@ -39,7 +39,8 @@ import {SCREEN} from '../config/screen';
 import {CountActiveUsers, setUserPresence} from '../context/UserActiveProvider';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { ADUNIT } from '../config/adconfig';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 
 const NumberDisplaySet = ({number = 0}) => {
@@ -362,7 +363,7 @@ const Chat = ({navigation}) => {
           <Icon name="arrow-back" size={25} color="#fff" />
         </TouchableOpacity>
         <View style={{alignItems: 'center'}}>
-          <Text allowFontScaling={false} style={{color: 'white', fontSize: wp('4%'), fontFamily: 'Inter-Bold'}}>
+          <Text allowFontScaling={false} style={{color: 'white', fontSize: hp('3%'), fontFamily: 'Inter-Bold'}}>
             Chat
           </Text>
         </View>
@@ -438,7 +439,7 @@ const Chat = ({navigation}) => {
                 padding: 10,
                 flex: 1,
                 color: 'white',
-                fontSize: wp('4%'),
+                fontSize: hp('2%'),
               }}
               placeholder="Type a message...."
               placeholderTextColor={'white'}
@@ -457,7 +458,7 @@ const Chat = ({navigation}) => {
                 style={{
                   color: 'white',
                   fontFamily: 'Inter-Bold',
-                  fontSize: wp('4%'),
+                  fontSize: hp('2'),
                 }}>
                 Send
               </Text>

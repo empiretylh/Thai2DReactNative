@@ -1,4 +1,10 @@
-import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -23,9 +29,12 @@ import {useToken} from '../context/TookenProvider';
 import axios from 'axios';
 import {timeExchanger} from '../tools/timeexchanger';
 import {PostItem} from './FeedComponents/Post';
-import { useLike } from '../context/LikeProvider';
-import { SearchViewModal } from './FeedComponents/SearchViewModal';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {useLike} from '../context/LikeProvider';
+import {SearchViewModal} from './FeedComponents/SearchViewModal';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 const Feed = ({navigation}) => {
   const {gtoken, setGToken} = useToken();
@@ -33,7 +42,6 @@ const Feed = ({navigation}) => {
   const [showNavibar, setShowNavibar] = React.useState(true);
 
   const [showSearchView, setShowSearchView] = useState(false);
-
 
   let lastScrollY = useRef(0);
 
@@ -50,7 +58,8 @@ const Feed = ({navigation}) => {
   };
 
   const feeds_data = useQuery('feeds', getFeeds);
-  const {likes, RefetchLikes, LikeCountbyPostId, isUserLiked,likes_data} = useLike();
+  const {likes, RefetchLikes, LikeCountbyPostId, isUserLiked, likes_data} =
+    useLike();
 
   useLayoutEffect(() => {
     feeds_data?.refetch();
@@ -79,75 +88,86 @@ const Feed = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <TopBar navigation={navigation} showOrigin={false} customViewStyle={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: 2,
-          paddingHorizontal: 10,
-          minHeight: 50,
-          width:'100%',
-
-        }}>
+        <TopBar
+          navigation={navigation}
+          showOrigin={false}
+          customViewStyle={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 2,
+            paddingHorizontal: 10,
+            minHeight: 50,
+            width: '100%',
+          }}>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}
-            
             style={{
-              padding:5,
+              padding: 5,
               alignItems: 'center',
               marginRight: 10,
             }}>
             <Icon name="arrow-back" size={25} color="#fff" />
           </TouchableOpacity>
-          <Text allowFontScaling={false}
+          <Text
+            allowFontScaling={false}
             style={{
               fontFamily: 'Inter-Bold',
-              fontSize: wp('4%'),
+              fontSize: hp('3%'),
               color: 'white',
               textAlign: 'center',
             }}>
             Feed
           </Text>
-          <View style={{
-            marginLeft:'auto',
-          }}>
-            <TouchableOpacity onPress={() => {
-              setShowSearchView(true);
-            }
-            }>
+          <View
+            style={{
+              marginLeft: 'auto',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowSearchView(true);
+              }}>
               <Icon name="search" size={30} color="#fff" />
-
             </TouchableOpacity>
-
           </View>
         </TopBar>
 
-        <SearchViewModal onClose={() => setShowSearchView(false)} visible={showSearchView} />
-
-        {gtoken ? (
-          <>
-            <FlatList
-              refreshControl={
-                <RefreshControl
-                  refreshing={feeds_data.isLoading}
-                  onRefresh={() => {
-                    feeds_data.refetch();
-                    likes_data.refetch();
-                  }}
-                />
-              }
-              data={feeds}
-              renderItem={({item}) => <PostItem item={item} />}
-              keyExtractor={item => item.id}
-              onScroll={handleScroll}
-              scrollEventThrottle={16}
-              initialNumToRender={5}
-            />
-          </>
-        ) : (
-          <GoogleLoginView />
-        )}
+        <SearchViewModal
+          onClose={() => setShowSearchView(false)}
+          visible={showSearchView}
+        />
+        <View style={{
+          flex:1,
+          alignItems:'center',
+          justifyContent:'center',
+          maxWidth:500,
+          alignSelf:'center'
+        }}>
+          {gtoken ? (
+            <>
+              <FlatList
+                refreshControl={
+                  <RefreshControl
+                    refreshing={feeds_data.isLoading}
+                    onRefresh={() => {
+                      feeds_data.refetch();
+                      likes_data.refetch();
+                    }}
+                  />
+                }
+                data={feeds}
+                renderItem={({item}) => <PostItem item={item} />}
+                keyExtractor={item => item.id}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+                initialNumToRender={5}
+              />
+            </>
+          ) : (
+            <GoogleLoginView />
+          )}
+        </View>
 
         <FloatingNavigionBottomBar
           navigation={navigation}

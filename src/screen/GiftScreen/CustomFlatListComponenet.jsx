@@ -3,7 +3,8 @@ import {FlatList, View, StyleSheet, Animated} from 'react-native';
 import {SCREEN} from '../../config/screen';
 import { ExpandingDot } from 'react-native-animated-pagination-dots';
 import { COLOR } from '../../config/theme';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const CustomFlatListComponent = ({
   data,

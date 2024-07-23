@@ -20,8 +20,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useLoadData} from '../context/LoadDataProvider';
 import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
 import {ADUNIT} from '../config/adconfig';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 const NumberDisplaySet = ({number = 0}) => {
   const numberString = number.toString();
@@ -29,16 +31,25 @@ const NumberDisplaySet = ({number = 0}) => {
   const lastDigit = numberString.slice(-1); // Last character
 
   return (
-    <Text allowFontScaling={false}
+    <Text
+      allowFontScaling={false}
       style={{
-        fontFamily:'Inter-Bold',
+        fontFamily: 'Inter-Bold',
         letterSpacing: 0.5,
         fontSize: wp('4%'),
         color: 'white',
       }}>
       <Text allowFontScaling={false}>Set: </Text>
-      <Text allowFontScaling={false} style={{color: 'black'}}>{mainPart}</Text>
-      <Text allowFontScaling={false} style={{color: '#f21b13', fontSize: wp('4%'), fontFamily: 'Inter-Bold'}}>
+      <Text allowFontScaling={false} style={{color: 'black'}}>
+        {mainPart}
+      </Text>
+      <Text
+        allowFontScaling={false}
+        style={{
+          color: '#f21b13',
+          fontSize: wp('4%'),
+          fontFamily: 'Inter-Bold',
+        }}>
         {lastDigit}
       </Text>
     </Text>
@@ -56,18 +67,26 @@ const NumberDisplayVal = ({number = 0}) => {
   console.log(selectPart);
 
   return (
-    <Text allowFontScaling={false}
+    <Text
+      allowFontScaling={false}
       style={{
-        fontFamily:'Inter-Bold',
+        fontFamily: 'Inter-Bold',
         fontSize: wp('4%'),
         color: 'white',
       }}
-      
       ellipsizeMode="tail">
       <Text allowFontScaling={false}>Value : </Text>
-      <Text allowFontScaling={false} style={{color: '#000'}} >{firstPart}</Text>
-      <Text allowFontScaling={false} style={{color: '#f21b13', fontFamily: 'Inter-Bold'}}>{selectPart}</Text>
-      <Text allowFontScaling={false} style={{color: '#000'}}>{thridPart} </Text>
+      <Text allowFontScaling={false} style={{color: '#000'}}>
+        {firstPart}
+      </Text>
+      <Text
+        allowFontScaling={false}
+        style={{color: '#f21b13', fontFamily: 'Inter-Bold'}}>
+        {selectPart}
+      </Text>
+      <Text allowFontScaling={false} style={{color: '#000'}}>
+        {thridPart}{' '}
+      </Text>
     </Text>
   );
 };
@@ -97,11 +116,12 @@ const TwoDResultView = ({result = []}) => {
           <View style={{flexDirection: 'column', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
               <Icon name="partly-sunny" size={30} color={COLOR.fithColor} />
-              <Text allowFontScaling={false}
+              <Text
+                allowFontScaling={false}
                 style={{
                   fontSize: wp('4%'),
                   color: COLOR.fithColor,
-                  fontFamily:'Inter-Bold',
+                  fontFamily: 'Inter-Bold',
                 }}>
                 12:01 PM
               </Text>
@@ -111,12 +131,13 @@ const TwoDResultView = ({result = []}) => {
               <NumberDisplayVal number={twelevePm?.value} />
             </View>
           </View>
-          <Text allowFontScaling={false}
+          <Text
+            allowFontScaling={false}
             style={{
               fontSize: wp('14%'),
               color: COLOR.fithColor,
               letterSpacing: 2,
-              fontFamily:'Inter-Bold',
+              fontFamily: 'Inter-Bold',
             }}>
             {twelevePm?.twod || '--'}
           </Text>
@@ -135,11 +156,12 @@ const TwoDResultView = ({result = []}) => {
           <View style={{flexDirection: 'column', gap: 2}}>
             <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
               <Icon name="moon" size={30} color={COLOR.fithColor} />
-              <Text allowFontScaling={false}
+              <Text
+                allowFontScaling={false}
                 style={{
                   fontSize: wp('4%'),
                   color: COLOR.fithColor,
-                  fontFamily:'Inter-Bold',
+                  fontFamily: 'Inter-Bold',
                 }}>
                 4:30 PM
               </Text>
@@ -149,12 +171,13 @@ const TwoDResultView = ({result = []}) => {
               <NumberDisplayVal number={fourPm?.value} />
             </View>
           </View>
-          <Text allowFontScaling={false}
+          <Text
+            allowFontScaling={false}
             style={{
               fontSize: wp('14%'),
               color: COLOR.fithColor,
               letterSpacing: 2,
-              fontFamily:'Inter-Bold',
+              fontFamily: 'Inter-Bold',
             }}>
             {fourPm?.twod}
           </Text>
@@ -181,7 +204,8 @@ const ThreeDResultView = ({result}) => {
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
             <View style={{flex: 1}}></View>
 
-            <Text allowFontScaling={false}
+            <Text
+              allowFontScaling={false}
               style={{
                 fontSize: wp('4%'),
                 marginLeft: 'auto',
@@ -189,18 +213,19 @@ const ThreeDResultView = ({result}) => {
                 flex: 1,
                 textAlign: 'center',
                 color: 'yellow',
-                fontFamily:'Inter-Regular',
+                fontFamily: 'Inter-Regular',
               }}>
               MODERN
             </Text>
-            <Text allowFontScaling={false}
+            <Text
+              allowFontScaling={false}
               style={{
                 fontSize: wp('4%'),
                 color: COLOR.fithColor,
                 flex: 1,
                 textAlign: 'center',
                 color: 'yellow',
-                fontFamily:'Inter-Regular',
+                fontFamily: 'Inter-Regular',
               }}>
               INTERNET
             </Text>
@@ -214,28 +239,31 @@ const ThreeDResultView = ({result}) => {
                 gap: 2,
               }}>
               <Icon name="sunny" size={25} color={COLOR.fithColor} />
-              <Text allowFontScaling={false}
+              <Text
+                allowFontScaling={false}
                 style={{
-                  fontSize: wp('5%'),
+                  fontSize: wp('4%'),
                   color: COLOR.fithColor,
-                  fontFamily:'Inter-Bold',
+                  fontFamily: 'Inter-Bold',
                 }}>
                 9:30 AM
               </Text>
             </View>
 
-            <Text allowFontScaling={false}
+            <Text
+              allowFontScaling={false}
               style={{
                 fontSize: wp('4%'),
                 marginLeft: 'auto',
                 textAlign: 'center',
-                fontFamily:'Inter-Bold',
+                fontFamily: 'Inter-Bold',
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
               {result?.modern_930 || '--'}
             </Text>
-            <Text allowFontScaling={false}
+            <Text
+              allowFontScaling={false}
               style={{
                 fontSize: wp('4%'),
                 color: COLOR.fithColor,
@@ -264,7 +292,8 @@ const ThreeDResultView = ({result}) => {
                 gap: 2,
               }}>
               <Icon name="sunny" size={25} color={COLOR.fithColor} />
-              <Text allowFontScaling={false}
+              <Text
+                allowFontScaling={false}
                 style={{
                   fontSize: wp('4%'),
                   fontFamily: 'Inter-Bold',
@@ -274,7 +303,8 @@ const ThreeDResultView = ({result}) => {
               </Text>
             </View>
 
-            <Text allowFontScaling={false}
+            <Text
+              allowFontScaling={false}
               style={{
                 fontSize: wp('4%'),
                 marginLeft: 'auto',
@@ -285,7 +315,8 @@ const ThreeDResultView = ({result}) => {
               }}>
               {result?.modern_200 || '--'}
             </Text>
-            <Text allowFontScaling={false}
+            <Text
+              allowFontScaling={false}
               style={{
                 fontSize: wp('5%'),
                 color: COLOR.fithColor,
@@ -320,7 +351,13 @@ const Home = ({navigation}) => {
   }, [modernData?.data]);
 
   useEffect(() => {
-    twodData?.refetch();
+    // refetch every 4 seconds
+    const interval = setInterval(() => {
+      twodData.refetch();
+      serverupdatedTwoD.refetch();
+    }, 4000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const Data = useMemo(() => {
@@ -355,12 +392,18 @@ const Home = ({navigation}) => {
     }
 
     let now = new Date();
+    // now.setHours(13,30, 0, 0)
 
     let noon = new Date(now);
     noon.setHours(12, 1, 0, 0); // 12:00 PM
 
     let afternoon = new Date(now);
     afternoon.setHours(16, 30, 0, 0); // 4:30 PM
+
+
+    let onehour = new Date(now);
+    onehour.setHours(13, 0, 0, 0); // 1:00 PM
+
 
     const twelevePm =
       Data?.result && Data?.result?.find(item => item.open_time == '12:01:00');
@@ -369,10 +412,15 @@ const Home = ({navigation}) => {
       Data?.result && Data?.result?.find(item => item.open_time == '16:30:00');
 
     if (now < noon) {
-    } else if (now >= noon && now < afternoon) {
+      // before 12:00 PM
+    } else if (now >= noon && now < onehour) {
+      // after 12:00 PM
       number = twelevePm?.twod;
-    } else {
-      number = fourPm?.twod;
+    } // after 1 hour 
+    else if (now >= onehour && now < afternoon){
+        return number;
+    }else {
+      number =  fourPm?.twod;
     }
 
     return number;
@@ -403,58 +451,68 @@ const Home = ({navigation}) => {
           flex: 1,
         }}>
         <TopBar navigation={navigation} />
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={twodData.isFetching}
-                onRefresh={onRefresh}
-              />
-            }
-            contentContainerStyle={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderColor: 'black',
-              marginTop: -15,
-            }}>
-            {twodData.isLoading ? (
-              <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
-              <Text allowFontScaling={false}
-                style={{
-                  color: COLOR.primaryColor,
-                  // fontSize: 170,
-                  fontSize: wp('37%'),
-                  textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                  textShadowOffset: {width: -1, height: 4},
-                  textShadowRadius: 2,
-                  fontFamily:'Inter-Bold',
-                }}>
-                {showTwodNumber}
-              </Text>
-            )}
-            <View
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={twodData.isFetching}
+              onRefresh={onRefresh}
+            />
+          }
+          contentContainerStyle={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderColor: 'black',
+            marginTop: hp(-2),
+       
+          }}>
+          {twodData.isLoading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <Text
+              allowFontScaling={false}
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 4,
+                color: COLOR.primaryColor,
+                // fontSize: 170,
+                fontSize: hp('20%'),
+                textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                textShadowOffset: {width: -1, height: 4},
+                textShadowRadius: 2,
+                fontFamily: 'Inter-Bold',
               }}>
-              <Icon name="time-outline" size={20} />
-              <Text allowFontScaling={false} style={{color: 'black',fontSize:wp('3%'),  fontFamily:'Inter-Bold'}}>
-                Updated At {new Date(showTwodTime).toLocaleString()}
-              </Text>
-            </View>
-          </ScrollView>
-        <ScrollView style={{marginBottom: 80}}>
-          {Data?.result && (
-            <>
-              <TwoDResultView result={Data?.result || [{}]} />
-              <BannerAd
-                unitId={ADUNIT.bannerunit}
-                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-              />
-              <ThreeDResultView result={MIData?.data || [{}]} />
-            </>
+              {showTwodNumber}
+            </Text>
           )}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 4,
+            }}>
+            <Icon name="time-outline" size={20} />
+            <Text
+              allowFontScaling={false}
+              style={{
+                color: 'black',
+                fontSize: wp('3%'),
+                fontFamily: 'Inter-Bold',
+              }}>
+              Updated At {new Date(showTwodTime).toLocaleString()}
+            </Text>
+          </View>
+          <View style={{
+            marginBottom:hp(10)
+          }}>
+            {Data?.result && (
+              <>
+                <TwoDResultView result={Data?.result || [{}]} />
+                <BannerAd
+                  unitId={ADUNIT.bannerunit}
+                  size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                />
+                <ThreeDResultView result={MIData?.data || [{}]} />
+              </>
+            )}
+          </View>
         </ScrollView>
 
         <FloatingNavigionBottomBar navigation={navigation} screen="home" />

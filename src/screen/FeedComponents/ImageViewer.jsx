@@ -4,7 +4,8 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../../config/theme';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 export const ModalImageViewer = ({show, setShow, imageUrls}) => {
   return (

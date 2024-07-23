@@ -3,7 +3,8 @@ import { ActivityIndicator, Image, StatusBar, Text, View } from 'react-native'
 import { COLOR } from '../../config/theme';
 import { IMAGE } from '../../config/image';
 import Icons from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 
 const SplashScreen = () => {

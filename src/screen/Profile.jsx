@@ -25,7 +25,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import GoogleLoginView from './components/GoogleLogin';
 import {useToken} from '../context/TookenProvider';
 import firebase from '@react-native-firebase/app';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const Profile = ({navigation}) => {
   const {token, gtoken, onSetGToken, onSetToken} = useToken();
@@ -127,7 +128,7 @@ const Profile = ({navigation}) => {
           <Text allowFontScaling={false}
             style={{
               color: 'white',
-              fontSize: wp('4%'),
+              fontSize: hp(2.5),
               fontFamily: 'Inter-Bold',
             }}>
             SETTINGS
@@ -151,7 +152,7 @@ const Profile = ({navigation}) => {
                 marginLeft: 10,
                 color: 'white',
                 fontFamily: 'Inter-Bold',
-                fontSize: 17,
+                fontSize: hp(2),
               }}>
               Privacy Policy
             </Text>
@@ -167,14 +168,20 @@ const Profile = ({navigation}) => {
               borderBottomColor: COLOR.thridColor,
               padding: 10,
               borderBottomWidth: 1,
-            }}>
+            }}
+
+            onPress={()=>{
+              navigation.navigate('AboutUs')
+            }}
+            
+            >
             <Icon name="information-circle" size={25} color={'#fff'} />
             <Text allowFontScaling={false}
               style={{
                 marginLeft: 10,
                 color: 'white',
                 fontFamily: 'Inter-Bold',
-                fontSize: 17,
+                fontSize: hp(2),
               }}>
               About Us
             </Text>
@@ -197,7 +204,7 @@ const Profile = ({navigation}) => {
                 marginLeft: 10,
                 color: 'white',
                 fontFamily: 'Inter-Bold',
-                fontSize: 17,
+                fontSize: hp(2),
               }}>
               Current Version
             </Text>
@@ -218,7 +225,7 @@ const Profile = ({navigation}) => {
                 marginLeft: 10,
                 color: 'white',
                 fontFamily: 'Inter-Bold',
-                fontSize: 17,
+                fontSize: hp(2),
               }}>
               Rate this app
             </Text>
@@ -238,7 +245,7 @@ const Profile = ({navigation}) => {
                 marginLeft: 10,
                 color: 'white',
                 fontFamily: 'Inter-Bold',
-                fontSize: 17,
+                fontSize: hp(2),
               }}>
               Logout
             </Text>

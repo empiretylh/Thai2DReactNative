@@ -20,7 +20,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useLoadData} from '../context/LoadDataProvider';
 import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
 import {ADUNIT} from '../config/adconfig';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const PrivacyPolicy = ({navigation}) => {
   const {twodDataHistory: twodData} = useLoadData();
@@ -92,7 +93,7 @@ const PrivacyPolicy = ({navigation}) => {
               style={{
                 color: 'black',
                 fontSize: wp('4%'),
-                fontFamily: 'NotoSansMyanmar-Regular',
+                fontFamily: 'Inter-Regular',
               }}>
               <Text allowFontScaling={false}
                 style={{

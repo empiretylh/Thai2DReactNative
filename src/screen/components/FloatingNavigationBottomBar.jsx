@@ -12,7 +12,8 @@ import {COLOR} from '../../config/theme';
 import {IMAGE} from '../../config/image';
 import { InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 import { ADKEYWORD, ADUNIT } from '../../config/adconfig';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const style = StyleSheet.create({
   buttton: {

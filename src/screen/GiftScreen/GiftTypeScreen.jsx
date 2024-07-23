@@ -27,8 +27,12 @@ import {SCREEN} from '../../config/screen';
 import AutoHeightImage from '../components/AutoHeightImage';
 import {ADUNIT} from '../../config/adconfig';
 import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import { useToken } from '../../context/TookenProvider';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {useToken} from '../../context/TookenProvider';
+import GoogleLoginView from '../components/GoogleLogin';
 
 const GiftTypeScreen = ({navigation, route}) => {
   const {giftype} = route.params;
@@ -119,17 +123,23 @@ const GiftTypeScreen = ({navigation, route}) => {
         </ImageBackground>
       ) : (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Image source={IMAGE.gift} style={{
+            width: wp('30'),
+            height:wp('30')
+          }} />
           <Text
             style={{
               fontFamily: 'NotoSansMyanmar-Bold',
               color: 'black',
-              fontSize: wp('4%'),
+              fontSize: hp(3),
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            Sigin ဝင်ပြီး ပေါက်ဂဏန်းများ ရယူပါ။
+            Signin ဝင်ပြီး ပေါက်ဂဏန်းများ ရယူပါ။
           </Text>
-          <GoogleLoginView nobound />
+          <View>
+            <GoogleLoginView nobound />
+          </View>
         </View>
       )}
     </View>

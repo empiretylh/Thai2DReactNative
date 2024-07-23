@@ -18,7 +18,8 @@ import {COLOR} from '../../config/theme';
 import {useQuery} from 'react-query';
 import {getSearch} from '../../server/api';
 import {PostItem} from './Post';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 export const SearchViewModal = ({visible, onClose}) => {
   const [searchtext, setSearchText] = React.useState('');

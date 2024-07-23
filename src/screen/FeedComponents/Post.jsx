@@ -21,7 +21,8 @@ import { ModalImageViewer } from './ImageViewer';
 import ImageViewer from '../components/ImageViewer';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { ADUNIT } from '../../config/adconfig';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -68,6 +69,16 @@ const ShowMoreText = ({text, numberOfLines , style}) => {
   );
 };
 
+const computeImageWidth = ()=>{
+  let SCREENWIDTH = SCREEN.width;
+
+  if(SCREENWIDTH > 400){
+    return 480;
+  }else{
+    return SCREENWIDTH-15;
+  } 
+}
+
 export const PostItem = ({item}) => {
   const {RefetchLikes, likes, LikeCountbyPostId, isUserLiked} = useLike();
 
@@ -98,9 +109,9 @@ export const PostItem = ({item}) => {
             uri: axios.defaults.baseURL + item?.image,
           }}
           style={{
-            width: SCREEN.width - 20,
-            height: SCREEN.height / 3,
-            objectFit: 'cover',
+            width: computeImageWidth(),
+            height: 320,
+            objectFit: 'cover'
           }}
         />
       </TouchableOpacity>
@@ -120,7 +131,7 @@ export const PostItem = ({item}) => {
         }}>
         <View
           style={{
-            padding: 10,
+            padding: wp('2'),
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
             <Image
@@ -128,7 +139,7 @@ export const PostItem = ({item}) => {
               source={
                 item?.user?.photo
                   ? {
-                      uri: axios.defaults.baseURL + item?.user?.photo,
+                      uri: item?.user?.photo,
                     }
                   : IMAGE.logo
               }

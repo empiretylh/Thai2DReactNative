@@ -25,7 +25,8 @@ import {SCREEN} from '../config/screen';
 import TopView from './GiftScreen/TopView';
 import {ADUNIT} from '../config/adconfig';
 import {BannerAd, BannerAdSize} from 'react-native-google-mobile-ads';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 const GiftView = ({navigation}) => {
   const ad_images = useQuery('adimages', getAdImages);
 

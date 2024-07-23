@@ -8,7 +8,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import {useToken} from '../../context/TookenProvider';
 import {useMutation} from 'react-query';
 import {register} from '../../server/api';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const GoogleLoginView = ({nobound = false, reload = () => {}}) => {
   const {gtoken, onSetGToken, setToken, token, onSetToken} = useToken();
@@ -66,6 +66,7 @@ const GoogleLoginView = ({nobound = false, reload = () => {}}) => {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: nobound ? 10 : 1,
+        minWidth : wp('100%')
       }}>
       <View
         style={{
@@ -81,7 +82,7 @@ const GoogleLoginView = ({nobound = false, reload = () => {}}) => {
           style={{
             color: 'black',
             textAlign: 'center',
-            fontSize: wp('5%'),
+            fontSize: hp('3'),
             fontFamily: 'Inter-Bold',
           }}>
           Please Sign in to Continue
@@ -91,7 +92,7 @@ const GoogleLoginView = ({nobound = false, reload = () => {}}) => {
           style={{
             color: COLOR.primaryColor,
             textAlign: 'center',
-            fontSize: wp('4%'),
+            fontSize: hp('2'),
             marginTop: 4,
 
             fontFamily: 'Inter-Bold',
@@ -122,7 +123,7 @@ const GoogleLoginView = ({nobound = false, reload = () => {}}) => {
             allowFontScaling={false}
             style={{
               color: 'black',
-              fontSize: wp('4%'),
+              fontSize: hp('3'),
               fontFamily: 'Inter-Bold',
             }}>
             Sign in with Google

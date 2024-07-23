@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Image, Dimensions, ActivityIndicator, View, Text} from 'react-native';
 import { SCREEN } from '../../config/screen';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
