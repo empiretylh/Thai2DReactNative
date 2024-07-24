@@ -47,7 +47,7 @@ const ETS = ({navigation}) => {
       style={{
         flex: 1,
       }}>
-      {gtoken ? (
+    
         <ImageBackground
           source={IMAGE.background}
           resizeMode="cover"
@@ -109,7 +109,7 @@ const ETS = ({navigation}) => {
 
           <FloatingNavigionBottomBar navigation={navigation} screen="home" />
         </ImageBackground>
-      ) : (
+      {/* ) : (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Image source={IMAGE.gift} style={{
             width: wp('30'),
@@ -129,7 +129,7 @@ const ETS = ({navigation}) => {
             <GoogleLoginView nobound />
           </View>
         </View>
-      )}
+      )} */}
     </View>
   );
 };

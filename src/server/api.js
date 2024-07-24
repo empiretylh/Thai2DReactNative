@@ -2,6 +2,8 @@ import axios from 'axios';
 // axios.defaults.baseURL = 'http://10.0.1.225:8000/'
 axios.defaults.baseURL = 'https://thaimyanmar2d.pythonanywhere.com';
 // axios.defaults.baseURL = 'http://192.168.43.181:8000/'
+// axios.defaults.baseURL = 'http://192.168.43.113:8000/';
+// http://192.168.43.113:8000/
 
 export const getTwoDDaliy = () => {
   return axios.get('https://api.thaistock2d.com/live');
@@ -67,6 +69,10 @@ export const getModernInternetData = () => {
 };
 
 export const postFCMToken = data => {
-  console.log("Device tokden", data)
+  console.log('Device tokden', data);
   return axios.post('/api/devicetoken/', data);
+};
+
+export const getModernInternetByAdmin = data => {
+  return axios.get('api/moderninternet/', data);
 };

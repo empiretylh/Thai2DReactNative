@@ -72,8 +72,6 @@ const NumberDisplayVal = ({number = 0}) => {
   const firstPart = numberString.slice(0, firstindex - 1);
   const thridPart = numberString.slice(firstindex, numberString.length);
 
-  console.log(firstindex);
-  console.log(selectPart);
 
   return (
     <Text allowFontScaling={false}
@@ -143,7 +141,7 @@ const Chat = ({navigation}) => {
   const twodData = useQuery('twod', getTwoDDaliy);
   const userprofile = useQuery('user_profile', getUsers);
   const {gtoken, onSetGToken} = useToken();
-
+ 
   const profiledata = useMemo(() => {
     if (userprofile?.data) {
       return userprofile?.data?.data;
@@ -153,11 +151,13 @@ const Chat = ({navigation}) => {
 
   const Data = useMemo(() => {
     if (twodData?.data) {
-      console.log(twodData?.data?.data);
       return twodData?.data?.data;
     }
     return null;
   }, [twodData?.data]);
+
+
+
 
   // Firestore cursor is not supported in query.onSnapshot so maintaining two chat list
   // oldChats -> chat list via cursor, recentChats -> chat list via live listener
@@ -169,22 +169,15 @@ const Chat = ({navigation}) => {
 
   const [inputMessage, setInputMessage] = useState('');
 
-  const [activeUsers, setActiveUsers] = useState([]);
+  const [activeUsers, setActiveUsers] = useState();
 
-  useEffect(() => {
-    const query = firestore().collection('Users').where('isOnline', '==', true);
-    const listener = query.onSnapshot(querySnapshot => {
-      let data = [];
-      querySnapshot?.forEach(s => {
-        data.push(s.data());
-      });
-      setActiveUsers(data);
-    });
-
-    return () => {
-      listener();
-    };
-  }, []);
+  useEffect(()=>{
+    // reload every 5 s
+    const interval = setInterval(()=>{ 
+      CountActiveUsers(setActiveUsers);
+    },10000)
+    return ()=> clearInterval(interval);
+  },[])
 
   useEffect(() => {
     const query = firestore()
@@ -400,7 +393,7 @@ const Chat = ({navigation}) => {
               fontSize: wp('4%'),
               textAlign:'center'
             }}>
-            {activeUsers?.length < 0 ? activeUsers?.length : '1'} Online
+            {activeUsers} Online
           </Text>
 
         

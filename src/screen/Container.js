@@ -22,9 +22,11 @@ import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 import {postFCMToken} from '../server/api';
 import {getUniqueIdSync} from 'react-native-device-info';
-import EncryptedStorage from 'react-native-encrypted-storage'
+import EncryptedStorage from 'react-native-encrypted-storage';
 import PrivacyPolicy from './PrivacyPolicy';
 import AboutUs from './AboutUs';
+import {TokenProvider} from '../context/TookenProvider';
+import PushNotification from 'react-native-push-notification';
 
 const client = new QueryClient();
 
@@ -43,7 +45,7 @@ const Container = () => {
 
       setAppState(nextAppState);
     };
-    
+
     AppState.addEventListener('change', handleAppStateChange);
   }, [appState]);
 
@@ -82,31 +84,34 @@ const Container = () => {
     <QueryClientProvider client={client}>
       <NavigationContainer>
         <LoadDataProvider>
-          <UserProvider>
-            <LikeProvider>
-              <Stack.Navigator
-                screenOptions={{headerShown: false, animation: 'none'}}>
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="Gift" component={GiftView} />
+          <TokenProvider>
+            <UserProvider>
+              <LikeProvider>
+                <Stack.Navigator
+                  screenOptions={{headerShown: false, animation: 'none'}}>
+                  <Stack.Screen name="Home" component={Home} />
+                  <Stack.Screen name="Gift" component={GiftView} />
 
-                <Stack.Screen name="ThreeD" component={ThreeDView} />
-                <Stack.Screen name="History" component={History} />
-                <Stack.Screen name="Feed" component={Feed} />
-                <Stack.Screen name="Chat" component={Chat} />
-                <Stack.Screen name="Profile" component={Profile} />
-                <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-                <Stack.Screen name="AboutUs" component={AboutUs} />
+                  <Stack.Screen name="ThreeD" component={ThreeDView} />
+                  <Stack.Screen name="History" component={History} />
+                  <Stack.Screen name="Feed" component={Feed} />
+                  <Stack.Screen name="Chat" component={Chat} />
+                  <Stack.Screen name="Profile" component={Profile} />
+                  <Stack.Screen
+                    name="PrivacyPolicy"
+                    component={PrivacyPolicy}
+                  />
+                  <Stack.Screen name="AboutUs" component={AboutUs} />
 
+                  {/* gift view */}
+                  <Stack.Screen name="ets" component={ETS} />
+                  <Stack.Screen name="gts" component={GiftTypeScreen} />
 
-
-                {/* gift view */}
-                <Stack.Screen name="ets" component={ETS} />
-                <Stack.Screen name="gts" component={GiftTypeScreen} />
-
-                <Stack.Screen name="SplashScreen" component={SplashScreen} />
-              </Stack.Navigator>
-            </LikeProvider>
-          </UserProvider>
+                  <Stack.Screen name="SplashScreen" component={SplashScreen} />
+                </Stack.Navigator>
+              </LikeProvider>
+            </UserProvider>
+          </TokenProvider>
         </LoadDataProvider>
       </NavigationContainer>
     </QueryClientProvider>

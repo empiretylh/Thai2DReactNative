@@ -1,3 +1,4 @@
+import { firebase } from '@react-native-firebase/auth';
 import axios from 'axios';
 import React, {useContext, createContext} from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -13,8 +14,9 @@ export const TokenProvider = ({children}) => {
         });
 
         EncryptedStorage.getItem('token').then((value)=>{
+            console.log("Token Value " , value)
             setToken(value);
-            axios.defaults.headers.common['Authorization'] = `Token ${value}`   
+            if(value) axios.defaults.headers.common['Authorization'] = `Token ${value}`   
         })
     }, []);
 
@@ -30,8 +32,15 @@ export const TokenProvider = ({children}) => {
         axios.defaults.headers.common['Authorization'] = `Token ${value}`
     }
 
+    const onLogout = ()=>{
+        setToken(null);
+        EncryptedStorage.removeItem('token')
+        axios.defaults.headers.common['Authorization'] = null;
+        firebase.auth().signOut();
+    }
+
     return (
-        <TokenContext.Provider value={{gtoken, setGToken, token, setToken, onSetGToken, onSetToken}}>
+        <TokenContext.Provider value={{gtoken, setGToken, token, setToken, onSetGToken, onSetToken, onLogout}}>
             {children}
         </TokenContext.Provider>
     );

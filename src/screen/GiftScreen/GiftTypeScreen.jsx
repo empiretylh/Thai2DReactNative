@@ -52,7 +52,7 @@ const GiftTypeScreen = ({navigation, route}) => {
       style={{
         flex: 1,
       }}>
-      {gtoken ? (
+     
         <ImageBackground
           source={IMAGE.background}
           resizeMode="cover"
@@ -121,7 +121,7 @@ const GiftTypeScreen = ({navigation, route}) => {
             </View>
           </ScrollView>
         </ImageBackground>
-      ) : (
+      {/* ) : (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Image source={IMAGE.gift} style={{
             width: wp('30'),
@@ -141,7 +141,7 @@ const GiftTypeScreen = ({navigation, route}) => {
             <GoogleLoginView nobound />
           </View>
         </View>
-      )}
+      )} */}
     </View>
   );
 };

@@ -13,7 +13,7 @@ import {
 import TopBar from './components/TopBar';
 import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
 import {useQuery} from 'react-query';
-import {getLiveTwoDServerUpdate, getTwoDDaliy} from '../server/api';
+import {getLiveTwoDServerUpdate, getModernInternetByAdmin, getTwoDDaliy} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -63,8 +63,6 @@ const NumberDisplayVal = ({number = 0}) => {
   const firstPart = numberString.slice(0, firstindex - 1);
   const thridPart = numberString.slice(firstindex, numberString.length);
 
-  console.log(firstindex);
-  console.log(selectPart);
 
   return (
     <Text
@@ -187,7 +185,7 @@ const TwoDResultView = ({result = []}) => {
   );
 };
 
-const ThreeDResultView = ({result}) => {
+const ThreeDResultView = ({result, admindata}) => {
   return (
     <View
       style={{
@@ -260,7 +258,7 @@ const ThreeDResultView = ({result}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              {result?.modern_930 || '--'}
+              {admindata?.modern_930 == '--' ? result?.modern_930 || '--' : admindata?.modern_930}
             </Text>
             <Text
               allowFontScaling={false}
@@ -271,7 +269,7 @@ const ThreeDResultView = ({result}) => {
                 fontFamily: 'Inter-Bold',
                 flex: 1,
               }}>
-              {result?.internet_930 || '--'}
+              {admindata?.internet_930 == '--' ? result?.internet_930 || '--' : admindata?.internet_930}
             </Text>
           </View>
           <View
@@ -313,18 +311,18 @@ const ThreeDResultView = ({result}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              {result?.modern_200 || '--'}
+              {admindata?.modern_200 == '--'? result?.modern_200 || '--' : admindata?.modern_200}
             </Text>
             <Text
               allowFontScaling={false}
               style={{
-                fontSize: wp('5%'),
+                fontSize: wp('4%'),
                 color: COLOR.fithColor,
                 textAlign: 'center',
                 fontFamily: 'Inter-Bold',
                 flex: 1,
               }}>
-              {result?.internet_200 || '--'}
+              {admindata?.internet_200 == '--' ? result?.internet_200 || '--' : admindata?.internet_200}
             </Text>
           </View>
         </View>
@@ -336,6 +334,40 @@ const ThreeDResultView = ({result}) => {
 const Home = ({navigation}) => {
   const {twodData, modernData} = useLoadData();
   const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
+  const SUMIQuery = useQuery('SUMIQuery',getModernInternetByAdmin);
+
+  const SUMIData = useMemo(()=>{
+    if(SUMIQuery?.data){
+      let data = SUMIQuery?.data?.data;
+      // [{"date": "2024-07-24T09:30:00+06:30", "id": 1, "internet": "34", "modern": "13"}, {"date": "2024-07-24T02:00:00+06:30", "id": 2, "internet": "32", "modern": "56"}]
+//
+      let MODERN930 = "--";
+      let INTERNET930 = "--";
+      let MODERN200 = "--";
+      let INTERNET200 = "--";
+
+      data?.map(item=>{
+        // get only hour 9:30 Moder and Internet and 2:00 PM Modern and Internet
+        let date = new Date(item.date);
+        if(date.getHours() == 9 && date.getMinutes() == 30){
+          MODERN930 = item.modern;
+          INTERNET930 = item.internet;
+        }else if(date.getHours() == 14 && date.getMinutes() == 0){
+          MODERN200 = item.modern;
+          INTERNET200 = item.internet;
+        }
+      })
+      
+      return {
+        modern_930:MODERN930,
+        internet_930:INTERNET930,
+        modern_200:MODERN200,
+        internet_200:INTERNET200
+      }
+
+    }
+
+  },[SUMIQuery?.data])
 
   const SUData = useMemo(() => {
     if (serverupdatedTwoD?.data) {
@@ -355,6 +387,7 @@ const Home = ({navigation}) => {
     const interval = setInterval(() => {
       twodData.refetch();
       serverupdatedTwoD.refetch();
+      modernData.refetch();
     }, 4000);
 
     return () => clearInterval(interval);
@@ -362,7 +395,6 @@ const Home = ({navigation}) => {
 
   const Data = useMemo(() => {
     if (twodData?.data) {
-      console.log(twodData?.data?.data);
       return twodData?.data?.data;
     }
     return null;
@@ -371,6 +403,7 @@ const Home = ({navigation}) => {
   const onRefresh = () => {
     twodData.refetch();
     serverupdatedTwoD.refetch();
+    SUMIQuery.refetch();  
   };
 
   const showTwodNumber = useMemo(() => {
@@ -509,7 +542,7 @@ const Home = ({navigation}) => {
                   unitId={ADUNIT.bannerunit}
                   size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                 />
-                <ThreeDResultView result={MIData?.data || [{}]} />
+                <ThreeDResultView result={MIData?.data || [{}]} admindata={SUMIData} />
               </>
             )}
           </View>

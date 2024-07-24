@@ -42,6 +42,7 @@ const Profile = ({navigation}) => {
   const firbaseLogout = () => {
     firebase.auth().signOut();
     onSetGToken(null);
+    
   };
 
   return (

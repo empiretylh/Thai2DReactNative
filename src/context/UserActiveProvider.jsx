@@ -2,24 +2,16 @@ import React from 'react';
 
 import firebase from '@react-native-firebase/app';
 import firestore, {onSnapshot} from '@react-native-firebase/firestore';
-
+import axios from 'axios';
 export const setUserPresence = isOnline => {
-  firestore().collection('Users').doc(firebase.auth()?.currentUser?.uid).set(
-    {
-      isOnline: isOnline,
-    },
-    {
-      merge: true,
-    },
-  );
+  return axios.post('/api/isonline/', {
+    active: isOnline,
+  });
 };
 
-export const CountActiveUsers = async () => {
-  const snapshot = await firestore()
-    .collection('Users')
-    .where('isOnline', '==', true)
-    .get();
+export const CountActiveUsers = async (setData) => {
+  const data = await axios.get('/api/isonline/').then(res=>
+    setData(res.data?.count || 1)
+  );
 
-  const activeUsers = snapshot?.docs?.map(doc => doc.data());
-  return activeUsers;
 };
