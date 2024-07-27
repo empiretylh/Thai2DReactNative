@@ -21,7 +21,7 @@ const SplashScreen = () => {
             <Text allowFontScaling={false} style={{
                 color:'white',
                 fontSize:20,
-                fontWeight:'bold',
+                fontFamily: 'Inter-Bold',
                 fontFamily:'Inter-Bold',
             }}>
                 ခဏစောင့်ပေးပါ...

@@ -159,8 +159,7 @@ export const PostItem = ({item}) => {
                 style={{
                   color: 'black',
                   fontFamily: 'Inter-Bold',
-                }}>
-                {item.user.username}
+                }}> {item.user.name || item.user.username}
               </Text>
               <Text allowFontScaling={false}>{timeExchanger(item.created_at)}</Text>
             </View>
@@ -201,7 +200,7 @@ export const PostItem = ({item}) => {
                 style={{
                   color: 'white',
                   fontFamily: 'Inter-Bold',
-                  fontSize: 15,
+                  fontSize: hp(2.5),
                   marginLeft: 5,
                 }}>
                 {item?.images?.length}

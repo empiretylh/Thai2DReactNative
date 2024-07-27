@@ -102,8 +102,7 @@ const PrivacyPolicy = ({navigation}) => {
                 Privacy Policy {'\n'}
               </Text>
               This privacy policy applies to the 2D MM VIP app (hereby referred
-              to as "Application") for mobile devices that was created by Thura
-              Lin Htut (hereby referred to as "Service Provider") as a Free
+              to as "Application") for mobile devices that was created by Code Area (hereby referred to as "Service Provider") as a Free
               service. This service is intended for use "AS IS".
               {'\n\n'}
               Information Collection and Use The Application collects

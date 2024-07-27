@@ -1,7 +1,8 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {
   ActivityIndicator,
   Image,
+  Animated,
   ImageBackground,
   ScrollView,
   StatusBar,
@@ -13,7 +14,11 @@ import {
 import TopBar from './components/TopBar';
 import FloatingNavigionBottomBar from './components/FloatingNavigationBottomBar';
 import {useQuery} from 'react-query';
-import {getLiveTwoDServerUpdate, getModernInternetByAdmin, getTwoDDaliy} from '../server/api';
+import {
+  getLiveTwoDServerUpdate,
+  getModernInternetByAdmin,
+  getTwoDDaliy,
+} from '../server/api';
 import {IMAGE} from '../config/image';
 import {COLOR} from '../config/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -62,7 +67,6 @@ const NumberDisplayVal = ({number = 0}) => {
   const selectPart = numberString.slice(firstindex - 1, firstindex);
   const firstPart = numberString.slice(0, firstindex - 1);
   const thridPart = numberString.slice(firstindex, numberString.length);
-
 
   return (
     <Text
@@ -258,7 +262,9 @@ const ThreeDResultView = ({result, admindata}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              {admindata?.modern_930 == '--' ? result?.modern_930 || '--' : admindata?.modern_930}
+              {admindata?.modern_930 == '--'
+                ? result?.modern_930
+                : admindata?.modern_930}
             </Text>
             <Text
               allowFontScaling={false}
@@ -269,7 +275,9 @@ const ThreeDResultView = ({result, admindata}) => {
                 fontFamily: 'Inter-Bold',
                 flex: 1,
               }}>
-              {admindata?.internet_930 == '--' ? result?.internet_930 || '--' : admindata?.internet_930}
+              {admindata?.internet_930 == '--'
+                ? result?.internet_930
+                : admindata?.internet_930}
             </Text>
           </View>
           <View
@@ -311,7 +319,9 @@ const ThreeDResultView = ({result, admindata}) => {
                 color: COLOR.fithColor,
                 flex: 1,
               }}>
-              {admindata?.modern_200 == '--'? result?.modern_200 || '--' : admindata?.modern_200}
+              {admindata?.modern_200 == '--'
+                ? result?.modern_200
+                : admindata?.modern_200}
             </Text>
             <Text
               allowFontScaling={false}
@@ -322,7 +332,9 @@ const ThreeDResultView = ({result, admindata}) => {
                 fontFamily: 'Inter-Bold',
                 flex: 1,
               }}>
-              {admindata?.internet_200 == '--' ? result?.internet_200 || '--' : admindata?.internet_200}
+              {admindata?.internet_200 == '--'
+                ? result?.internet_200
+                : admindata?.internet_200}
             </Text>
           </View>
         </View>
@@ -334,40 +346,62 @@ const ThreeDResultView = ({result, admindata}) => {
 const Home = ({navigation}) => {
   const {twodData, modernData} = useLoadData();
   const serverupdatedTwoD = useQuery('updatedTwoD', getLiveTwoDServerUpdate);
-  const SUMIQuery = useQuery('SUMIQuery',getModernInternetByAdmin);
+  const SUMIQuery = useQuery('SUMIQuery', getModernInternetByAdmin);
 
-  const SUMIData = useMemo(()=>{
-    if(SUMIQuery?.data){
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const fadeIn = () => {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start(() => fadeOut());
+    };
+
+    const fadeOut = () => {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start(() => fadeIn());
+    };
+
+    fadeIn(); 
+
+    return () => fadeAnim.stopAnimation(); // Cleanup animation on unmount
+  }, [fadeAnim]);
+
+  const SUMIData = useMemo(() => {
+    if (SUMIQuery?.data) {
       let data = SUMIQuery?.data?.data;
       // [{"date": "2024-07-24T09:30:00+06:30", "id": 1, "internet": "34", "modern": "13"}, {"date": "2024-07-24T02:00:00+06:30", "id": 2, "internet": "32", "modern": "56"}]
-//
-      let MODERN930 = "--";
-      let INTERNET930 = "--";
-      let MODERN200 = "--";
-      let INTERNET200 = "--";
+      //
+      let MODERN930 = '--';
+      let INTERNET930 = '--';
+      let MODERN200 = '--';
+      let INTERNET200 = '--';
 
-      data?.map(item=>{
+      data?.map(item => {
         // get only hour 9:30 Moder and Internet and 2:00 PM Modern and Internet
         let date = new Date(item.date);
-        if(date.getHours() == 9 && date.getMinutes() == 30){
+        if (date.getHours() == 9 && date.getMinutes() == 30) {
           MODERN930 = item.modern;
           INTERNET930 = item.internet;
-        }else if(date.getHours() == 14 && date.getMinutes() == 0){
+        } else if (date.getHours() == 14 && date.getMinutes() == 0) {
           MODERN200 = item.modern;
           INTERNET200 = item.internet;
         }
-      })
-      
+      });
+
       return {
-        modern_930:MODERN930,
-        internet_930:INTERNET930,
-        modern_200:MODERN200,
-        internet_200:INTERNET200
-      }
-
+        modern_930: MODERN930,
+        internet_930: INTERNET930,
+        modern_200: MODERN200,
+        internet_200: INTERNET200,
+      };
     }
-
-  },[SUMIQuery?.data])
+  }, [SUMIQuery?.data]);
 
   const SUData = useMemo(() => {
     if (serverupdatedTwoD?.data) {
@@ -403,7 +437,7 @@ const Home = ({navigation}) => {
   const onRefresh = () => {
     twodData.refetch();
     serverupdatedTwoD.refetch();
-    SUMIQuery.refetch();  
+    SUMIQuery.refetch();
   };
 
   const showTwodNumber = useMemo(() => {
@@ -433,10 +467,8 @@ const Home = ({navigation}) => {
     let afternoon = new Date(now);
     afternoon.setHours(16, 30, 0, 0); // 4:30 PM
 
-
     let onehour = new Date(now);
     onehour.setHours(13, 0, 0, 0); // 1:00 PM
-
 
     const twelevePm =
       Data?.result && Data?.result?.find(item => item.open_time == '12:01:00');
@@ -449,11 +481,11 @@ const Home = ({navigation}) => {
     } else if (now >= noon && now < onehour) {
       // after 12:00 PM
       number = twelevePm?.twod;
-    } // after 1 hour 
-    else if (now >= onehour && now < afternoon){
-        return number;
-    }else {
-      number =  fourPm?.twod;
+    } // after 1 hour
+    else if (now >= onehour && now < afternoon) {
+      return number;
+    } else {
+      number = fourPm?.twod;
     }
 
     return number;
@@ -496,24 +528,28 @@ const Home = ({navigation}) => {
             justifyContent: 'center',
             borderColor: 'black',
             marginTop: hp(-2),
-       
           }}>
           {twodData.isLoading ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : (
-            <Text
-              allowFontScaling={false}
-              style={{
-                color: COLOR.primaryColor,
-                // fontSize: 170,
-                fontSize: hp('20%'),
-                textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                textShadowOffset: {width: -1, height: 4},
-                textShadowRadius: 2,
-                fontFamily: 'Inter-Bold',
-              }}>
-              {showTwodNumber}
-            </Text>
+            <Animated.View
+              style={
+                {
+                  opacity: fadeAnim, // Bind opacity to animated value
+                }
+              }>
+              <Text
+                allowFontScaling={false}
+                style={{
+                  color: COLOR.primaryColor,
+                  // fontSize: 170,
+                  fontSize: hp('20%'),
+                
+                  fontFamily: 'Inter-Bold',
+                }}>
+                {showTwodNumber}
+              </Text>
+            </Animated.View>
           )}
           <View
             style={{
@@ -532,9 +568,10 @@ const Home = ({navigation}) => {
               Updated At {new Date(showTwodTime).toLocaleString()}
             </Text>
           </View>
-          <View style={{
-            marginBottom:hp(10)
-          }}>
+          <View
+            style={{
+              marginBottom: hp(10),
+            }}>
             {Data?.result && (
               <>
                 <TwoDResultView result={Data?.result || [{}]} />
@@ -542,7 +579,10 @@ const Home = ({navigation}) => {
                   unitId={ADUNIT.bannerunit}
                   size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                 />
-                <ThreeDResultView result={MIData?.data || [{}]} admindata={SUMIData} />
+                <ThreeDResultView
+                  result={MIData?.data || [{}]}
+                  admindata={SUMIData}
+                />
               </>
             )}
           </View>

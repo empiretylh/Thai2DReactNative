@@ -115,17 +115,17 @@ const TwoDResultView = ({result = [], livenumber}) => {
                 }}>
                 <Text allowFontScaling={false}>Live : </Text>
                 <Text allowFontScaling={false}>
-                  {livenumber == '--' ? result[3].twod || 0 : livenumber}
+                 {result?.twod}
                 </Text>
               </Text>
               <NumberDisplaySet
                 number={
-                  livenumber == '--' ? result[3]?.set || 0 : twelevePm?.set
+                  result?.set ? result?.set || 0 : result?.set
                 }
               />
               <NumberDisplayVal
                 number={
-                  livenumber == '--' ? result[3]?.value || 0 : twelevePm?.value
+                  result?.value ? result?.value || 0 : result?.value
                 }
               />
             </View>
@@ -397,7 +397,7 @@ const Chat = ({navigation}) => {
           </Text>
 
         
-          <TwoDResultView result={Data?.result} livenumber={Data?.live?.twod} />
+          <TwoDResultView result={Data?.live} livenumber={Data?.live?.twod} />
         </View>
       </View>
       <BannerAd unitId={ADUNIT.bannerunit} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />

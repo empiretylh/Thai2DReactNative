@@ -7,6 +7,80 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:658645331835:android:72ed52c0684aa9e57b97de",
+        "android_client_info": {
+          "package_name": "com.codearea.mm2dvip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658645331835-n601h9l7u5nppuetint2bd20ps5s1k30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG6B7gqXQZYwufXXzBzOcAInTXBmQT0uA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658645331835-n601h9l7u5nppuetint2bd20ps5s1k30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658645331835:android:41d8cb586a5980227b97de",
+        "android_client_info": {
+          "package_name": "com.empire.thai2dadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658645331835-ccqrpkir3s6o6tl9m729okktt84e4uqs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.empire.thai2dadmin",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "658645331835-ireegmble33llub58buheju37729jpro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.empire.thai2dadmin",
+            "certificate_hash": "68372cafc3d893962855d648e8bc6b044a726055"
+          }
+        },
+        {
+          "client_id": "658645331835-n601h9l7u5nppuetint2bd20ps5s1k30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG6B7gqXQZYwufXXzBzOcAInTXBmQT0uA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658645331835-n601h9l7u5nppuetint2bd20ps5s1k30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:658645331835:android:b5bcaf7f1ba4603a7b97de",
         "android_client_info": {
           "package_name": "com.thai2d"
@@ -15,7 +89,7 @@
       "oauth_client": [
         {
           "client_id": "658645331835-72lcv0vq94lse2hvniev11ah1ni7jcbu.apps.googleusercontent.com",
-          "client_type": 3,
+          "client_type": 1,
           "android_info": {
             "package_name": "com.thai2d",
             "certificate_hash": "68372cafc3d893962855d648e8bc6b044a726055"
@@ -23,7 +97,7 @@
         },
         {
           "client_id": "658645331835-a1su3h2q2tk81983judq25aqglh7f3ot.apps.googleusercontent.com",
-          "client_type": 3,
+          "client_type": 1,
           "android_info": {
             "package_name": "com.thai2d",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
