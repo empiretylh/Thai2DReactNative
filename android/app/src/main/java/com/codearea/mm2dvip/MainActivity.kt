@@ -1,4 +1,4 @@
-package com.thai2d
+package com.codearea.mm2dvip
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

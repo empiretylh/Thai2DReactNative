@@ -1,4 +1,4 @@
-package com.thai2d
+package com.codearea.mm2dvip
 
 import android.app.Application
 import com.facebook.react.PackageList

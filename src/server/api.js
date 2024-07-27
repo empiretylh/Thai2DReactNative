@@ -1,6 +1,6 @@
 import axios from 'axios';
 // axios.defaults.baseURL = 'http://10.0.1.225:8000/'
-let debugurl = 'http://192.168.43.113:8000/'
+let debugurl = 'https://thaimyanmar2d.pythonanywhere.com'
 axios.defaults.baseURL = __DEV__ ? debugurl :'https://thaimyanmar2d.pythonanywhere.com';
 // axios.defaults.baseURL = 'http://192.168.43.181:8000/'
 // axios.defaults.baseURL = 'http://192.168.43.113:8000/';

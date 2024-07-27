@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.thai2d"
+    namespace "com.codearea.mm2dvip"
     defaultConfig {
-        applicationId "com.thai2d"
+        applicationId "com.codearea.mm2dvip"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
